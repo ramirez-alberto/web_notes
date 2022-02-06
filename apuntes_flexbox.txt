@@ -1,0 +1,60 @@
+Axis
+Main axis defined by flex-direction property and the cross axis runs perpendicular to it
+
+Flex container is define by the display property "flex or inline-flex"
+
+flex-flow combine the two properties flex-direction and flex-wrap
+
+flex items
+
+    flex-grow
+    flex-shrink
+    flex-basis
+flex is the shortand
+flex: 0 1 auto    //default values
+
+flex-grow is 0, so items will not grow larger than their flex-basis size
+
+align-items
+
+The align-items property will align the items on the cross axis.
+
+justify-content
+
+The justify-content property is used to align the items on the main axis
+
+
+    justify-content — controls alignment of all items on the main axis.
+    align-items — controls alignment of all items on the cross axis.
+    align-self — controls alignment of an individual flex item on the cross axis.
+    align-content — described in the spec as for “packing flex lines”;
+ controls space between flex lines on the cross axis.
+    gap, column-gap, and row-gap — used to create gaps or gutters between flex items.
+
+footer
+make the card a flex container, with flex-direction: column.
+ We then set the content area to flex: 1, 
+which is the shorthand for flex: 1 1 0 — 
+the item can grow and shrink from a flex basis of 0. 
+As this is the only item that can grow, 
+it takes up all available space in the flex container 
+and pushes the footer to the bottom.
+
+Media objects
+.media {
+    display: flex;
+    
+}
+.media .content {
+    flex: 1;
+    padding: 10px;
+}
+
+Form controls
+.wrapper {
+  display: flex;
+}
+
+.wrapper input[type="text"] {
+    flex: 1 1 auto;
+  }

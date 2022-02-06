@@ -1,0 +1,56 @@
+The basic Git syntax is program | action | destination.
+Best practices: Atomic commits
+An atomic commit is a commit that includes changes related to only one feature or task of your program.
+ There are two main reasons to do this: first, if something you change turns out to cause some problems,
+ it is easy to revert the specific change without losing other changes; and second,
+ it enables you to write better commit messages.
+
+If applied, this commit will 
+
++ git config
+git config --global user.name "Your name"
+git config --global user.email "Your email"
+git config --global color.ui auto
+git config --global init.defaultBranch main
+
++ Create ssh key with ed25519
+ssh-keygen -t ed25519 -C <youremail>
+
++ Clone a repo
+git clone git@github.com:ramirez-alberto/git_test.git
+
++ Check remote repo
+git remote -v
+
++ View status
+git status
+
++ Add file to staging area
+git add file
+git add .    //add all files
+
++ Add a comment to the commit
+git commit -m "Add file.txt"
+
++View log
+git log
+
++ Push changes
+git push //optional git push origin main
+
+Feature branches
+    git branch <branch_name> create a new branch or without arguments to see the branches
+    git checkout <branch_name> change to the new branch
+    git checkout -b <branch_name> create a new branch and change to it
+
+Merge branches:
+    git merge <branch_name> 
+
+Delete branch:
+    git branch -d <branch_name> if the branch has already been merged into main
+    git branch -D <branch_name>   
+    git push --delete origin branch-name delete branch from remote repo
+
+
++Git commit with VSCODE
+git config --global core.editor "code --wait".

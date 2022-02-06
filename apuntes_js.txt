@@ -1,0 +1,133 @@
+check functional programming languages
+"use strict"; stric mode
+
+Declare variable:
+    Use let and const instead of var.
+    camelCase
+    Cannot use reserved words
+
+    Constant
+    use constants as aliases for difficult-to-remember values.
+     Example: const COLOR_RED = "#F00";
+     Note:  capital-named constants are only used as aliases for “hard-coded” values.
+
+There are 8 basic data types in JavaScript.
+
+    number for numbers of any kind: integer or floating-point, integers are limited by ±(253-1).
+    bigint is for integer numbers of arbitrary length.
+    string for strings. A string may have zero or more characters, there’s no separate single-character type.
+    boolean for true/false.
+    null for unknown values – a standalone type that has a single value null.
+    undefined for unassigned values – a standalone type that has a single value undefined.
+    object for more complex data structures.
+    symbol for unique identifiers.
+
+Numbers (Number object):
+    JavaScript Numbers are Always 64-bit Floating Point and are always stored as 
+     double precision floating point numbers, following the international IEEE 754 standard. 
+     This format stores numbers in 64 bits, where the number (the fraction) is stored in bits 0 to 51,
+     the exponent in bits 52 to 62, and the sign in bit 63
+
+    Large or extra small number can be written with scientific notation:
+     let x = 123e5;    // 12300000
+     let y = 123e-5;   // 0.00123 
+
+    Precision:
+    Integer are accurate up to 15 digits and the max number of decimals ia 17
+    Floating point arithmetic is not always 100% accurate
+
+    The + operand is for sum number or concatenate strings
+    NaN = Not a Number  but typeof Nan = number
+    Infinity keyword represent a number outside the largest possible number
+    Can use toString(base) to outuput numbers from base 2 to base 36 
+
+    Operator precedence:
+    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators#operator_precedence
+
+Strings:
+    Escape quotes with backslash \
+    With Template literals ` you can concatenate variables ans strings `Hello ${variable}` or use the * operand. And template literal respect the line 
+    breaks. 
+
+Comparisons: if(comparison) action;
+    Prioritize the use of strict equality ===
+    String comparison - strings are compared letter-by-letter (lexicographical order)
+    JS transform values to number for comparison, comparison convert null to 0 and the equality dont convert.
+
+Logical Operators: OR || , AND && , NOT ! , ?? NULLISH COALESCING
+
+OR
+For each operand, converts it to boolean. If the result is true, stops and returns the original value of that operand.
+If all operands have been evaluated (i.e. all were false), returns the last operand.
+Uses:
+    Getting the first truthy value from a list of variables or expressions. firstName || lastName || nickName || "Anonymous" returns Anonymous if false, or the data if true
+    Short-circuit evaluation It means that || processes its arguments until the first truthy value is reached, and then the value is returned immediately, without even touching the other argument.
+    Sometimes, people use this feature to execute commands only if the condition on the left part is falsy.
+    true || alert("not printed");
+false || alert("printed");
+
+AND
+    The rules above are similar to OR. The difference is that AND returns the first falsy value 
+    while OR returns the first truthy one.
+
+
+Precedence of AND && is higher than OR || and ! is the highest
+
+!!value convert value to true or false. Boolean(value) is the same
+
+Switch....case
+switch(expression){
+    case choice:
+    something
+    break;
+    default:
+}
+
+Ternary operator
+    ( condition ) ? run this code : run this code instead
+
+Arrays:
+    let array = [1,2,3] or let array = [] or let array = new Array(1,2,3,4)
+    Arrays can store any type of value.
+    Associative array or hashes is arrays with named indexes, JS interpret them as objects
+
+js and html
+
+const html = document.querySelector('type selector');
+other_html.addEventListener('event', function or  () => ternary operator);
+
+DOM (Document Object Model):
+    <node></node>
+    Select first child - firstElementChild
+    Select last child - firstElementChild
+
+    Put the script node in the botton or add to the head node and include the defer
+    keyword <script src="js-file.js" defer></script> when DOM manipulation
+
+Events:
+    Note: can only have 1 onclick property
+    inline event attributes like onclick => <button onclick="alert('Hello World')">Click Me</button>
+    assign event to the button =>
+        const btn = document.querySelector('#btn');
+        btn.onclick = () => alert("Hello World");
+    
+    Multiple onclik or events if necessary
+        const btn = document.querySelector('#btn');
+        btn.addEventListener('click', () => {
+        alert("Hello World");
+        });
+
+    Useful events https://www.w3schools.com/jsref/dom_obj_event.asp
+    click
+    dblclick
+    keypress
+    keydown
+    keyup
+
+
+
+
+
+
+
+

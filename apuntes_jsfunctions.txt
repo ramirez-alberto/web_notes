@@ -1,0 +1,47 @@
+Functions is a value
+function myFunction(){}  code function is stored in myFunction variable
+function declaration
+
+A function is a value representing an “action”
+Regular values like strings or numbers represent the data.
+A function can be perceived as an action.
+We can pass it between variables and run when we want.
+
+
+
+function name(parameter1=default-value, parameter2, ... parameterN) {
+  ...body...
+}
+
+functino declaration:   function myFunction(){}
+function expression:    anonymous functions ... function(){}    is not hoisted
+arrow function: (event) => {action} , (event) => action , event => action ...you can omit return word for return value
+
+The outer variable is only used if there’s no local one.
+
+Naming a function... One function – one action
+
+Functions are actions. So their name is usually a verb. It should be brief, as accurate as possible and describe what the function does, so that someone reading the code gets an indication of what the function does.
+
+It is a widespread practice to start a function with a verbal prefix which vaguely describes the action. There must be an agreement within the team on the meaning of the prefixes.
+
+For instance, functions that start with "show" usually show something.
+
+Function starting with…
+
+    "get…" – return a value,
+    "calc…" – calculate something,
+    "create…" – create something,
+    "check…" – check something and return a boolean, etc.
+
+Callback functions is a function passed as argument
+
+JavaScript Call Stack is a mechanism to keep track of the function calls
+https://www.javascripttutorial.net/javascript-call-stack/
+  JS call stack works based on LIFO principle last-in-first-out
+  JSengine create a GLOBAL EXECUTION CONTEXT and places on top of the call stack
+  Stack overflow
+    The call stack has a fixed size, depending on the implementation of the host environment, either the web browser or Node.js.
+    If the number of the execution contexts exceeds the size of the stack, a stack overflow error will occur.
+
+    
