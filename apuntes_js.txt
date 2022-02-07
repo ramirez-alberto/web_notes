@@ -11,7 +11,7 @@ Declare variable:
      Example: const COLOR_RED = "#F00";
      Note:  capital-named constants are only used as aliases for “hard-coded” values.
 
-There are 8 basic data types in JavaScript.
+There are 8 basic data types in JavaScript (Seven are called primitives).
 
     number for numbers of any kind: integer or floating-point, integers are limited by ±(253-1).
     bigint is for integer numbers of arbitrary length.
@@ -123,6 +123,82 @@ Events:
     keypress
     keydown
     keyup
+
+Objects: object literal
+    {key called property :value}
+    Empty object   
+        let user = new Object(); // "object constructor" syntax
+        let user = {};  // "object literal" syntax
+    Properties
+        delete user.age remove a property
+        object.new_property = value add property
+        multiword property must be quoted {"property name" : value}
+        The last property in the list may end with a comma (trailing comma)
+        acces properties(  prefered var[key])
+        Properties always string or converted to string
+        Reading a non-existing property just returns undefined. We can check if properties exists with in operator
+            "key" in object property always in string, you can use a strong variable( var in object)
+        Computed Properties:
+            var = value
+            object = { [var] : otherValue,} here var is replaced for value (Computed property) 
+            object.value = otherValue  
+
+        for in loop access properties for(let key in object){}
+        “integer property” term here means a string that can be converted to-and-from an integer without a change.
+        Propertie value shorthand:
+                function makeUser(name, age) {
+                    return {
+                        name: name,
+                        age: age,
+                        // ...other properties
+                    };
+                }
+
+                let user = makeUser("John", 30);
+                alert(user.name); // John
+
+            is tha same as:
+
+                function makeUser(name, age) {
+                return {
+                    name, // same as name: name
+                    age,  // same as age: age
+                    // ...
+                };
+                }
+        Function property:
+            {
+                key : function(){return true},
+            }
+            or
+            {
+                key() {return true},
+            }            
+
+    this keyword refer to the var in the context of the object this.key
+        Contructor:
+        First method (not a constructor same funcionality) : we have to create an empty object, initialize it, and return it.
+        function createPerson(name) {
+            const obj = {};
+            obj.name = name;
+            obj.introduceSelf = function() {
+            console.log(`Hi! I'm ${this.name}.`);
+            }
+        return obj;
+        }
+        Second method (constructor):        
+            create a new object
+            bind this to the new object, so you can refer to this in your constructor code
+            run the code in the constructor
+            return the new object.
+        Constructors, by convention, start with a capital letter and are named for the type of object they create
+            function Person(name) {
+            this.name = name;
+            this.introduceSelf = function() {
+                console.log(`Hi! I'm ${this.name}.`);
+            }
+            }
+        and for call the constructor const var = new Person('value')
 
 
 
