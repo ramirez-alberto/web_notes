@@ -13,3 +13,6 @@ are moved to the top of their scope before code execution.
 Objects 
     {key called property :value}
      var.property dot notation
+
+String interpolation
+ "a string, and a {variable}"
