@@ -1,0 +1,19 @@
+
+
+
+Unit test 
+https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test:
+    dotnet new sln -o <carpeta_De_la_solucion>  Crear nueva solucion
+
+    dotnet new classlib -o <carpeta_libreria_de_clases> 
+
+    dotnet sln add <ruta-csproj> add the class library project to the solution.
+
+    dotnet new xunit -o PrimeService.Tests  Create the test project
+
+    dotnet sln add ./PrimeService.Tests/PrimeService.Tests.csproj   Add the test project to the solution file.
+
+    dotnet add <carpeta-tests/csproj-file> reference <carpeta-source/csproj-file>  Add the PrimeService class library as a dependency to the PrimeService.Tests project.
+
+    Name the test: public class ReferenceClass_thingToBeTested
+    Use ARRANGE,ACTION,ASSERT
