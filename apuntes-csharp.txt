@@ -1,4 +1,13 @@
+String.Contains
+String.ToUpper, ToLower, Replace
+string.Empty; initialize a var with a empty string
+Use tuple for swap values in array (array[i - 1], array[i]) = (array[i], array[i - 1])
 
+Hashtable: https://www.tutorialspoint.com/csharp/csharp_hashtable.htm
+
+
+Program structure
+https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/program-structure/
 
 
 Unit test 
