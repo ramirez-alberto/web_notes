@@ -1,0 +1,22 @@
+
+Numeric
+double.Parse Parse a string to double
+
+
+String
+
+nameof
+
+Return types
+    return default; returns null or zeros
+
+Exception
+    throw new excetionType("text");
+
+Method keywords
+    This function only call in derived classes, can be override and return type 
+            may be null
+    protected virtual type? MyFunction(varType varName)
+    {
+        return default;  return null
+    }

@@ -1,0 +1,3 @@
+A object has methods and attributes
+
+Class names start with a capital letter and use CamelCase
