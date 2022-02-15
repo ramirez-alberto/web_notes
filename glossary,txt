@@ -16,3 +16,5 @@ Objects
 
 String interpolation
  "a string, and a {variable}"
+
+ members of a class : methods,properties,etc

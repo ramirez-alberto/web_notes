@@ -1,10 +1,33 @@
+
+https://docs.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/program-building-blocks#members
+Fields denote storage locations, propierties has accessors (get set)
+Accesibility:
+
+    public: Access isn't limited.
+    private: Access is limited to this class.
+    protected: Access is limited to this class or classes derived from this class.
+    internal: Access is limited to the current assembly (.exe or .dll).
+    protected internal: Access is limited to this class, classes derived from this class, or classes within the same assembly.
+    private protected: Access is limited to this class or classes derived from this type within the same assembly.
+
+Operators: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/
+
 String.Contains
 String.ToUpper, ToLower, Replace
 string.Empty; initialize a var with a empty string
 Use tuple for swap values in array (array[i - 1], array[i]) = (array[i], array[i - 1])
 
+Arrays,Collectinons use IEnumerable<T> interface
 Hashtable: https://www.tutorialspoint.com/csharp/csharp_hashtable.htm
 
+Delegates (https://docs.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/features#delegates-and-lambda-expressions): 
+    syntax delegate double Function(double x);
+
+Variables
+    static keyword are class variables or non-instance variable
+    readonly keyword like instance variables but cannot be modified, 
+            the value is assign in the constructor
+    protected functions can be called only in derived classes
 
 Program structure
 https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/program-structure/
