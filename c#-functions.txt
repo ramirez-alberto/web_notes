@@ -20,3 +20,8 @@ Method keywords
     {
         return default;  return null
     }
+
+Files methods: 
+System.Environment.GetLogicalDrives
+    GetFiles , GetDirectories
+    System.IO.Directory and System.IO.File 

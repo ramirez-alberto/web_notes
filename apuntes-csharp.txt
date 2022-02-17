@@ -32,6 +32,44 @@ Variables
 Program structure
 https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/program-structure/
 
+Files and Registry (https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/file-system/)
+    File system information in following classes:
+    System.IO.FileInfo, System.IO.DirectoryInfo, System.IO.DriveInfo, System.IO.Directory
+    System.IO.File   
+    Example : System.IO.DriveInfo di = new System.IO.DriveInfo(@"C:\");
+    https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/file-system/how-to-get-information-about-files-folders-and-drives
+
+   GetFiles , GetDirectories
+        if any one of the subdirectories under the specified root causes a 
+            DirectoryNotFoundException or UnauthorizedAccessException, the whole 
+            method fails and returns no directories. 
+
+    Traverse directory tree manually    
+        pre-order traversal : files first
+        post-order traversal : subdirectories first
+        You can use recursion or stack-based traversal
+
+        Recursion:
+            Can cause a stack overflow exception if the dirtree is deeply nested and large
+            Example: #recursive_traverse_directory_tree
+
+        No recursion:
+        Uses generic Stack<T> collection type wich is LIFO stack
+        Example: #no_recursion_traverse_dirtree
+
+        If you must store the contents of a directory tree, either in memory or 
+        on disk, the best option is to store only the FullName property 
+        (of type string) for each file. You can then use this string to create 
+        a new FileInfo or DirectoryInfo object as necessary, or open any file 
+        that requires additional processing.
+
+        When you process user-specified path strings, you should also handle exceptions for the following conditions:
+            The file name is malformed. For example, it contains invalid characters or only white space.
+            The file name is null.
+            The file name is longer than the system-defined maximum length.
+            The file name contains a colon (:).
+
+
 
 Unit test 
 https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test:
@@ -49,3 +87,5 @@ https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-te
 
     Name the test: public class ReferenceClass_thingToBeTested
     Use ARRANGE,ACTION,ASSERT
+
+

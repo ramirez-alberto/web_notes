@@ -18,3 +18,8 @@ String interpolation
  "a string, and a {variable}"
 
  members of a class : methods,properties,etc
+
+ LIFO stack
+EXCEPTIONS
+ As a rule, only catch those exceptions that you can handle without leaving 
+ your application in an unknown state.
