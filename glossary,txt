@@ -9,6 +9,10 @@ Parameters are sometimes called arguments, properties, or even attributes.
 Hoisting is a JavaScript mechanism where variables and function declarations 
 are moved to the top of their scope before code execution.
 
+URI REQUEST TI application
+? : Parameters to the method
+
+    & : The parameter separator
 
 Objects 
     {key called property :value}

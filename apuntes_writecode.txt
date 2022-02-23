@@ -1,5 +1,8 @@
  we need the comments to tell us why it works.
  Code Tells You How, Comments Tell You Why
+
+    Does the code clearly express what it is trying to accomplish?
+
 Naming Things:
  Names for functions and variables should be descriptive. 
 Always use camelCase. To keep things consistent and easy to read, variables 
