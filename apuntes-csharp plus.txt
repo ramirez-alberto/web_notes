@@ -19,7 +19,7 @@ Classes
                 Syntax: public string Name(){ static string LocalFunction(){}}  //No visibility modifier    
 
 Collections:
-    Arrays implement Array class(Use lists instead)
+    Arrays implement IList and is part of Array class(Use lists instead)
         Syntax: string[] myarray; or string[] myarray = new string[size_of_array]; //instantiate array for use
             or int[] numbers = new int[5] { 4, 3, 8, 0, 5 }; // shorter version int[] numbers = { 4, 3, 8, 0, 5 };
-    Lists
+    Lists implement the IList interfaces (List<T> is type-safe)

@@ -2,6 +2,13 @@
 Numeric
 double.Parse Parse a string to double
 
+Arrays,List
+    array.Add()
+    array.Insert(index, value)
+    array.AddRange() and InsertRange() add another collection
+    Remove:
+        Remove(), RemoveAt() and RemoveAll().
+
 LINQ 
 https://dev.to/juancarlosfl/equivalencia-de-filter-map-y-reduce-en-c-38ga
 js map equivalence = Select()
