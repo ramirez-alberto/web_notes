@@ -1,93 +1,25 @@
+Classes
+    Namespaces
+        using Namespace = Alias; make an alias for the namespace.
+    Constants 
+    Defined either inside the scope of a method or on the class level. 
+        const keyword evaluate in compile time, you cannot assign the result of method call.
+            Syntax\Example: public const int name = value;  
+        readonly keyword same as const less restrictive, can assign in the constructor.
+    Partial Classes
+    You can have the same class in multiple files. The partial keyword and the same name must be in both classes
+        Syntax: public partial class Name
+    Local Function C#7
+        A local function is declared inside of a method an can only be accesesed inside of this method (Encapsulation).
+            Syntax: public string Name(){ string LocalFunction(){}}  //No visibility modifier
+        You can declare the local function after declare the local variables of the method if you want to use them
+            Static Local Function C#8
+                So if you want to make sure that your local function can't reference or change variables from the method, 
+                just declare it as static
+                Syntax: public string Name(){ static string LocalFunction(){}}  //No visibility modifier    
 
-https://docs.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/program-building-blocks#members
-Fields denote storage locations, propierties has accessors (get set)
-Accesibility:
-
-    public: Access isn't limited.
-    private: Access is limited to this class.
-    protected: Access is limited to this class or classes derived from this class.
-    internal: Access is limited to the current assembly (.exe or .dll).
-    protected internal: Access is limited to this class, classes derived from this class, or classes within the same assembly.
-    private protected: Access is limited to this class or classes derived from this type within the same assembly.
-
-Operators: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/
-
-String.Contains
-String.ToUpper, ToLower, Replace
-string.Empty; initialize a var with a empty string
-Use tuple for swap values in array (array[i - 1], array[i]) = (array[i], array[i - 1])
-
-Arrays,Collectinons use IEnumerable<T> interface
-Hashtable: https://www.tutorialspoint.com/csharp/csharp_hashtable.htm
-
-Delegates (https://docs.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/features#delegates-and-lambda-expressions): 
-    syntax delegate double Function(double x);
-
-Variables
-    static keyword are class variables or non-instance variable
-    readonly keyword like instance variables but cannot be modified, 
-            the value is assign in the constructor
-    protected functions can be called only in derived classes
-
-Program structure
-https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/program-structure/
-
-Files and Registry (https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/file-system/)
-    File system information in following classes:
-    System.IO.FileInfo, System.IO.DirectoryInfo, System.IO.DriveInfo, System.IO.Directory
-    System.IO.File   
-    Example : System.IO.DriveInfo di = new System.IO.DriveInfo(@"C:\");
-    https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/file-system/how-to-get-information-about-files-folders-and-drives
-
-   GetFiles , GetDirectories
-        if any one of the subdirectories under the specified root causes a 
-            DirectoryNotFoundException or UnauthorizedAccessException, the whole 
-            method fails and returns no directories. 
-
-    Traverse directory tree manually    
-        pre-order traversal : files first
-        post-order traversal : subdirectories first
-        You can use recursion or stack-based traversal
-
-        Recursion:
-            Can cause a stack overflow exception if the dirtree is deeply nested and large
-            Example: #recursive_traverse_directory_tree
-
-        No recursion:
-        Uses generic Stack<T> collection type wich is LIFO stack
-        Example: #no_recursion_traverse_dirtree
-
-        If you must store the contents of a directory tree, either in memory or 
-        on disk, the best option is to store only the FullName property 
-        (of type string) for each file. You can then use this string to create 
-        a new FileInfo or DirectoryInfo object as necessary, or open any file 
-        that requires additional processing.
-
-        When you process user-specified path strings, you should also handle 
-        exceptions for the following conditions:
-            The file name is malformed. For example, it contains invalid characters 
-                    or only white space.
-            The file name is null.
-            The file name is longer than the system-defined maximum length.
-            The file name contains a colon (:).
-
-
-
-Unit test 
-https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test:
-    dotnet new sln -o <carpeta_De_la_solucion>  Crear nueva solucion
-
-    dotnet new classlib -o <carpeta_libreria_de_clases> 
-
-    dotnet sln add <ruta-csproj> add the class library project to the solution.
-
-    dotnet new xunit -o PrimeService.Tests  Create the test project
-
-    dotnet sln add ./PrimeService.Tests/PrimeService.Tests.csproj   Add the test project to the solution file.
-
-    dotnet add <carpeta-tests/csproj-file> reference <carpeta-source/csproj-file>  Add the PrimeService class library as a dependency to the PrimeService.Tests project.
-
-    Name the test: public class ReferenceClass_thingToBeTested
-    Use ARRANGE,ACTION,ASSERT
-
-
+Collections:
+    Arrays implement Array class(Use lists instead)
+        Syntax: string[] myarray; or string[] myarray = new string[size_of_array]; //instantiate array for use
+            or int[] numbers = new int[5] { 4, 3, 8, 0, 5 }; // shorter version int[] numbers = { 4, 3, 8, 0, 5 };
+    Lists
