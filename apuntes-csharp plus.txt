@@ -1,3 +1,25 @@
+Variables
+    For converting types use Convert class
+    Booleans
+    Integers int keyword == Int32 class
+        Common integer types:
+            bytes ( 0 - 255 ), short ( +-32768 or Int16), long (Int64)
+    Float (use double or float for performance, use decumal for precission)
+        double 16precision (System.Double), double var = 32.0 or double var = 32.0d
+        float 7precision, (System.Single)  float var = 32.0f
+        decimal 29precision (System.Decimal) decimal var = 32.0m
+    Char (Char class)
+        Char is a numerical value, where each character has a specified number in Unicode
+        char var = 'H' //note the single quotes
+    Strings
+        Is a reference type, an is inmutable.
+        it's generally recommended to use a StringBuilder if you know that you 
+            will be building a string over several operations: StringBuilder numbers = new StringBuilder();
+        You can use a verbatim operator @ for escaping characters
+    Date & time
+        DateTime is a struct, and always be use as a container for datetime data
+            DateTime dt = new DateTime(); and DateTime dt = DateTime.Now;
+
 Classes
     Namespaces
         using Namespace = Alias; make an alias for the namespace.

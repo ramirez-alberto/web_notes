@@ -5,6 +5,7 @@ Parameters are sometimes called arguments, properties, or even attributes.
     A parameter is the variable listed inside the parentheses in the function declaration (it’s a declaration time term)
     An argument is the value that is passed to the function when it is called (it’s a call time term).
 
+typecast Syntax (type)variable
 
 Hoisting is a JavaScript mechanism where variables and function declarations 
 are moved to the top of their scope before code execution.
