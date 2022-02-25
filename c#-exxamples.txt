@@ -182,3 +182,57 @@ public class StackBasedIteration
         }
     }
 }
+
+#ExpandoObject
++use a ExpandoObject
+dynamic user = new System.Dynamic.ExpandoObject();
+user.Name = "John Doe";
+user.Age = 42;
+user.HomeTown = "New York";
+Console.WriteLine(user.Name + " is " + user.Age + " years old and lives in " + user.HomeTown);
++assign a property
+dynamic user = new System.Dynamic.ExpandoObject();
+user.Name = "John Doe";
+user.Age = 42;
+
+user.HomeTown = new System.Dynamic.ExpandoObject();
+user.HomeTown.Name = "New York";
+user.HomeTown.ZipCode = 10001;
+
++assign a object
+user.DescribeUser = (Func<String>)(() => {
+    return user.Name + " is " + user.Age + " years old and lives in " + user.HomeTown.Name + " [" + user.HomeTown.ZipCode + "]";
+});
+
+Console.WriteLine(user.DescribeUser());
++iterate 
+dynamic user = new System.Dynamic.ExpandoObject();  
+user.Name = "John Doe";  
+user.Age = 42;  
+
+foreach (KeyValuePair<string, object> kvp in user)
+{
+    Console.WriteLine(kvp.Key + ": " + kvp.Value);
+}
+
+#Anonymous types
+using System;
+using System.IO;
+
+namespace AnonymousTypes
+{
+    class Program
+    {
+    static void Main(string[] args)
+    {
+        string pathOfExe = System.Reflection.Assembly.GetEntryAssembly().Location;
+        FileInfo fileInfo = new FileInfo(pathOfExe);
+        var simpleFileInfo = new
+        {
+        Filename = fileInfo.Name,
+        FileSize = fileInfo.Length
+        };
+        Console.WriteLine("File name: " + simpleFileInfo.Filename + ". Size: " + simpleFileInfo.FileSize + " bytes");
+    }
+    }
+}

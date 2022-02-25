@@ -19,6 +19,38 @@ Variables
     Date & time
         DateTime is a struct, and always be use as a container for datetime data
             DateTime dt = new DateTime(); and DateTime dt = DateTime.Now;
+    Null (System.Nullable)
+        Helper method GetValueOrDefault()
+        Always check for null references before trying to use the value, 
+    Implicit variables C#3
+        Var keyword, only in method not in class level.
+        C# check the value type in compile time
+        a must in  anonymous types
+    Dynamic types C#4
+        We can hold a object where we get to define the properties, without 
+        having to define the class first.
+        Its a static type, the compiler dont check the members
+        We cant dynamically assign properties after the object has been initialized
+        This will give you some of the advantages of the dynamically/weakly 
+        typed languages, while maintaining the advantages of a strongly typed 
+        language in all other cases.
+        Examples of when it makes good sense to use the dynamic keyword are for 
+        COM interop and when interacting with data formats like JSON and XML.
+    ExpandoObject (System.Dynamic)
+    Example: #ExpandoObject
+    https://csharp.net-tutorials.com/data-types/the-expandoobject/
+
+    Anonymous Types
+    Example: #Anonymous types
+        Can only holds properties, cant have fields or methods
+        Properties are readonly , you cant add new properties
+        usage scenario is when you have a complex object (from a defined class) 
+        and you need to simplify it, e.g. because you have to keep the object as 
+        small as possible to send it to a browser or perhaps because the full 
+        object has sensitive information that you don't want to expose to the 
+        consumer. Anonymous types are great for this, as illustrated in this next example:
+        https://csharp.net-tutorials.com/data-types/anonymous-types/
+
 
 Classes
     Namespaces
