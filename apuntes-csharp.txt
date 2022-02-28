@@ -71,6 +71,14 @@ Files and Registry (https://docs.microsoft.com/en-us/dotnet/csharp/programming-g
             The file name is longer than the system-defined maximum length.
             The file name contains a colon (:).
 
+Pattern Matching (https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/functional/pattern-matching)
+    Declarative pattern if(maybe is int number)
+                            Console.WriteLine($"Maybe is int equal to {number}");
+    switch expression
+        Syntax: variable switch { expression => return_value,
+                                    { } matches a non-null object that didnt match an earlier arm
+                                    null matches null values}
+        You must match all kind of expressiones, if not, compiler issues a warning
 
 
 Unit test 
