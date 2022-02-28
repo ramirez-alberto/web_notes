@@ -80,6 +80,12 @@ Pattern Matching (https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/fu
                                     null matches null values}
         You must match all kind of expressiones, if not, compiler issues a warning
 
+    Pattern matching makes some types of code more readable and offers an alternative to object-oriented techniques 
+    when you can't add code to your classes. The cloud is causing data and functionality to live apart. 
+    The shape of the data and the operations on it aren't necessarily described together. 
+    In this tutorial, you consumed existing data in entirely different ways from its original function. 
+    Pattern matching gave you the ability to write functionality that overrode those types, even though you couldn't extend them.
+
 
 Unit test 
 https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test:
