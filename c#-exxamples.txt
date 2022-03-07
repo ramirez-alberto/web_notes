@@ -236,3 +236,72 @@ namespace AnonymousTypes
     }
     }
 }
+
+
+#LINQExamples
+
+Query Syntax
+// Get the names which are 8 characters or less, using LINQ  
+var shortNames = from name in names where name.Length <= 8 orderby name.Length select name;
+
+\\Method Syntax
+
+var names = new List<string>()
+{
+    "John Doe",
+    "Jane Doe",
+    "Jenna Doe",
+    "Joe Doe"
+};
+
+// Get the names which are 8 characters or less, using LINQ
+var shortNames = names.Where(name => name.Length <= 8);
+// Order it by length
+shortNames = shortNames.OrderBy(name => name.Length);
+// Add a name to the original list
+names.Add("Zoe Doe");
+
+// Iterate over it - the query has not actually been executed yet!
+// It will be as soon as we hit the foreach loop though!
+foreach (var name in shortNames)
+    Console.WriteLine(name);
+
+
+using System;
+using System.Globalization;
+using System.Linq;
+using System.Xml.Linq;
+
+namespace LinqTakeSkip1
+{
+    class Program
+    {
+    static void Main(string[] args)
+    {
+        CultureInfo usCulture = new CultureInfo("en-US");
+        XDocument xDoc = XDocument.Load("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
+        var cubeNodes = xDoc.Descendants().Where(n => n.Name.LocalName == "Cube" && n.Attribute("currency") != null).ToList();
+        var currencyRateItems = cubeNodes.Select(node => new
+        {
+        Currency = node.Attribute("currency").Value,
+        Rate = double.Parse(node.Attribute("rate").Value, usCulture)
+        });
+
+
+        int pageSize = 5, pageCounter = 0;
+        var pageItems = currencyRateItems.Take(pageSize);
+        while(pageItems.Count() > 0)
+        {
+        foreach (var item in pageItems)
+            Console.WriteLine(item.Currency + ": " + item.Rate.ToString("N2", usCulture));
+        Console.WriteLine("Press any key to get the next items...");
+        Console.ReadKey();
+        pageCounter++;
+        // Here's where we use the Skip() and Take() methods!
+        pageItems = currencyRateItems.Skip(pageSize * pageCounter).Take(pageSize);
+        }
+        Console.WriteLine("Done!");
+        
+    }
+    }
+}

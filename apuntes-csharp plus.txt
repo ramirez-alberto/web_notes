@@ -77,3 +77,9 @@ Collections:
         Syntax: string[] myarray; or string[] myarray = new string[size_of_array]; //instantiate array for use
             or int[] numbers = new int[5] { 4, 3, 8, 0, 5 }; // shorter version int[] numbers = { 4, 3, 8, 0, 5 };
     Lists implement the IList interfaces (List<T> is type-safe)
+
+LINQ Lenguage Integrated-Query
+    Comes with to syntax flavors Query and Method Syntax.
+    LINQ query is executed when we use the data. Example in a foreach loop
+    Lambda Expressions 
+        name => name.Length <= 8

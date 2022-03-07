@@ -10,10 +10,15 @@ Arrays,List
         Remove(), RemoveAt() and RemoveAll().
 
 LINQ 
-https://dev.to/juancarlosfl/equivalencia-de-filter-map-y-reduce-en-c-38ga
-js map equivalence = Select()
-js filter eq = Where()
-js reduce eq = Aggregate()
+    https://dev.to/juancarlosfl/equivalencia-de-filter-map-y-reduce-en-c-38ga
+    js map equivalence = Select()  transform and shape data from your data source into new variants
+    js filter eq = Where() can contain a lamba Expression, you can call any methods 
+         as long as the final result is a boolean value.
+    js reduce eq = Aggregate()
+
+    Sorting Data: OrderBy and ThenBy
+    Take() get you X number of items from the data source
+    Skip() allow you to ignore the first X items
 
 String
 
