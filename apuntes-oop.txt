@@ -1,3 +1,34 @@
 A object has methods and attributes
 
 Class names start with a capital letter and use CamelCase
+
+highly cohesive,loosely coupled
+
+the cycle is:
+1. Add a little test
+2. Run all tests and fail
+3. Make a little change
+4. Run the tests and succeed
+5. Refactor to remove duplication
+https://github.com/thomasnield/oreilly_sql_fundamentals_for_data/blob/master/notes_and_slides/sql_fundamentals_slides.pdf
+https://github.com/urahamat01/coding-interview-university#why-use-it
+
+
+***get to the customer and ask for details and new implementations before class abstraction design ,we can implement something for protection
+against new functionalities
+
+high level policy doesnt know about low level details
+POO why?
+Encapsulation
+inheritance
+polymorfism (we can substitute one class with another): we can avoid write rigid,fragile and non-reusable modules
+
+SOLID Principles (Class design principles):
+SRP : Single Responsability(Reason to change) Principles
+A class should have one, and only one, reason to change.
+OPEN/CLOSED PRINCIPLE
+Modules should be open for extension,but closed for modification: You could change was the module does without changing it.
+We can extent a class because has polymorphic calls
+
+Liskov substitution principle
+Derived classes must be usable through the base class interface, without the need for the user to know the difference

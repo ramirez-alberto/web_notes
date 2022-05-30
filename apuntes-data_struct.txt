@@ -1,0 +1,8 @@
+Arrays are a static linear data structure
+Linked List are dynamic.
+A static data structure needs all of its resources to be allocated when the structure is created. One block of memory.
+
+Linked List structure - https://dev.to/vaidehijoshi/whats-a-linked-list-anyway
+Nodes are the elements of the data structure.
+The first element is called HEAD and last node references NULL
+A node is formed by the data and a reference to the next node
