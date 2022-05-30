@@ -7,6 +7,10 @@ An atomic commit is a commit that includes changes related to only one feature o
 
 If applied, this commit will 
 
+Steps for new repo
+    Add README, Add licence (Apache), Add CODE OF CONDUCT (CODE_OF_CONDUCT.md) like "Contributor Covenant", 
+        Add contribution guidelines
+
 + git config
 git config --global user.name "Your name"
 git config --global user.email "Your email"
@@ -59,3 +63,9 @@ Create good README's
 https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/about-readmes
 https://makeareadme.com/?utm_medium=Exinfluencer&utm_source=Exinfluencer&utm_content=000026UJ&utm_term=10006555&utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMCD0131ENSkillsNetwork32121029-2021-01-01
 https://github.com/matiassingers/awesome-readme
+
+Useful links for CONTRIBUTING.md
+https://github.com/Call-for-Code-for-Racial-Justice/Legit-Info/blob/main/CONTRIBUTING.md
+https://github.com/openeew/openeew/blob/master/CONTRIBUTING.md
+https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-CD0131EN-SkillsNetwork/labs/project/github.com/atom/atom/blob/master/CONTRIBUTING.md%E2%80%8B
+https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-CD0131EN-SkillsNetwork/labs/project/github.com/rails/rails/blob/main/CONTRIBUTING.md%E2%80%8B
