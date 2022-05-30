@@ -1,0 +1,37 @@
+Python functions
+    type(value) - Check for type bool,int,float,etc
+    int(value) - Cast to type
+    sys.float_info - check for float specifics (max value for runtime environment,etc)
+    len() 
+
+
+Expression with operator
+    24//5 - Divide and round, the symbol // represent integer value
+
+Strings 
+    Are immutable, string methods always return new values
+    "hola"[0] = "sd" --no se puede
+    "Hola"[::2] - stride, show each second char [begin:end exclusive:stride]
+    3*"Hola" = "HolaHolaHola"
+    print(r"Hola \") - the letter r is for escape char in the string
+
+    Method: string.upper, string.replace(), string.find()
+Tuple sorted(Tuple)
+Dictionary 
+    del(Dict[key]), key in Dict , Dict.keys(), Dict.values()
+Set like a list but only hold unique values(remove duplicates). We can cast a list to a set set(List) {}
+    set.Add(), set.remove("value"), value in Set
+    To get the intersection of two sets use & - set1 & set2 return new set with coincidences
+    set1.union(set2) return all elements
+    set1,issubset(set2) True or False
+ List
+    Are mutables
+    newList = oldList[:] - copy the list contents into a new list
+    list.extend([1,2,3]) - extend the list
+    list.append([1,2,3]) - append the list
+    list.sort() , string.split(), del(List[index_of_value_to_remove])
+
+Conventions:
+    Underscore in variable name new_value or newValue
+
+    https://labs.cognitiveclass.ai/tools/jupyterlite/lab/tree/labs/PY0101EN/PY0101EN-1-1-Write_your_first_python_code.ipynb?lti=true
