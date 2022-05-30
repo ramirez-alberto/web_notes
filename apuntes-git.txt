@@ -54,3 +54,8 @@ Delete branch:
 
 +Git commit with VSCODE
 git config --global core.editor "code --wait".
+
+Create good README's
+https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/about-readmes
+https://makeareadme.com/?utm_medium=Exinfluencer&utm_source=Exinfluencer&utm_content=000026UJ&utm_term=10006555&utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMCD0131ENSkillsNetwork32121029-2021-01-01
+https://github.com/matiassingers/awesome-readme
