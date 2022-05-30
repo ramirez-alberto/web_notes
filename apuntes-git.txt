@@ -35,12 +35,17 @@ git add .    //add all files
 
 + Add a comment to the commit
 git commit -m "Add file.txt"
+git commit -s --sign a commit
 
 +View log
 git log
 
 + Push changes
 git push //optional git push origin main
+git pull origin branch --this command fetch and merge
+
+Revert commit
+    git revert commitID
 
 Feature branches
     git branch <branch_name> create a new branch or without arguments to see the branches
