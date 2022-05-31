@@ -31,6 +31,13 @@ Set like a list but only hold unique values(remove duplicates). We can cast a li
     list.append([1,2,3]) - append the list
     list.sort() , string.split(), del(List[index_of_value_to_remove])
 
+Branching:
+    if: else: elif:
+Conditional: and or not
+
+Loops:
+    for i in range(n,n-1), for i in ['a','b','c'], for i,value_in_list in enumerate(list)
+
 Conventions:
     Underscore in variable name new_value or newValue
 
