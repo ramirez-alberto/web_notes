@@ -22,8 +22,11 @@ Dictionary
 Set like a list but only hold unique values(remove duplicates). We can cast a list to a set set(List) {}
     set.Add(), set.remove("value"), value in Set
     To get the intersection of two sets use & - set1 & set2 return new set with coincidences
+    set1.difference(set2)
+    set1.intersection(set2)
     set1.union(set2) return all elements
     set1,issubset(set2) True or False
+    set1.issuperset(set2)
  List
     Are mutables
     newList = oldList[:] - copy the list contents into a new list
