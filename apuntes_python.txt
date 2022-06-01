@@ -39,7 +39,24 @@ Loops:
     for i in range(n,n-1), for i in ['a','b','c'], for i,value_in_list in enumerate(list)
 
 Exceptions:
-    try ... except ... else ... finally
+    https://docs.python.org/3/library/exceptions.html?utm_medium=Exinfluencer&utm_source=Exinfluencer&utm_content=000026UJ&utm_term=10006555&utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkPY0101ENSkillsNetwork19487395-2021-01-01
+    try ... except or except(ExceptionName): or exception(Name1,Name2,Name3)...
+    else (execute something only if there were no errors.) ... 
+    finally (always execute)
+functions:
+    def name(values): or def name(*var_name): pass any arguments, def name(**var): pass args as Dict
+        you can 'return value' or 'pass' if function does nothing,
+        '''Documentation, this display when call help(miFunction)''' 
+    Notes: keyword global myvar to make it global scope available
+            mutable objects pass as reference hence you can make changes to the original var
+
+Objects:
+    All is a objects, function dir(object) check attr and class methods
+    class className(object):
+        def _init_(self,var1,var2):
+            self.var1 = var1
+            self.var2 = var2
+        
 
 Conventions:
     Underscore in variable name new_value or newValue
