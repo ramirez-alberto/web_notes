@@ -3,6 +3,7 @@ Python functions
     int(value) - Cast to type
     sys.float_info - check for float specifics (max value for runtime environment,etc)
     len() 
+    for n,m in zip(list1,list2)
 
 
 Expression with operator
@@ -16,6 +17,7 @@ Strings
     print(r"Hola \") - the letter r is for escape char in the string
 
     Method: string.upper, string.replace(), string.find()
+
 Tuple sorted(Tuple)
 Dictionary 
     del(Dict[key]), key in Dict , Dict.keys(), Dict.values()
@@ -57,7 +59,56 @@ Objects:
             self.var1 = var1
             self.var2 = var2
         
+File operations
+    with open(file_path,mode) as file:
+        file.readline() , file.readlines(), file.read() or for loop #read functiona
+        file.write("text")    # write functions
+    When use r+ you can file.truncate() 
+    Cursor function:
+        .tell() - returns the current position in bytes
+*       .seek(offset,from) - changes the position by 'offset' bytes with respect 
+            to 'from'. From can take the value of 0,1,2 corresponding to beginning,
+            relative to current position and end
 
+Pandas
+    A DataFrame is a two-dimensional data structure, i.e., data is aligned in a tabular fashion in rows and columns.
+
+        A Pandas DataFrame will be created by loading the datasets from existing storage.
+        Storage can be SQL Database, CSV file, an Excel file, etc.
+        It can also be created from the lists, dictionary, and from a list of dictionaries.
+
+    Series represents a one-dimensional array of indexed data. It has two main components :
+
+        An array of actual data.
+        An associated array of indexes or data labels.
+
+    functions:
+        df = pd.read_csv(path) or read_excel
+        Convert dictionary,list into df: df=pandas.DataFrame(myDict), call column: df[['ID']] or df[['ID','C2','C3']]
+        To view column as a series use one bracket df['ID']
+        loc[] key based,.iloc[] index based - df.iloc(0,0) or df.loc(0,'ID')
+        .set_index("Name") set a index for loc: df1.loc['Jane', 'Salary'] now you can check by name 
+        .head display first 5 rows
+        .index make a new index
+    Slicing:
+        df.loc[0:3,'dep':'id'] 
+
+    The index is used to access individual data values. You can also get a column 
+    of a dataframe as a Series. You can think of a Pandas series as a 1-D dataframe.
+
+Numpy
+    numpy.array(list)
+    vector addition: z = numpyArray1 + numpyArray2
+    vector multiplication with a scalar: z = 2y
+    Product of two arrays: z=u*v
+    dot product check how similar two vectors are: z= np.dot(u,v)
+    Broadcasting: z=u+1 add 1 to each value in array
+    Universal functions:
+        array.mean(), max(), np.pi, np.sin(vector)
+    Plotting math functions: np.linspace(start,end,num= number?samples)  
+
+    function: .dtype() get the datatype
+    attr: .size , ndim rank, shape size in each dimensiona
 Conventions:
     Underscore in variable name new_value or newValue
 
