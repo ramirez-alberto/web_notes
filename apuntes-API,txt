@@ -1,0 +1,4 @@
+Application Program Interfase
+
+API: When interacting with a API you make a Instance df = pandas.DataFrame() <-call the api and make a instance
+REST API: Representational State Transfer APIs

@@ -1,0 +1,40 @@
+Linux command: Check if a dir dont exist
+[ ! -d 'CC201' ] && command
+
+IBMCLOUD:
+    Push docker image to cloud
+        ibmcloud target  information about the account you're targeting
+        ibmcloud cr namespaces access namespaces available for you
+        ibmcloud cr region-set us-south
+        ibmcloud cr login - log local docker daemon to ibm container registry
+        ibmcloud cr images CHECK IMAGES IN ICR OPTIONAL ibmcloud cr images --restrict $MY_NAMESPACE 
+        export MY_NAMESPACE=sn-labs-$USERNAME export namespace as a environment variable for future commands
+
+        tag a image docker tag myimage:v1 us.icr.io/$MY_NAMESPACE/hello-world:1
+        push to ICR docker push us.icr.io/$MY_NAMESPACE/hello-world:1
+Docker:
+    docker images - list images
+    docker pull image
+    docker run image
+    docker ps -a - List containers
+    docker container rm <container_id> remove container
+    docker build <dir_dockfile> -t myimage:v1
+    docker run -p 8080:8080 myimage:v1
+    docker stop $(docker ps -q) :pass in the list of all running containers
+    Example Dockerfile:
+        FROM node:9.4.0-alpine
+        COPY app.js .
+        COPY package.json .
+        RUN npm install &&\
+            apk update &&\
+            apk upgrade
+        EXPOSE  8080
+        CMD node app.js
+The FROM instruction initializes a new build stage and specifies the base image 
+that subsequent instructions will build upon.
+The COPY command enables us to copy files to our image.
+The RUN instruction executes commands.
+The EXPOSE instruction exposes a particular port with a specified protocol 
+inside a Docker Container.
+The CMD instruction provides a default for executing a container, or in other 
+words, an executable that should run in your container. 
