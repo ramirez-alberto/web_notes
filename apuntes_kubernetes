@@ -1,0 +1,43 @@
+KubeCTL:
+    kubectl config get-clusters Get cluster informaction
+    kubectl config get-contexts context is a group of access parameters, 
+            including a cluster, a user, and a namespace. View your current context
+    kubectl get pods -List all the pods in your namespace or expand view: kubectl get pods -o wide
+    kubectl describe pod hello-world -Describe sample pod
+    kubectl delete pod hello-world -Delete the pod
+    kubectl expose deployment/hello-world -Expose app to the internet
+            Creates what is called a ClusterIP Service. This is an IP address that accessible within the cluster.
+    kubectl get services -Get the app/services available
+    kubectl proxy -the cluster IP is not accessible outside of the cluster we need a proxy (for the lab only 
+            and for testing purposes) curl -L localhost:8001/api/v1/namespaces/sn-labs-$USERNAME/services/hello-world/proxy
+    kubectl delete deployment/hello-world service/hello-world -Delete the deployment and services/app
+
+Imperatively create a pod:
+    Create a pod with imperative command
+        Export a namespace to be used in subsecuent commands: export MY_NAMESPACE=sn-labs-$USERNAME
+        Run the sample image in Kubernetes. Note: --overrides only apply in this test lab
+        kubectl run hello-world --image us.icr.io/$MY_NAMESPACE/hello-world:1 --overrides='{"spec":{"template":{"spec":{"imagePullSecrets":[{"name":"icr"}]}}}}'
+
+    Create a pod with imperative object configuration
+        Imperative object configuration lets you create objects by specifying the action to take (e.g., create, update, delete) while using a configuration file.
+        Create a pod with configuration file: kubectl create -f hello-world-create.yaml
+
+Declarative pod creation (suited for production):
+    Create a pod with yaml file: kubectl apply -f hello-world-apply.yaml
+    Check the deployment: kubectl get deployments
+    Delete the deploymentn: kubectl delete -f deployment-configmap-env-var.yaml
+
+Scaling and Updating Applications
+    ReplicaSet:
+        kubectl scale deployment hello-world --replicas=3 -Scale up or scale down (replicas=1 for example) your
+                deployment
+    Rolling Updates:
+        kubectl set image deployment/hello-world hello-world=us.icr.io/$MY_NAMESPACE/hello-world:2
+        kubectl rollout status deployment/hello-world  -Check rollout status
+        kubectl rollout undo deployment/hello-world    -Undo changes
+    ConfigMap to store configuration:
+        kubectl create configmap app-config --from-literal=MESSAGE="This message came from a ConfigMap!" 
+                --in example-configmap is a yaml file to reference this configmap
+        kubectl delete configmap app-config && kubectl create configmap app-config --from-literal=MESSAGE="This 
+                message is different, and you didn't have to rebuild the image!" -Delete and Create configMap
+        kubectl rollout restart deployment hello-world -Restart deployment to see the changes on configMap

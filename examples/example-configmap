@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world
+spec:
+  selector:
+    matchLabels:
+      run: hello-world
+  template:
+    metadata:
+      labels:
+        run: hello-world
+    spec:
+      containers:
+      - name: hello-world
+        image: us.icr.io/sn-labs-arstudio7968/hello-world:3
+        ports:
+        - containerPort: 8080
+        envFrom: #environment variables should be defined in the container from the data in a ConfigMap named app-config.
+        - configMapRef:
+            name: app-config
+      imagePullSecrets:
+        - name: icr
