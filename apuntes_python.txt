@@ -1,3 +1,5 @@
+
+figlet
 Python functions
     type(value) - Check for type bool,int,float,etc
     int(value) - Cast to type
@@ -58,9 +60,11 @@ functions:
 Objects:
     All is a objects, function dir(object) check attr and class methods
     class className(object):
-        def _init_(self,var1,var2):
+        def __init__(self,var1,var2):
             self.var1 = var1
             self.var2 = var2
+        
+        def custom_Function(self) -> Any: #must return Any type
         
 File operations
     with open(file_path,mode) as file:
@@ -114,8 +118,19 @@ Numpy : check version np.__array__
     transposed matrix : 2darray.T
 
     function: .dtype() get the datatype
-    attr: .size , ndim rank, shape size in each dimensiona
-Conventions:
-    Underscore in variable name new_value or newValue
+    attr: .size , ndim rank, shape size in each dimension
 
+Test Driven Development 
+    Test runners (example pyunit in examples):
+        unittest = built-in in python: python3 -m unittest or unittest -v for verbose
+        Nose = color coded(Pinocchio) code coverage and better test output: nosetests -v
+               or installing pinocchio: nosetests --with-spec --spec-color
+               or installing coverage: nosetests --with-spec --spec-color --with-coverage
+               coverage report -m check the lines of code missing test cases
+               You can create a setup.cfg (View Week2 Lab TDD)
+Conventions:
+    Underscore in variable name new_value (serpent case)
+
+Notes:
+    pip install -r requirements.txt 
     https://labs.cognitiveclass.ai/tools/jupyterlite/lab/tree/labs/PY0101EN/PY0101EN-1-1-Write_your_first_python_code.ipynb?lti=true
