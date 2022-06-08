@@ -1,0 +1,12 @@
+Openshift:
+    Check openshift version: oc version
+    Note:   oc comes with a copy of kubectl, so all the kubectl commands can be run with oc.
+    Get openshift specififc objects: oc get buildconfigs
+    View the current project: oc project
+
+    Scan images in IBM Container Registry and push to internal OpenShift Registry for less latency:
+        -Create an image stream that points to your image in IBM Cloud Container Registry
+        oc tag us.icr.io/$MY_NAMESPACE/guestbook:v1 guestbook:v1 --reference-policy=local --scheduled
+                    -copy to local cache of internal registry as a image stream, periodic importing of the image
+        oc import-image guestbook:v1 --from=us.icr.io/$MY_NAMESPACE/guestbook:v1 --confirm
+            -Import a new image
