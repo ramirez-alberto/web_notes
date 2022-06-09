@@ -1,0 +1,21 @@
+REPO: git clone https://github.com/ibm-developer-skills-network/duwjx-tdd_bdd_PracticeCode.git
+Test fixtures
+    Test fixtures are used to establish an initial know state before and after running tests
+    PyUnit
+    def setUpModule():             # runs once before any tests
+    def tearDownModule():          # runs once after all tests
+    # 
+    class MyTestCases(TestCase):   # the start of a test case
+
+        @classmethod
+        def setUpClass(cls):       # runs once before test case
+    # 
+        @classmethod
+        def tearDownClass(cls):    # runs once after test case
+    # 
+        def setUp(self):           # runs before each test
+
+        def tearDown(self):        # runs after each test
+Factories and Fakes:
+
+Mocking:

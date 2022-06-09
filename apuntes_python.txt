@@ -133,4 +133,5 @@ Conventions:
 
 Notes:
     pip install -r requirements.txt 
+    Repo with class and test: REPO: git clone https://github.com/ibm-developer-skills-network/duwjx-tdd_bdd_PracticeCode.git
     https://labs.cognitiveclass.ai/tools/jupyterlite/lab/tree/labs/PY0101EN/PY0101EN-1-1-Write_your_first_python_code.ipynb?lti=true
