@@ -1,0 +1,57 @@
+Docker:
+    Build a container with a Dockerfile in current dir and tag: docker build -t container_name .
+    Run a container, decoupled (running in background) and expose port 3000: docker run -d -p 3000:3000 container-name
+
+    Remove a container - First the container need to be stopped and removed:
+        Get the ID of the container: docker ps
+        Stop the container: docker stop container_id
+        Remove the container: docker rm container_id or force to stop and delete: docker rm -f container_id
+
+    List tagged images: docker image ls 
+    Login in DockerHub: docker login -u YOUR-USER-NAME
+    Tag image to push on DockerHub: docker tag image_name YOUR-USER-NAME/image_name
+    Push image to DockerHub: docker push username/image_name:tag
+
+Container's Filesystem:
+    Run a ubuntu image, write to data.txt inside container and watch a file preventing closing it: docker run -d ubuntu bash -c "shuf -i 1-10000 -n 1 -o /data.txt && tail -f /dev/null"
+    Cat the data txt file inside the container: docker exec <container-id> cat /data.txt
+    Run a interactive bash shell when running a container: docker run -it ubuntu ls /
+
+Container Volumes
+    Named Volumes: docker volume create volume_name
+    Run a container and mount the volume: docker run -dp 3000:3000 -v todo-db:/etc/todos getting-started
+    Inspect the volume: docker volume inspect volume_name
+
+
+
+
+Commands:
+    docker images - list images
+    docker pull image
+    docker run image
+    docker ps -a - List containers
+    docker container rm <container_id> remove container
+    docker build <dir_dockfile> -t myimage:v1
+    docker run -p 8080:8080 myimage:v1
+    docker stop $(docker ps -q) :pass in the list of all running containers
+    Example Dockerfile:
+        FROM node:9.4.0-alpine
+        COPY app.js .
+        COPY package.json .
+        RUN npm install &&\
+            apk update &&\
+            apk upgrade
+        EXPOSE  8080
+        CMD node app.js
+The FROM instruction initializes a new build stage and specifies the base image 
+that subsequent instructions will build upon.
+The COPY command enables us to copy files to our image.
+The RUN instruction executes commands.
+The EXPOSE instruction exposes a particular port with a specified protocol 
+inside a Docker Container.
+The CMD instruction provides a default for executing a container, or in other 
+words, an executable that should run in your container. 
+
+
+Links:
+https://labs.play-with-docker.com/
