@@ -53,5 +53,9 @@ The CMD instruction provides a default for executing a container, or in other
 words, an executable that should run in your container. 
 
 
+    docker run -dit --name=my_docker_container docker-image     
+        Create a container, run in the bg and maintain open a pseudoTTy ,
+        when exec commands use docker attach docker_container
+
 Links:
 https://labs.play-with-docker.com/
