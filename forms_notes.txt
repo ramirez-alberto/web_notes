@@ -1,0 +1,7 @@
+Forms elements
+    inputs, labels, textarea, select dropdown, radio buttons, checkbox
+Organizing elements: fieldset > legend
+Lists are recommended for structuring multiple checkboxes or radio buttons.
+
+Labels
+    The input we want to associate with a label needs an id attribute with the same value as the label’s for attribute.
