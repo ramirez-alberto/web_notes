@@ -1,6 +1,6 @@
 #https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/adding-controller?view=aspnetcore-6.0&tabs=visual-studio
 
-MVC
+MVC  -follows DRY principle (You can declaratively specify validation rules in one place (in the model class) and the rules are enforced everywhere in the app.)
     Controller (Retrieve data and decide the response to the browser):
         Every public method in a controller is callable as an HTTP endpoint (Controller methods are referred to as action methods)
             Default URL routing logic /[Controller]/[ActionName]/[Parameters] in Program.cs
@@ -20,6 +20,8 @@ MVC
         Uses EFCore as ORM
         You can use DataAnnotations in model classes
         The context is derived from Microsoft.EntityFrameworkCore.DbContext and specifies the entities to include in the data model.
+        Customize model with DataAnnotations: TableName, StringLength , Required, Display, DataType, Range, Column, RegularExpression
+            Value types (such as decimal, int, float, DateTime) are inherently required and don't need the [Required] attribute.
 
     You can install the next tools to scaffold and add SQLServer provider to the project
         Install-Package Microsoft.EntityFrameworkCore.Design
@@ -31,5 +33,17 @@ MVC
         Add-Migration InitialCreate
         Update-Database
 
-    Customize model with DataAnnotations
-    TableName
+    Note:
+    When the model class is different than the schema of the Movie table of the existing database. (There's no Rating column in the database table.)
+
+There are a few approaches to resolving the error:
+
+    Have the Entity Framework automatically drop and re-create the database based on the new model class schema. This approach is very convenient early in the development cycle when you're doing active development on a test database; it allows you to quickly evolve the model and database schema together. The downside, though, is that you lose existing data in the database — so you don't want to use this approach on a production database! Using an initializer to automatically seed a database with test data is often a productive way to develop an application. This is a good approach for early development and when using SQLite.
+
+    Explicitly modify the schema of the existing database so that it matches the model classes. The advantage of this approach is that you keep your data. You can make this change either manually or by creating a database change script.
+
+    Use Code First Migrations to update the database schema.
+                Add-Migration Rating
+                Update-Database
+
+
