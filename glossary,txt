@@ -29,7 +29,7 @@ EXCEPTIONS
  As a rule, only catch those exceptions that you can handle without leaving 
  your application in an unknown state.
 
-
+In HTML, accessibility is important
 
  Diagramas de capas de arquitectura
  SDLC`

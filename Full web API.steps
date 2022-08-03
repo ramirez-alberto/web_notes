@@ -1,0 +1,8 @@
+Approach: Database First (Not Model First or Code First)
+
+Development ambient:
+    docker volume create mysql-db-data
+    docker run -d -p 33060:3306 --name mysql-db -e MYSQL_ROOT_PASSWORD=secret \
+     --mount src=mysql-db-data,dst=/var/lib/mysql mysql
+
+1.- Create schema (synonim of database in mysql) and populate tables

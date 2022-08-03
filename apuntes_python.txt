@@ -7,6 +7,12 @@ Python functions
     len() 
     for n,m in zip(list1,list2)
 
+Folder structure: 1st folder> Project_name , 2nd> App_name
+Decorators
+
+Static code analysis (pylint):
+    Pylint check for non-compliant lines
+
 
 Expression with operator
     24//5 - Divide and round, the symbol // represent integer value
@@ -128,6 +134,8 @@ Test Driven Development
                or installing coverage: nosetests --with-spec --spec-color --with-coverage
                coverage report -m check the lines of code missing test cases
                You can create a setup.cfg (View Week2 Lab TDD)
+
+
 Conventions:
     Underscore in variable name new_value (serpent case)
 
