@@ -16,7 +16,7 @@ Make a new API project
      and configuration for accessing the database. 
      DbContext has three properties Database, ChangeTracker and Model
 
-     Structure: Folder Entities>ApplicationContext.cs
+     Structure: Folder Entities > ApplicationContext.cs
      Additional options are sent to the base DbContext class through the 
      ApplicationContext constructor by using DbContextOptions parameter take it from the base
 
@@ -49,7 +49,8 @@ Make a new API project
     For VStudio Package manager> Add-Migration MigrationName [options] or through the dotnet CLI:
         dotnet ef migrations add MigrationName [options]
     Update Database with migrations:
-        Update-Database [options] for the command prompt window, the command is: dotnet ef database update [options]
+        Update-Database [options] for the command prompt window, the command is: 
+        dotnet ef database update [options]
     Remove-Migration
 
 - Data Seed : Insert initial values (data) in tables, for simple things we can use OnModelCreating.
