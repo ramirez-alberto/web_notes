@@ -1,4 +1,5 @@
 REPO: git clone https://github.com/ibm-developer-skills-network/duwjx-tdd_bdd_PracticeCode.git
+https://auth0.com/blog/xunit-to-test-csharp-code/
 Test fixtures
     Test fixtures are used to establish an initial know state before and after running tests
     PyUnit

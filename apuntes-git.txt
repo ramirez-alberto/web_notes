@@ -36,6 +36,7 @@ git add .    //add all files
 + Add a comment to the commit
 git commit -m "Add file.txt"
 git commit -s --sign a commit
+git commit --amend  After add a file to the staging area, replaces the last commit. Use only before push
 
 +View log
 git log
@@ -60,6 +61,8 @@ Delete branch:
     git branch -D <branch_name>   
     git push --delete origin branch-name delete branch from remote repo
 
+Rebase
+    git rebase -i Change the history of commits
 
 +Git commit with VSCODE
 git config --global core.editor "code --wait".
