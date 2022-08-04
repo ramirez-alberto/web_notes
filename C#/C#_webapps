@@ -33,3 +33,8 @@ MVC
 
     Customize model with DataAnnotations
     TableName
+
+Notes:
+ It is important to use redirect after mutating the database or application state.
+ Otherwise, if the user refreshes the page, the browser will make the same request,
+ and the mutation will be repeated.
