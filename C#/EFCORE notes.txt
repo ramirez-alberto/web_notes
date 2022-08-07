@@ -16,7 +16,7 @@ Make a new API project
      and configuration for accessing the database. 
      DbContext has three properties Database, ChangeTracker and Model
 
-     Structure: Folder Entities > ApplicationContext.cs
+     Structure: Folder Entities > ApplicationContext.cs (NETCORE 6 use Data > Context)
      Additional options are sent to the base DbContext class through the 
      ApplicationContext constructor by using DbContextOptions parameter take it from the base
 

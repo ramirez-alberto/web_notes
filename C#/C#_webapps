@@ -1,4 +1,5 @@
 #https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/adding-controller?view=aspnetcore-6.0&tabs=visual-studio
+//https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/data/ef-mvc/intro/samples/cu-final
 
 MVC  -follows DRY principle (You can declaratively specify validation rules in one place (in the model class) and the rules are enforced everywhere in the app.)
     Controller (Retrieve data and decide the response to the browser):
@@ -35,8 +36,7 @@ MVC  -follows DRY principle (You can declaratively specify validation rules in o
 
     Note:
     When the model class is different than the schema of the Movie table of the existing database. (There's no Rating column in the database table.)
-
-There are a few approaches to resolving the error:
+    There are a few approaches to resolving the error:
 
     Have the Entity Framework automatically drop and re-create the database based on the new model class schema. This approach is very convenient early in the development cycle when you're doing active development on a test database; it allows you to quickly evolve the model and database schema together. The downside, though, is that you lose existing data in the database — so you don't want to use this approach on a production database! Using an initializer to automatically seed a database with test data is often a productive way to develop an application. This is a good approach for early development and when using SQLite.
 
@@ -46,4 +46,29 @@ There are a few approaches to resolving the error:
                 Add-Migration Rating
                 Update-Database
 
+    Bind attribute clears out any pre-existing data in fields not listed in the Include parameter.
 
+Fetch Data:
+    If related data is needed, FirstOrDefaultAsync is the choice, else, you can use FindAsync
+
+
+
+Overposting
+    You can prevent overposting in edit scenarios by reading the entity from the database first and then calling TryUpdateModel, passing in an explicit allowed properties list. That's the method used in these tutorials.
+
+An alternative way to prevent overposting that's preferred by many developers is to use view models rather than entity classes with model binding. Include only the properties you want to update in the view model. Once the MVC model binder has finished, copy the view model properties to the entity instance, optionally using a tool such as AutoMapper. Use _context.Entry on the entity instance to set its state to Unchanged, and then set Property("PropertyName").IsModified to true on each entity property that's included in the view model. This method works in both edit and create scenarios.
+
+Entity States:
+    The database context keeps track of whether entities in memory are in sync with their corresponding rows in the database, and this information determines what happens when you call the SaveChanges method. For example, when you pass a new entity to the Add method, that entity's state is set to Added. Then when you call the SaveChanges method, the database context issues a SQL INSERT command.
+
+    An entity may be in one of the following states:
+        Added. The entity doesn't yet exist in the database. The SaveChanges method issues an INSERT statement.
+        Unchanged. Nothing needs to be done with this entity by the SaveChanges method. When you read an entity from the database, the entity starts out with this status.
+        Modified. Some or all of the entity's property values have been modified. The SaveChanges method issues an UPDATE statement.
+        Deleted. The entity has been marked for deletion. The SaveChanges method issues a DELETE statement.
+        Detached. The entity isn't being tracked by the database context.
+
+    In a desktop application, state changes are typically set automatically. You read an entity and make changes to some of its property values. This causes its entity state to automatically be changed to Modified. Then when you call SaveChanges, the Entity Framework generates a SQL UPDATE statement that updates only the actual properties that you changed.
+    In a web app, the DbContext that initially reads an entity and displays its data to be edited is disposed after a page is rendered. When the HttpPost Edit action method is called, a new web request is made and you have a new instance of the DbContext. If you re-read the entity in that new context, you simulate desktop processing.
+    But if you don't want to do the extra read operation, you have to use the entity object created by the model binder. The simplest way to do this is to set the entity state to Modified as is done in the alternative HttpPost Edit code shown earlier. Then when you call SaveChanges, the Entity Framework updates all columns of the database row, because the context has no way to know which properties you changed.
+    If you want to avoid the read-first approach, but you also want the SQL UPDATE statement to update only the fields that the user actually changed, the code is more complex. You have to save the original values in some way (such as by using hidden fields) so that they're available when the HttpPost Edit method is called. Then you can create a Student entity using the original values, call the Attach method with that original version of the entity, update the entity's values to the new values, and then call SaveChanges.
