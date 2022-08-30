@@ -47,3 +47,12 @@ Notes:
  https://stackoverflow.com/questions/43615040/comment-boxes-only-post-with-first-post-in-mvc
   https://stackoverflow.com/questions/5456825/asp-net-mvc-3-adding-comments-in-article-view
 
+Concurrency conflicts>
+    Pessimistic concurrency (locking) > before you read a row from a database, you request a lock for read-only or for update access.
+    Optimistic Concurrency > Allowing concurrency conflicts to happen, and then reacting appropriately if they do 
+        - You can keep track of property changes
+        - You can let it happen ( a user overwrite data) Client Wins or Last in Wins scenario, this
+            will happen automatically)
+        - Prevent the last change from being updated in the db (Display a error message and the user
+            need to reesubmit his request). This is called Store Wins scenario, data-store takes precedence
+        (https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/concurrency?view=aspnetcore-6.0#optimistic-concurrency)

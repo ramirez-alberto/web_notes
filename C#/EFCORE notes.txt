@@ -65,4 +65,4 @@ Concepts:
                 representing one-to-many relationship, or,in the child (Dependent entity) add a 
                  reference navigation property, if it isn't fully defined, efcore create a shadow property 
                  like parentID.
-        
+Detecting concurrency conflicts> DbConcurrencyException         
