@@ -96,3 +96,4 @@ Indexes https://docs.microsoft.com/en-us/ef/core/modeling/indexes?tabs=data-anno
 When add a new non-null column in production data: https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/complex-data-model?view=aspnetcore-6.0#add-a-migration
 
 Load Related Data https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/read-related-data?view=aspnetcore-6.0#learn-how-to-load-related-data
+    and include multiple levels: https://docs.microsoft.com/en-us/ef/core/querying/related-data/eager#including-multiple-levels
