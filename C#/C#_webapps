@@ -14,7 +14,11 @@ MVC
         You can pass data from the controller to the view:
             In a dictionary: ViewData["Key"] = "Value"  --ViewData is a dynamic object (any type can be used)
         In a view with model, the @model statement specifies the type of object that the view expects
-    Models: Model names are singular
+
+        Partial Views:
+            https://docs.microsoft.com/en-us/aspnet/core/mvc/views/partial?view=aspnetcore-6.0
+
+    Models: Model names are singular because  represents a single data record
      A model is made up of entity classes and a context object that represents a session with the database
         Uses POCOs to define the properties of the data to be stored in the database
         Uses EFCore as ORM
@@ -38,3 +42,8 @@ Notes:
  It is important to use redirect after mutating the database or application state.
  Otherwise, if the user refreshes the page, the browser will make the same request,
  and the mutation will be repeated.
+
+ Render two models in one page
+ https://stackoverflow.com/questions/43615040/comment-boxes-only-post-with-first-post-in-mvc
+  https://stackoverflow.com/questions/5456825/asp-net-mvc-3-adding-comments-in-article-view
+
