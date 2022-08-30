@@ -15,7 +15,11 @@ MVC  -follows DRY principle (You can declaratively specify validation rules in o
         You can pass data from the controller to the view:
             In a dictionary: ViewData["Key"] = "Value"  --ViewData is a dynamic object (any type can be used)
         In a view with model, the @model statement specifies the type of object that the view expects
-    Models: Model names are singular
+
+        Partial Views:
+            https://docs.microsoft.com/en-us/aspnet/core/mvc/views/partial?view=aspnetcore-6.0
+
+    Models: Model names are singular because  represents a single data record
      A model is made up of entity classes and a context object that represents a session with the database
         Uses POCOs to define the properties of the data to be stored in the database
         Uses EFCore as ORM
@@ -35,7 +39,30 @@ MVC  -follows DRY principle (You can declaratively specify validation rules in o
         Add-Migration InitialCreate
         Update-Database
 
-    Note:
+    Customize model with DataAnnotations
+    TableName
+
+    
+Notes:
+ It is important to use redirect after mutating the database or application state.
+ Otherwise, if the user refreshes the page, the browser will make the same request,
+ and the mutation will be repeated.
+
+ Render two models in one page
+ https://stackoverflow.com/questions/43615040/comment-boxes-only-post-with-first-post-in-mvc
+  https://stackoverflow.com/questions/5456825/asp-net-mvc-3-adding-comments-in-article-view
+
+Concurrency conflicts>
+    Pessimistic concurrency (locking) > before you read a row from a database, you request a lock for read-only or for update access.
+    Optimistic Concurrency > Allowing concurrency conflicts to happen, and then reacting appropriately if they do 
+        - You can keep track of property changes
+        - You can let it happen ( a user overwrite data) Client Wins or Last in Wins scenario, this
+            will happen automatically)
+        - Prevent the last change from being updated in the db (Display a error message and the user
+            need to reesubmit his request). This is called Store Wins scenario, data-store takes precedence
+        (https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/concurrency?view=aspnetcore-6.0#optimistic-concurrency)
+
+ Note:
     When the model class is different than the schema of the Movie table of the existing database. (There's no Rating column in the database table.)
     There are a few approaches to resolving the error:
 

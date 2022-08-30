@@ -59,3 +59,13 @@ Make a new API project
 - Data Seed : Insert initial values (data) in tables, for simple things we can use OnModelCreating.
     PM> Add-Migration SeedInitialData and apply it: Update-Database
     For larger projects we can use IEntityTypeConfiguration<T> interface
+
+Concepts:
+    Relationships:
+        One-to-Many:
+            By convention:
+                You can add a ICollection (Collection navigation property) in the parent (Principal entity)
+                representing one-to-many relationship, or,in the child (Dependent entity) add a 
+                 reference navigation property, if it isn't fully defined, efcore create a shadow property 
+                 like parentID.
+Detecting concurrency conflicts> DbConcurrencyException         

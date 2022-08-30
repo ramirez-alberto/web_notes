@@ -8,6 +8,7 @@ dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 # Scaffold running the next line    
 dotnet-aspnet-codegenerator controller -name MoviesController -m Movie -dc MvcMovieContext --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries -sqlite
+dotnet-aspnet-codegenerator controller -name CommentsController -m Comment -dc MvcArticleContext  --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries -sqlite
 
 # The command-line interface (CLI) tools for EF Core
 # The aspnet-codegenerator scaffolding tool.

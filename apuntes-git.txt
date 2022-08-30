@@ -52,6 +52,9 @@ Feature branches
     git branch <branch_name> create a new branch or without arguments to see the branches
     git checkout <branch_name> change to the new branch
     git checkout -b <branch_name> create a new branch and change to it
+    - Workflow fetch from main/master to branch:
+        git checkout main | git pull main | git checkout branch | git rebase main 
+        If git find any conflicts, resolve it and:  git add path/to/file | git rebase --continue
 
 Merge branches:
     git merge <branch_name> 
