@@ -124,3 +124,6 @@ When add a new non-null column in production data: https://docs.microsoft.com/en
 
 Load Related Data https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/read-related-data?view=aspnetcore-6.0#learn-how-to-load-related-data
     and include multiple levels: https://docs.microsoft.com/en-us/ef/core/querying/related-data/eager#including-multiple-levels
+
+Implement inheritance in the data model
+https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/inheritance?view=aspnetcore-6.0
