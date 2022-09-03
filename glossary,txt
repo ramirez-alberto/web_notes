@@ -36,4 +36,6 @@ In HTML, accessibility is important
  AGILE
  SUBQUERY`
 
- less error prone, easier to test, and easier to maintain.
+ less error prone, easier to test, and easier to maintain.+
+
+ Law of demeter

@@ -1,6 +1,8 @@
 
 https://docs.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/program-building-blocks#members
 Fields denote storage locations, propierties has accessors (get set)
+
+Guidelines https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/
 Accesibility:
 
     public: Access isn't limited.
