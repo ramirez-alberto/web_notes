@@ -1,0 +1,22 @@
+MVC: https://github.com/CodeMazeBlog/aspnetcore-mvc-series
+    Basic
+        Creating an ASP.NET Core MVC project, Adding Controllers, Creating Views, Defining Models -> Data Annotations, "Create" View
+
+    Working with data:
+        Creating a Model in ASP.NET Core MVC, Scaffolding the Model, Migrations, Seeding the Data (with overload OnModelCreating method in contexct),
+    
+    Views, Partial Views, and Layouts:
+        Defining Model & Controller, Using Razor Markup to Create Views, The Concept of Partial Views, Layouts 
+
+    State Management:
+        Cookies, Session State, Query strings ( if we provide the values for name and age as either form values, route values or query strings,
+        we can bind those to the parameters of our action method. ), Hidden Fields, TempData, Passing Data into Views (Weakly Typed Data) with ViewBag and ViewData
+
+    Routing 
+        Conventional Routing, Attribute Routing
+
+    Dependency Injection>https://code-maze.com/dependency-injection-aspnetcore-mvc/
+        Injecting Dependencies into Controllers: Add the service scoped, inject via contructor or directly into an action method [FromServices] attribute
+            Index([FromServices]  IDataRepository<Employee> _dataRepository)
+
+        Injecting into Views: @inject <type> <name> in the view

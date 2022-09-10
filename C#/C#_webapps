@@ -8,6 +8,7 @@ MVC  -follows DRY principle (You can declaratively specify validation rules in o
         Use HtmlEncoder.Default.Encode to protect the app from malicious input, such as through JavaScript.
         The model binding automatically assign the named parameters from the query string
         to parameters in the method.
+        Ideally, a controller should not directly access the context file. Instead, we should introduce a repository layer in between
     Views:( Should not   Do business logic    Interact with a database directly.) separation of concerns
         Uses Razor pages, you can use anchor Tag Helper attributes .
         Good practice: make folder to separate views.
@@ -16,7 +17,7 @@ MVC  -follows DRY principle (You can declaratively specify validation rules in o
             In a dictionary: ViewData["Key"] = "Value"  --ViewData is a dynamic object (any type can be used)
         In a view with model, the @model statement specifies the type of object that the view expects
 
-        Partial Views:
+        Partial Views: <partial name="_Authors" />
             https://docs.microsoft.com/en-us/aspnet/core/mvc/views/partial?view=aspnetcore-6.0
 
     Models: Model names are singular because  represents a single data record
@@ -127,3 +128,39 @@ Load Related Data https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/read-
 
 Implement inheritance in the data model
 https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/inheritance?view=aspnetcore-6.0
+
+
+Static files
+    Bundle and minify static assets in ASP.NET Core  https://docs.microsoft.com/en-us/aspnet/core/client-side/bundling-and-minification?source=recommendations&view=aspnetcore-6.0
+
+Controller filters
+https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters?view=aspnetcore-6.0
+
+Identity 
+https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-6.0&tabs=visual-studio
+
+Cookies (size across ~4kb)> https://allaboutcookies.org/
+    You shouldnt store anything that needs to either be secure or persisted across browser sessions
+    https://code-maze.com/state-management-in-asp-net-core-mvc/
+
+Sessions
+https://docs.microsoft.com/en-us/aspnet/core/fundamentals/app-state?view=aspnetcore-6.0
+
+A generic step-by-step overview of auth:
+
+    Add a column to your Users table to contain the user’s password_digest.
+    When the user signs up, turn the password they submitted into digest form and then store THAT in the new database column by adding the has_secure_password method to your User model.
+    Don’t forget any necessary validations for password and password confirmation length.
+    Build a sessions controller (and corresponding routes) and use the #authenticate method to sign in the user when the user has submitted the proper credentials using the signin form.
+    Allow the user to be remembered by creating a remember_token column in the Users table and saving that token as a permanent cookie in the user’s browser. Reset on each new signin.
+    On each page load that requires authentication (and using a #before_action in the appropriate controller(s)), first check the user’s cookie remember_token against the database to see if he’s already signed in. If not, redirect to the signin page.
+    Make helper methods as necessary to let you do things like easily determine if a user is signed in or compare another user to the currently signed in user.
+
+
+
+
+    Transient objects are always different; a new instance is provided to every controller and every service.
+
+    Scoped objects are the same within a request, but different across different requests.
+
+    Singleton objects are the same for every object and every request.

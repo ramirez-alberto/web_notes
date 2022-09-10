@@ -1,0 +1,16 @@
+Using Identity in ASP NET CORE : https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-6.0&tabs=netcore-cli
+
+dotnet new webapp --auth Individual -o WebApp1
+
+The preceding command creates a Razor web app using SQLite. To create the web app with LocalDB, run the following command:
+.NET CLI
+
+dotnet new webapp --auth Individual -uld -o WebApp1
+
+The typical pattern is to call methods in the following order:
+
+    Add{Service}
+    builder.Services.Configure{Service}
+
+Scaffold auth pages
+Install-Package Microsoft.VisualStudio.Web.CodeGeneration.Design
