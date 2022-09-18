@@ -1,4 +1,6 @@
 Using Identity in ASP NET CORE : https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-6.0&tabs=netcore-cli
+https://code-maze.com/identity-asp-net-core-project/
+ASP.NET Core Identity is the membership system for web applications that includes membership, login and user data. ASP.NET Core Identity is a user store
 
 dotnet new webapp --auth Individual -o WebApp1
 
