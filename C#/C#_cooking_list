@@ -20,3 +20,10 @@ MVC: https://github.com/CodeMazeBlog/aspnetcore-mvc-series
             Index([FromServices]  IDataRepository<Employee> _dataRepository)
 
         Injecting into Views: @inject <type> <name> in the view
+
+
+API: https://code-maze.com/net-core-series/
+    DatabaseFirst:
+        Creating Schema Model Diagram and Adding Table Relations
+        Creating a New Project and Modifying LaunchSettings.json File, Extension Methods and CORS Configuration, optional(IIS Configuration as Part of .NET Core Configuration)
+        Use logging (custom via NLog  or built-in)

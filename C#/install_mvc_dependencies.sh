@@ -7,7 +7,7 @@ dotnet add package Microsoft.EntityFrameworkCore.SQLite\
 dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 
-#Microsoft.EntityFrameworkCore.Tools for visual studio
+#Microsoft.EntityFrameworkCore.Tools for visual studio, this is used for make Migrations
 # Scaffold running the next line    
 dotnet-aspnet-codegenerator controller -name MoviesController -m Movie -dc MvcMovieContext --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries -sqlite
 dotnet-aspnet-codegenerator controller -name CommentsController -m Comment -dc MvcArticleContext  --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries -sqlite
