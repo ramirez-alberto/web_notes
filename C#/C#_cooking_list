@@ -27,3 +27,8 @@ API: https://code-maze.com/net-core-series/
         Creating Schema Model Diagram and Adding Table Relations
         Creating a New Project and Modifying LaunchSettings.json File, Extension Methods and CORS Configuration, optional(IIS Configuration as Part of .NET Core Configuration)
         Use logging (custom via NLog  or built-in)
+        While DbSet and DbContext implement repository/UoW patterns, but we can implement our own.
+            Create Models, Context Class and the Database Connection, Repository Pattern Logic,
+                Repository User Classes, Creating a Repository Wrapper
+        Handle Request in Controller
+            Controllers and Routing in WEB API, GetAllOwners GET Request, Code Permissions , Using DTO and AutoMapper
