@@ -3,7 +3,7 @@ Variables
     Booleans
     Integers int keyword == Int32 class
         Common integer types:
-            bytes ( 0 - 255 ), short ( +-32768 or Int16), long (Int64)
+            bytes ( 0 - 255 ), short ( +-32768 or Int16), long (Int64), uint unsigned
     Float (use double or float for performance, use decumal for precission)
         double 16precision (System.Double), double var = 32.0 or double var = 32.0d
         float 7precision, (System.Single)  float var = 32.0f

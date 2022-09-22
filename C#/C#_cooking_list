@@ -32,3 +32,5 @@ API: https://code-maze.com/net-core-series/
                 Repository User Classes, Creating a Repository Wrapper
         Handle Request in Controller
             Controllers and Routing in WEB API, GetAllOwners GET Request, Code Permissions , Using DTO and AutoMapper
+        Paging
+            

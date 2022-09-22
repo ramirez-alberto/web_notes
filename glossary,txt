@@ -1,5 +1,6 @@
 invoke = run,execute
 method is a function part of a object.
+use case , extend, implement
 Parameters are sometimes called arguments, properties, or even attributes.
 
     A parameter is the variable listed inside the parentheses in the function declaration (it’s a declaration time term)
