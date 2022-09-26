@@ -1,0 +1,85 @@
+https://code-maze.com/net-core-web-development-part7/
+https://code-maze.com/angular-series/
+
+Angular is a framework for building SPA (Single Page Application) applications. 
+That is why we only have the index.html page inside the src folder. In the index.html file all content is going to be generated inside <app-root></app-root> selector, which comes from the app.component.ts file.
+
+## Install angular cli
+npm install -g @angular/cli
+ng version -> Check version
+## Uninstall
+npm uninstall -g @angular/cli
+npm cache clean --force
+
+Create a new project: ng new AccountOwnerClient --strict false
+Third-Party Libraries as Part Of Angular Project Preparation:
+    ng add ngx-bootstrap  -> Angular bootstrap
+Run our app and also open it in a browser automatically (-o flag): ng serve -o
+
+Creating Angular Components
+    ng g component home --skip-tests or ng g component dir/not-found --skip-tests
+Creating Angular Modules>
+    ng g module owner --routing=true --module app.module
+Create a new services>
+    ng g service shared/services/environment-url --skip-tests
+## Important pages
+    app.component.html -> app root html
+    AppRoutingModlue -> app routes
+    src/environments -> prod env and dev
+
+## Add modules to app root
+    import { CollapseModule } from 'ngx-bootstrap/collapse'; add module in imports array
+        CollapseModule.forRoot() --> for root is for app root if another use forChild()
+## Markup for html
+ {{notFoundText}} put var in html , its called interpolation
+ (click)="isCollapsed = !isCollapsed" -> click event
+ [attr.aria-expanded]="!isCollapsed"
+ [collapse]="!isCollapsed" [isAnimated]="true"
+    + Styling Links
+        [routerLink]="['/home']" replace href in linka (<a>) when using routing
+        [routerLinkActiveOptions]="{exact: true}"
+    *ngFor="let owner of owners"> => *ngFor directive loop over all the owners
+    <td>{{owner.dateOfBirth | date: 'dd/MM/yyyy'}}</td>>  Date pipe | date: 'dd/MM/yyyy' to format
+
+## Routes
+    1.- Import the component if you use in the route 
+        and add router-outlet tag in html is a container for the routing content
+  { path: 'home', component: HomeComponent }, 
+  { path: '', redirectTo: '/home', pathMatch: 'full' }
+  { path: '**' --> wildcard route, match any route. A wildcard route is the last route
+
+## Angular HTTP Client
+    import the HttpClientModule inside the app.module.ts and  place it inside the imports array,
+    make a wrapper for CRUD request, Create,Update must provide a body and headers. If you receive a response object must createa strongly typed HTTP method, like http.put<Model>(values)
+    + Subscription on the HTTP Calls
+        wrapper functions need a subscription, and these function not be executed until we call the subscribe function.   this.repo.getOwners('api/owner').subscribe(lambda)
+
+## Angular Services
+Services are just classes, which provide us with some business logic relevant to our components. These services must be injected into a component using constructor injection.
+We should use services whenever we have code that we can reuse in other components, or extract part of the code from our components.
+Create a new services -> ng g service shared/services/environment-url --skip-tests
+
+## Angular Lazy Loading
+    loadChildren: () => import('./owner/owner.module').then(m => m.OwnerModule) },
+    using the loadChildren property which means, that the owner module with its components won’t be loaded until we explicitly ask for them. By doing this, we are configuring Angular lazy loading from the owner module content.
+## Subscription
+    implement that subscription to our HTTP requests in order to display the data on the page.
+
+Troubleshoot ngx boostrap
+Change oath in angular.json ( is wrong by default)
+"styles": [
+  "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+  "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+  "src/styles.css"
+]
+
+Recipe: 
+Installation of the Angular CLI and Starting a New Project
+Third-Party Libraries like bootstrap and ngx-bootstrap
+Creating Angular Components and incorporate in app.component.html
+Add Navigation and Routing and Styling Links if use routing
+Add a not found page and routes
+Make a wrapper for CRUD functions as a service, add interface with Model you receive,
+     modify Environment Files, Add the url and makea a auxiliary service for getting the url
+Add Lazy Loading
+Subscription and Data Display
