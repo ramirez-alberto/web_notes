@@ -65,6 +65,9 @@ Create a new services -> ng g service shared/services/environment-url --skip-tes
 ## Subscription
     implement that subscription to our HTTP requests in order to display the data on the page.
 
+## Input and Output decorator
+    In the situations where we want to send some content from a parent to a child component, we need to use the @Input decorator in a child component to provide a property binding between those components. Moreover, we can have some events in a child component that reflect its behavior back to a parent component. For that purpose, we are going to use @Output decorator with the EventEmitter.
+
 Troubleshoot ngx boostrap
 Change oath in angular.json ( is wrong by default)
 "styles": [
