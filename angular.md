@@ -40,6 +40,8 @@ Create a new services>
         [routerLinkActiveOptions]="{exact: true}"
     *ngFor="let owner of owners"> => *ngFor directive loop over all the owners
     <td>{{owner.dateOfBirth | date: 'dd/MM/yyyy'}}</td>>  Date pipe | date: 'dd/MM/yyyy' to format
+    <div class="row" *ngIf='owner?.accounts.length <= 2; else advancedUser'> *ngIf directive
+        <ng-template #advancedUser>some template <ng-template>
 
 ## Routes
     1.- Import the component if you use in the route 
@@ -67,6 +69,13 @@ Create a new services -> ng g service shared/services/environment-url --skip-tes
 
 ## Input and Output decorator
     In the situations where we want to send some content from a parent to a child component, we need to use the @Input decorator in a child component to provide a property binding between those components. Moreover, we can have some events in a child component that reflect its behavior back to a parent component. For that purpose, we are going to use @Output decorator with the EventEmitter.
+## Libraries
+    Errors: HttpErrorResponse
+    Redirection and navigation: Router
+
+## General
+    var? -> is a optional property
+
 
 Troubleshoot ngx boostrap
 Change oath in angular.json ( is wrong by default)
@@ -81,8 +90,9 @@ Installation of the Angular CLI and Starting a New Project
 Third-Party Libraries like bootstrap and ngx-bootstrap
 Creating Angular Components and incorporate in app.component.html
 Add Navigation and Routing and Styling Links if use routing
-Add a not found page and routes
+Add a not found page, internal server error, standard errors and add routes
 Make a wrapper for CRUD functions as a service, add interface with Model you receive,
      modify Environment Files, Add the url and makea a auxiliary service for getting the url
 Add Lazy Loading
 Subscription and Data Display
+Create a service for error handling
