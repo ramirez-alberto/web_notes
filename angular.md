@@ -13,7 +13,7 @@ npm cache clean --force
 
 Create a new project: ng new AccountOwnerClient --strict false
 Third-Party Libraries as Part Of Angular Project Preparation:
-    ng add ngx-bootstrap  -> Angular bootstrap
+    ng add ngx-bootstrap  -> [Angular bootstrap](https://valor-software.com/ngx-bootstrap/#/components/datepicker?tab=overview)
 Run our app and also open it in a browser automatically (-o flag): ng serve -o
 
 Creating Angular Components
@@ -47,12 +47,16 @@ Create a new directive
     <div class="row" *ngIf='owner?.accounts.length <= 2; else advancedUser'> *ngIf directive
         <ng-template #advancedUser>some template <ng-template>
 
+
 ## Routes
     1.- Import the component if you use in the route 
         and add router-outlet tag in html is a container for the routing content
   { path: 'home', component: HomeComponent }, 
   { path: '', redirectTo: '/home', pathMatch: 'full' }
   { path: '**' --> wildcard route, match any route. A wildcard route is the last route
+
+## Redirection
+    this.router.navigate(['/owner/list']); or inject Location and use back() > (location.back())
 
 ## Angular HTTP Client
     import the HttpClientModule inside the app.module.ts and  place it inside the imports array,
@@ -79,12 +83,19 @@ Create a new services -> ng g service shared/services/environment-url --skip-tes
 ## Directives (manipulate DOM)
     Change the appearance or behavior of DOM elements and Angular components with attribute directives.
 
+## Form validation
+    Template-driven (via html)
+    Reactive form (validation in component): Add the ReactiveFormModule in the parent module, format the html:
+    each input must have formControlName attribute inside every control. That attribute represents the control name which we are going to validate, onInit create a FormGroup with FormatControl and pass an array of Validators, handle errors (check if user place cursor in control (touched and if its valid)), handle creation and redirection
+
+
 ## Libraries
     Errors: HttpErrorResponse
     Redirection and navigation: Router
     ReferenceDOM: ElementRef
     ManipulateDOM: Renderer2
     Check for changes: OnChanges interface and add ngOnChanges method lifecyle in class.
+    Reactive form validation module: ReactiveFormsModule 
 
 ## General
     var? -> is a optional property
