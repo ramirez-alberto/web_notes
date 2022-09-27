@@ -18,10 +18,14 @@ Run our app and also open it in a browser automatically (-o flag): ng serve -o
 
 Creating Angular Components
     ng g component home --skip-tests or ng g component dir/not-found --skip-tests
-Creating Angular Modules>
+Creating Angular Modules with routes
     ng g module owner --routing=true --module app.module
 Create a new services>
     ng g service shared/services/environment-url --skip-tests
+Create a new shared module
+    ng g module shared --module owner
+Create a new directive
+    ng g directive shared/directives/append --skip-tests
 ## Important pages
     app.component.html -> app root html
     AppRoutingModlue -> app routes
@@ -69,12 +73,23 @@ Create a new services -> ng g service shared/services/environment-url --skip-tes
 
 ## Input and Output decorator
     In the situations where we want to send some content from a parent to a child component, we need to use the @Input decorator in a child component to provide a property binding between those components. Moreover, we can have some events in a child component that reflect its behavior back to a parent component. For that purpose, we are going to use @Output decorator with the EventEmitter.
+
+## Shared modules
+    When we want to register our reusable component it is a good practice to create a shared module and to register and export our components inside that module. Then, we can use those reusable components in any higher-level component we want by registering the shared module inside a module responsible for that higher-order component.
+## Directives (manipulate DOM)
+    Change the appearance or behavior of DOM elements and Angular components with attribute directives.
+
 ## Libraries
     Errors: HttpErrorResponse
     Redirection and navigation: Router
+    ReferenceDOM: ElementRef
+    ManipulateDOM: Renderer2
+    Check for changes: OnChanges interface and add ngOnChanges method lifecyle in class.
 
 ## General
     var? -> is a optional property
+    `${accNum}` text format
+
 
 
 Troubleshoot ngx boostrap
