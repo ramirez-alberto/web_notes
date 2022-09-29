@@ -7,6 +7,8 @@ Public members are visible in derived classes and are part of the derived class'
 
 Create each new class in a different source file
 
+https://code-maze.com/csharp-intermediate-tutorial-oop/
+
 Extension methods: 
     Only contained in static classes and must have this keyword in parameters
     public static methodName(this string name)  ... "mystring".methodName()
@@ -20,6 +22,37 @@ Structures ( struct ):
 Enumerations ( enum ): 
     By default, assign the integer value to every element inside the enumerations.
     We can change from int to another value type ( public enum Name: short)
+Interfaces
+Generic type T
+    A generic class can have more than one type parameter: public class CollectionKeyValueInitializer<TKey, TValue>
+    We can constraint a generic class with where > 
+        public class MyClass<T> where T: Student or where T: class work only with classes.
+        or where T: struct , work only with value types
+    and we can have generic methods public void ExampleMethod<T>(T param1, T param2), note if We
+    use a generic class, we need to change the T keyword for U,Y,R, etc.. Otherwise, 
+    the type T from a method will hide the type T from a class.
+
+Queue, Stack and Hashtable
+    Queue collection represents a first-in, first-out collection of objects
+        Syntax:
+            Queue<int> intCollection = new Queue<int>(); generic
+            Queue intCollection = new Queue(); stores objects of any data type
+        Count > check how many objects
+        Enqueue > add a object inside a collection
+        Dequeue  > Remove the firs object
+        Peek return the first object
+        Clear  > removes all elements in a collection
+    Stack collection represents a simple last-in, first-out collection. Same syntax as Queue
+        Push > insert an object at the top
+        Pop  > returns the last in object
+        Peek  > return object ready to exit
+        Clear, Count
+    Hashtable collection of a key-value pair that is organized based on the hash
+     code of the key. Syntax>  Hashtable hashTable = new Hashtable();
+        Methods: Add , Remove(key), ContainsKey, ContainsValue , Clear
+        Property; Count, Keys, Value,  
+
+
 
 
 Inheritance (https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/tutorials/inheritance)
@@ -68,8 +101,6 @@ Assign a higher rank object to a lower rank object using the “as” keyword
 
 Memory allocation 
 Class and struct
-
-
 The downside of classes is that both code and data are thrown onto the heap…with
  a struct, only data is allocated. So if your class has many methods, and you 
  start allocating many instances of the class, your memory will take a hit.
