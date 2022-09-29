@@ -7,6 +7,21 @@ Public members are visible in derived classes and are part of the derived class'
 
 Create each new class in a different source file
 
+Extension methods: 
+    Only contained in static classes and must have this keyword in parameters
+    public static methodName(this string name)  ... "mystring".methodName()
+Anonymous Classes ( new {property = value})
+Partial Classes ( partial)
+Constructor overloads
+Structures ( struct ): 
+    Is a value type, An instance of a class lives on a heap memory 
+    while the instance of a structure lives on a stack.
+    Use structures when our structures need to be small and simple types and immutable
+Enumerations ( enum ): 
+    By default, assign the integer value to every element inside the enumerations.
+    We can change from int to another value type ( public enum Name: short)
+
+
 Inheritance (https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/tutorials/inheritance)
     Inheritance applies only to classes and interfaces. Other type categories 
             (structs, delegates, and enums) do not support inheritance.
@@ -47,3 +62,14 @@ Polymorfism
 
         Derived class
         public MyDerivedClassConstructor(string name, decimal initialBalance, decimal creditLimit) : base(name, initialBalance, -creditLimit)
+
+Assign a higher rank object to a lower rank object using the “as” keyword
+    XMLWriter newWriter = writer as XMLWriter;
+
+Memory allocation 
+Class and struct
+
+
+The downside of classes is that both code and data are thrown onto the heap…with
+ a struct, only data is allocated. So if your class has many methods, and you 
+ start allocating many instances of the class, your memory will take a hit.

@@ -88,6 +88,7 @@ Pattern Matching (https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/fu
     In this tutorial, you consumed existing data in entirely different ways from its original function. 
     Pattern matching gave you the ability to write functionality that overrode those types, even though you couldn't extend them.
 
+StreamReader and StreamWriter
 
 Unit test 
 https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test:
