@@ -22,8 +22,16 @@ Use tuple for swap values in array (array[i - 1], array[i]) = (array[i], array[i
 Arrays,Collectinons use IEnumerable<T> interface
 Hashtable: https://www.tutorialspoint.com/csharp/csharp_hashtable.htm
 
-Delegates (https://docs.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/features#delegates-and-lambda-expressions): 
+Delegates (https://docs.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/features#delegates-and-lambda-expressions)
+https://code-maze.com/csharp-delegates/: 
     syntax delegate double Function(double x);
+    C# has the two built-in delegates: Func<T> and Action<T>
+    Func<T> Syntax: 
+        Func<Type1, Type2..., ReturnType> DelegateName = new Func<Type1, Type2..., ReturnType>(MethodName); or
+        Func< Type1, Type2..., ReturnType> name = MethodName;
+    Action<T>
+        Action<Type1, Type2...> DelegateName = new Action<Type1, Type2...>(MethodName);
+        Action < Type1, Type2...> DelegateName = MethodName;
 
 Variables
     static keyword are class variables or non-instance variable
