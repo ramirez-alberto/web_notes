@@ -3,7 +3,7 @@ https://code-maze.com/asp-net-core-testing/
 
 # Unit test 
   [MicrosoftLearn](https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test)
-
+```
     dotnet new sln -o <carpeta_De_la_solucion>  Crear nueva solucion
 
     dotnet new classlib -o <carpeta_libreria_de_clases> 
@@ -18,24 +18,35 @@ https://code-maze.com/asp-net-core-testing/
 
     Name the test: public class ReferenceClass_thingToBeTested
     Use ARRANGE,ACTION,ASSERT
+```
 
 ## Attributes
 
-* [Fact] – attribute states that the method should be executed by the test runner ####
-*    [Theory] – attribute implies that we are going to send some parameters to our testing code. So, it is similar to the [Fact] attribute, because it states that the method should be executed by the test runner, but additionally implies that we are going to send parameters to the test method
-*    [InlineData] – attribute provides those parameters we are sending to the test method. If we are using the [Theory] attribute, we have to use the [InlineData] as well
+* `[Fact]` – attribute states that the method should be executed by the test runner 
+*    `[Theory]` – attribute implies that we are going to send some parameters to our testing code. So, it is similar to the `[Fact]` attribute, because it states that the method should be executed by the test runner, but additionally implies that we are going to send parameters to the test method
+*    `[InlineData]` – attribute provides those parameters we are sending to the test method. If we are using the `[Theory]` attribute, we have to use the `[InlineData]` as well
 
 ## Writing tests
   * well organized and easy to maintain
-  * Naming test convention : [ MethodWeTest_StateUnderTest_ExpectedBehavior ]
+  * Naming test convention : [ `MethodWeTest_StateUnderTest_ExpectedBehavior` ]
   * We should mock external dependencies
 
 ## Moq Package
-  Install Moq , syntax Mock< IEmployeeRepository >
+  Install Moq , syntax `Mock<IEmployeeRepository>`
   ### Methods:
   * Setup(method => method.methodToMock() and Returns(returnValue)
   * Setup(method => method.methodToMock(It.IsAny<dataType>())).Callback()
-  * Verify(method => method.methodToMock(It.IsAny<dataType>() <--any object with type parameter,
-      Times.Never or Times.Once, etc..)
+  * `Verify(method => method.methodToMock(It.IsAny<dataType>()` <--any object with type parameter
+  `,Times.Never` or `Times.Once etc..)`
 
 # Integration Tests  
+Ensures diferent components inside the application function correctly when working together.
+Includes application’s infrastructure components like database, file system, etc.
+  
+  Install two packages:
+  * `AspNetCore.Mvc.Testing` provides TestServer and WebApplicationFactory to help us bootstrap our app in-memory
+  * `Microsoft.EntityFrameworkCore.InMemory` – In-memory database provider
+
+  WIP:
+    * Create a class implementing WebApplicationFactory: change Program class to be partial, instruct to use in-memory db and seed the data.
+    * Make the tests: implement IClassFixture and generate a httpclient in the constructor
