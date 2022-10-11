@@ -26,6 +26,16 @@ Create a new shared module
     ng g module shared --module owner
 Create a new directive
     ng g directive shared/directives/append --skip-tests
+
+## Template Basics
+    {{ var }} -> Interpolation
+    <tag *ngFor="let var of var[]"> or *ngIf="condition" -> Structural Directives
+    [property]="var" -> property binding
+    (event)="function()" -> Event binding
+
+
+## Components
+    Define an area of responsability in the UI and allow shared functionality.
 ## Important pages
     app.component.html -> app root html
     AppRoutingModlue -> app routes
@@ -98,7 +108,8 @@ Create a new services -> ng g service shared/services/environment-url --skip-tes
     Reactive form validation module: ReactiveFormsModule 
 
 ## General
-    var? -> is a optional property
+    var? -> is a optional property. In template is a safe navigation operator and check if the 
+        property exists.
     `${accNum}` text format
 
 
