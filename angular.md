@@ -32,16 +32,22 @@ Create a new directive
     <tag *ngFor="let var of var[]"> or *ngIf="condition" -> Structural Directives
     [property]="var" -> property binding
     (event)="function()" -> Event binding
+    [(ngModel)]="property in class" -> two way binding , data can flow in both directions 
+        from the class to the view and viceversa.
+    [class.selected] ="condition" -> Class binding add and remove a CSS class conditionally. 
+            Add to the element you want to style
 
 
 ## Components
-    Define an area of responsability in the UI and allow shared functionality.
+    Define an area of responsability in the UI and allow shared functionality. Must be declared in
+    exactly one NgModule.
 ## Important pages
     app.component.html -> app root html
     AppRoutingModlue -> app routes
     src/environments -> prod env and dev
 
 ## Add modules to app root
+    Other files and libraries the application requires is called metadata.
     import { CollapseModule } from 'ngx-bootstrap/collapse'; add module in imports array
         CollapseModule.forRoot() --> for root is for app root if another use forChild()
 ## Markup for html
@@ -52,7 +58,7 @@ Create a new directive
     + Styling Links
         [routerLink]="['/home']" replace href in linka (<a>) when using routing
         [routerLinkActiveOptions]="{exact: true}"
-    *ngFor="let owner of owners"> => *ngFor directive loop over all the owners
+    *ngFor="let owner of owners"> => *ngFor directive loop over all the owners, put in the host tag
     <td>{{owner.dateOfBirth | date: 'dd/MM/yyyy'}}</td>>  Date pipe | date: 'dd/MM/yyyy' to format
     <div class="row" *ngIf='owner?.accounts.length <= 2; else advancedUser'> *ngIf directive
         <ng-template #advancedUser>some template <ng-template>
@@ -77,6 +83,8 @@ Create a new directive
 ## Angular Services
 Services are just classes, which provide us with some business logic relevant to our components. These services must be injected into a component using constructor injection.
 We should use services whenever we have code that we can reuse in other components, or extract part of the code from our components.
+Components shouldn't fetch or save data directly and they certainly shouldn't knowingly present fake data.
+and delegate data access to a service 
 Create a new services -> ng g service shared/services/environment-url --skip-tests
 
 ## Angular Lazy Loading
@@ -112,7 +120,8 @@ Create a new services -> ng g service shared/services/environment-url --skip-tes
         property exists.
     `${accNum}` text format
 
-
+## Pipes
+    https://angular.io/guide/pipes
 
 Troubleshoot ngx boostrap
 Change oath in angular.json ( is wrong by default)
