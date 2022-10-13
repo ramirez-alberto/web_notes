@@ -56,7 +56,7 @@ Create a new directive
  [attr.aria-expanded]="!isCollapsed"
  [collapse]="!isCollapsed" [isAnimated]="true"
     + Styling Links
-        [routerLink]="['/home']" replace href in linka (<a>) when using routing
+        [routerLink]="['/home']" replace href in linka (\<a\>) when using routing
         [routerLinkActiveOptions]="{exact: true}"
     *ngFor="let owner of owners"> => *ngFor directive loop over all the owners, put in the host tag
     <td>{{owner.dateOfBirth | date: 'dd/MM/yyyy'}}</td>>  Date pipe | date: 'dd/MM/yyyy' to format
@@ -81,10 +81,15 @@ Create a new directive
         wrapper functions need a subscription, and these function not be executed until we call the subscribe function.   this.repo.getOwners('api/owner').subscribe(lambda)
 
 ## Angular Services
+https://angular.io/guide/providers
 Services are just classes, which provide us with some business logic relevant to our components. These services must be injected into a component using constructor injection.
 We should use services whenever we have code that we can reuse in other components, or extract part of the code from our components.
 Components shouldn't fetch or save data directly and they certainly shouldn't knowingly present fake data.
-and delegate data access to a service 
+We can delegate data access to a service or to share information among classes that don't know each other.
+Services mplements @Injectable() decorator. To deliver or create the service you need to register a provider
+metadata. When you provide at root level, angular created a single, shared instance.
+You can bind directly to a service in a template, for that, you must declare a public property.
+
 Create a new services -> ng g service shared/services/environment-url --skip-tests
 
 ## Angular Lazy Loading
