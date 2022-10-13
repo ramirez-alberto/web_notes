@@ -20,6 +20,8 @@ Creating Angular Components
     ng g component home --skip-tests or ng g component dir/not-found --skip-tests
 Creating Angular Modules with routes
     ng g module owner --routing=true --module app.module
+    ng generate module app-routing --flat --module=app -> --flat puts the file 
+        in src/app instead of its own directory and --module tell to register it in the imports array of the AppModule
 Create a new services>
     ng g service shared/services/environment-url --skip-tests
 Create a new shared module
@@ -50,21 +52,22 @@ Create a new directive
     Other files and libraries the application requires is called metadata.
     import { CollapseModule } from 'ngx-bootstrap/collapse'; add module in imports array
         CollapseModule.forRoot() --> for root is for app root if another use forChild()
-## Markup for html
+## Markup for html  
  {{notFoundText}} put var in html , its called interpolation
  (click)="isCollapsed = !isCollapsed" -> click event
  [attr.aria-expanded]="!isCollapsed"
  [collapse]="!isCollapsed" [isAnimated]="true"
     + Styling Links
-        [routerLink]="['/home']" replace href in linka (\<a\>) when using routing
+        [routerLink]="['/home']" replace href in linka (\<a\>) when using routing and
+            is the selector for the RouterLink directive .
         [routerLinkActiveOptions]="{exact: true}"
     *ngFor="let owner of owners"> => *ngFor directive loop over all the owners, put in the host tag
     <td>{{owner.dateOfBirth | date: 'dd/MM/yyyy'}}</td>>  Date pipe | date: 'dd/MM/yyyy' to format
     <div class="row" *ngIf='owner?.accounts.length <= 2; else advancedUser'> *ngIf directive
         <ng-template #advancedUser>some template <ng-template>
 
-
 ## Routes
+Best practice is to load and configure the router in a separate, top-level module.
     1.- Import the component if you use in the route 
         and add router-outlet tag in html is a container for the routing content
   { path: 'home', component: HomeComponent }, 
