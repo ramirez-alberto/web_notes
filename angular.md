@@ -80,8 +80,13 @@ Best practice is to load and configure the router in a separate, top-level modul
 ## Angular HTTP Client
     import the HttpClientModule inside the app.module.ts and  place it inside the imports array,
     make a wrapper for CRUD request, Create,Update must provide a body and headers. If you receive a response object must createa strongly typed HTTP method, like http.put<Model>(values)
-    + Subscription on the HTTP Calls
-        wrapper functions need a subscription, and these function not be executed until we call the subscribe function.   this.repo.getOwners('api/owner').subscribe(lambda)
+    * Handle errors on HTTP request
+        You can pipe the error response with pipe( catchError(handleErrors) ), the handleError function
+        must return an Observable of the same type as the response.
+        With tap() you can make something with the response. Syntax> pipe(tap(),catchError())
+
+    * Subscription on the HTTP Calls
+        wrapper functions need a subscription, and these function not be executed until we call the subscribe function.   this.repo.getOwners('api/owner').subscribe(lambda)    
 
 ## Angular Services
 https://angular.io/guide/providers
@@ -127,9 +132,13 @@ Create a new services -> ng g service shared/services/environment-url --skip-tes
     var? -> is a optional property. In template is a safe navigation operator and check if the 
         property exists.
     `${accNum}` text format
+    var$ -> $ symbol indicates var is an Observable
+    var! -> ! symbol indicates var is not null or undefined
 
 ## Pipes
     https://angular.io/guide/pipes
+
+    async keyword -> This identifies Angular's AsyncPipe and subscribes to an Observable automatically so you won't have to do so in the component class.
 
 Troubleshoot ngx boostrap
 Change oath in angular.json ( is wrong by default)
