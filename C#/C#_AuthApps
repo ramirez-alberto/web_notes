@@ -16,3 +16,6 @@ The typical pattern is to call methods in the following order:
 
 Scaffold auth pages
 Install-Package Microsoft.VisualStudio.Web.CodeGeneration.Design
+
+A claim is a name value pair that represents what the subject is, not what the subject can do. 
+An identity can contain multiple claims with multiple values and can contain multiple claims of the same type.
