@@ -116,8 +116,10 @@ Create a new services -> ng g service shared/services/environment-url --skip-tes
 
 ## Form validation
     Template-driven (via html)
-    Reactive form (validation in component): Add the ReactiveFormModule in the parent module, format the html:
-    each input must have formControlName attribute inside every control. That attribute represents the control name which we are going to validate, onInit create a FormGroup with FormatControl and pass an array of Validators, handle errors (check if user place cursor in control (touched and if its valid)), handle creation and redirection
+### Reactive form (validation in component): 
+* Add the ReactiveFormModule in the parent module and format the html:
+each input must have formControlName attribute inside every control. That attribute represents the control name which we are going to validate.
+* onInit instance a FormGroup object, pass a object with the names of the form fields as keys and instance FormatControl as values, syntax-> `FormatControl('',optional= array of validators)` and pass an array of Validators, handle errors (check if user place cursor in control (touched and if its valid)), handle creation and redirection
 
 
 ## Libraries
