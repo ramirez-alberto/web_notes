@@ -1,6 +1,8 @@
 
 # Continuous Delivery
 
+You can trigger the CD pipeline via a webhook from github
+
 # Tools
 
 ## Tekton 
@@ -357,10 +359,39 @@ spec:
         value: $(params.branch)
 ```
 
- use the Tekton CLI (tkn) to create a PipelineRun to run the pipeline
+Use the Tekton CLI (`tkn`) to create a `PipelineRun` to run the pipeline
+
+```bash
  tkn pipeline start cd-pipeline \
     -p repo-url="https://github.com/ibm-developer-skills-network/wtecc-CICD_PracticeCode.git" \
     -p branch="main" \
     -w name=pipeline-workspace,claimName=pipelinerun-pvc \
     --showlog
-You should get into the habit of always checking the Tekton Catalog at Tekton Hub before writing any task. Remember: “A line of code you did not write is a line of code that you do not have to maintain!”
+```
+
+You should get into the habit of always checking the Tekton Catalog at Tekton Hub before writing any task. Remember: **“A line of code you did not write is a line of code that you do not have to maintain!”**
+
+
+### Build a image and push it to registry
+
+***This example use buildah task from Tekton Hub***
+
+You can check available task in the ClusterTasks with `tkn clustertask ls` .
+A `ClusterTask` is installed cluster-wide by an administrator and anyone can use it in their pipelines without having to install it themselves.
+
+To reference a ClusterTask in the pipeline.yaml, under the task name add a `kind:` tag with value ClusterTask so that Tekton knows to look for a ClusterTask and not a regular Task.
+
+tkn pipeline start cd-pipeline \
+    -p repo-url="https://github.com/ibm-developer-skills-network/wtecc-CICD_PracticeCode.git" \
+    -p branch=main \
+    -p build-image=image-registry.openshift-image-registry.svc:5000/$SN_ICR_NAMESPACE/tekton-lab:latest \
+    -w name=pipeline-workspace,claimName=pipelinerun-pvc \
+    --showlog
+
+### Deploy to Openshift
+Use the kubectl command to check that your deployment is in a running state.
+kubectl get all -l app=hitcounter
+
+    Determine if the openshift-client ClusterTask is available on your cluster
+    Describe the parameters required to use the openshift-client ClusterTask
+    Use the openshift-client ClusterTask in a Tekton pipeline to deploy your Docker image to Kubernetes

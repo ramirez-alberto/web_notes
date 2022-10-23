@@ -32,7 +32,7 @@ When making a pull request, make sure that your request is merging with your for
 
 First we need to create a workflow. The first line in this file will define the name of the workflow 
 1. Create the directory structure .github/workflows and create a file called workflow.yml
-2. Give a name with the name tag as the firsts line name: my name
+2. Give a name with the name tag as the firsts line `name: my name`
 
 ## Add Event Triggers
 
@@ -66,3 +66,34 @@ You can make another step with another name and the `run:` keyword to run comman
 
 Actions>
 actions/checkout@v3 - Checkout code
+
+```YAML
+name: CI workflow
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: python:3.9-slim
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: | 
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+
+      - name: Lint with flake8
+        run: |
+            flake8 service --count --select=E9,F63,F7,F82 --show-source --statistics
+            flake8 service --count --max-complexity=10 --max-line-length=127 --statistics
+
+      - name: Run unit tests with nose
+        run: nosetests -v --with-spec --spec-color --with-coverage --cover-package=app
+```
