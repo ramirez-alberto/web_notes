@@ -1,11 +1,12 @@
 
 # Continuous Delivery
 
-## Tools
+# Tools
 
-### Tekton
+## Tekton 
+[Examples]("https://github.com/ibm-developer-skills-network/wtecc-CICD_PracticeCode.git")
 
-#### Structuring Tekton pipeline project
+### Structuring Tekton pipeline project
 
 How to author Tekton pipelines and tasks so that they are easy to use and parameterize.
 You can have multiple definitions in a single yaml file by separating them with three dashes `---` on a single line.
@@ -23,7 +24,7 @@ spec:
       command: [/bin/echo]
       args: ["Hello World"]
 ```
-1. Create a pipeline, reference the previous task and apply to kubernetes `kubectl apply -f file.yaml`. You can check the pipeline status in Tekton `tkn pipeline ls`
+2. Create a pipeline, reference the previous task and apply to kubernetes `kubectl apply -f file.yaml`. You can check the pipeline status in Tekton `tkn pipeline ls`
 ```YAML
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
@@ -37,7 +38,13 @@ spec:
 ```
 3. Run the pipeline using Tekton CLI `tkn pipeline start --showlog hello-pipeline`
 
-#### Tekton Triggers
+The next examples are avaliable:
+
+* [With parameters](#task-yaml-with-parameters)
+
+* [Checkout pipeline](#checkout-pipeline)
+* 
+### Tekton Triggers
 
 1. Create an EventListener that references a TriggerBinding and a TriggerTemplate
    * In the Eventlistener yaml, add a Service Account `serviceAccountName:` in the `spec:` section
@@ -77,17 +84,12 @@ spec:
 
 3. Create a TriggerTemplate. The TriggerTemplate takes the parameters passed in from the TriggerBinding and creates a PipelineRun to start the pipeline
 
-* The first thing you want to do is give the TriggerTemplate the same name that is referenced in the EventListener
-resourcetemplates
-
-    Add a serviceAccountName: with a value of pipeline.
-
-    Add a pipelineRef: that refers to the cd-pipeline created in the last lab.
-
-    Add a parameter named repo-url with a value referencing the TriggerTemplate repository parameter above.
-
-    Add a second parameter named branch with a value referencing the TriggerTemplaterepository parameter above. kubectl apply -f triggertemplate.yaml
-
+   * The first thing you want to do is give the TriggerTemplate the same name that is referenced in the EventListener resourcetemplates
+   * Add a `serviceAccountName:` with a value of pipeline.
+   * Add a `pipelineRef:` that refers to the cd-pipeline created in the last lab.
+   * Add a parameter named repo-url with a value referencing the TriggerTemplate repository parameter above.
+   * Add a second parameter named branch with a value referencing the TriggerTemplaterepository parameter above. Apply to kubernetes `kubectl apply -f triggertemplate.yaml`
+```YAML
 apiVersion: triggers.tekton.dev/v1beta1
 kind: TriggerTemplate
 metadata:
@@ -114,21 +116,29 @@ spec:
             value: $(tt.params.repository)
           - name: branch
             value: $(tt.params.branch)
+```
 
-    Start a PipelineRun on a port > kubectl port-forward service/el-cd-listener  8090:8080
-        Run port-forward to send the service to your localhost and use a curl command to test your EventListener
-
-    Trigger the e vent:
+4. Start a PipelineRun on a port with `kubectl port-forward service/el-cd-listener  8090:8080`. 
+   Run port-forward to send the service to your localhost. You can use a curl command to test your EventListener:
+```bash
     curl -X POST http://localhost:8090 \
   -H 'Content-Type: application/json' \
   -d '{"ref":"main","repository":{"url":"https://github.com/ibm-developer-skills-network/wtecc-CICD_PracticeCode"}}'
+```
 
-  tkn pipelinerun ls
-  tkn pipelinerun logs --last
+You can check the pipeline and the pipeline logs with 
 
-  Now that you know your triggers are working, you can expose the event listener service with an ingress and call it from a webhook in GitHub and have it run on changes to your GitHub repository.
+```
+tkn pipelinerun ls
+tkn pipelinerun logs --last
+```
 
-With parameters:
+Now that you know your triggers are working, you can expose the event listener service with an ingress and call it from a webhook in GitHub and have it run on changes to your GitHub repository.
+
+
+
+### Task yaml with parameters:
+```YAML
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
@@ -143,6 +153,8 @@ spec:
       image: alpine:3
       command: [/bin/echo]
       args: ["$(params.message)"]
+
+--- pipeline.yaml -------------------
 
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
@@ -159,12 +171,15 @@ spec:
         - name: message
           value: "$(params.message)"
 
+--- Terminal ---------------------------
+
 tkn pipeline start hello-pipeline \
     --showlog  \
     -p message="Hello Tekton!"
+```
 
-Checkout Pipeline
-
+### Checkout Pipeline
+```YAML
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
@@ -198,8 +213,32 @@ spec:
       command: [git]
       args: ["clone", "--branch", "$(params.branch)", "$(params.repo-url)"]
 
-
 ---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: nose
+spec:
+  workspaces:
+    - name: source
+  params:
+    - name: args
+      description: Arguments to pass to nose
+      type: string
+      default: "-v"
+  steps:
+    - name: nosetests
+      image: python:3.9-slim
+      workingDir: $(workspaces.source.path)
+      script: |
+        #!/bin/bash
+        set -e
+        python -m pip install --upgrade pip wheel
+        pip install -r requirements.txt
+        nosetests $(params.options)
+
+--- pipeline.yaml ---------------------------------
+
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
@@ -219,11 +258,14 @@ spec:
       - name: branch
         value: "$(params.branch)"
 
+--- Terminal --------------------------------
+
 tkn pipeline start cd-pipeline \
     --showlog \
     -p repo-url="https://github.com/ibm-developer-skills-network/wtecc-CICD_PracticeCode.git" \
     -p branch="main"
 
+```
 
 PIPELINE FOR FUTURE
 apiVersion: tekton.dev/v1beta1
@@ -280,3 +322,45 @@ spec:
         value: "Deploying $(params.branch) branch of $(params.repo-url) ..."
       runAfter:
         - build
+
+### Tekton CD Catalog
+1. Use the Tekton CD Catalog to install the git-clone task
+
+```bash
+tkn hub install task git-clone
+```
+2. Create a workspace. A workspace is a disk volume that can be shared across tasks. The way to bind to volumes in Kubernetes is with a PersistentVolumeClaim.. Apply to kubernetes `kubectl apply -f pvc.yaml`
+3. Add a workspace to the pipeline. Add a `workspaces:` definition as the first line under the `spec:` but before the `params:` and name it. Then you will add the workspace to the task and change the task to reference git-clone instead of your checkout task. Apply kubectl apply -f pipeline.yaml
+``` YAML
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: cd-pipeline
+spec:
+  workspaces:
+    - name: pipeline-workspace
+  params:
+    - name: repo-url
+    - name: branch
+      default: "master"
+  tasks:
+    - name: clone
+      workspaces:
+        - name: output
+          workspace: pipeline-workspace
+      taskRef:
+        name: git-clone
+      params:
+      - name: url
+        value: $(params.repo-url)
+      - name: revision
+        value: $(params.branch)
+```
+
+ use the Tekton CLI (tkn) to create a PipelineRun to run the pipeline
+ tkn pipeline start cd-pipeline \
+    -p repo-url="https://github.com/ibm-developer-skills-network/wtecc-CICD_PracticeCode.git" \
+    -p branch="main" \
+    -w name=pipeline-workspace,claimName=pipelinerun-pvc \
+    --showlog
+You should get into the habit of always checking the Tekton Catalog at Tekton Hub before writing any task. Remember: “A line of code you did not write is a line of code that you do not have to maintain!”
