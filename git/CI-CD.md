@@ -390,8 +390,4 @@ tkn pipeline start cd-pipeline \
 
 ### Deploy to Openshift
 Use the kubectl command to check that your deployment is in a running state.
-kubectl get all -l app=hitcounter
-
-    Determine if the openshift-client ClusterTask is available on your cluster
-    Describe the parameters required to use the openshift-client ClusterTask
-    Use the openshift-client ClusterTask in a Tekton pipeline to deploy your Docker image to Kubernetes
+`kubectl get all -l app=hitcounter`
