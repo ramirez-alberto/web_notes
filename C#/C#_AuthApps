@@ -1,13 +1,24 @@
-Using Identity in ASP NET CORE : https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-6.0&tabs=netcore-cli
+Using Identity in ASP NET CORE : 
+https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-6.0&tabs=netcore-cli
 https://code-maze.com/identity-asp-net-core-project/
+
 ASP.NET Core Identity is the membership system for web applications that includes membership, login and user data. ASP.NET Core Identity is a user store
+
+### Implementation: 
+
+**Packages**
+
+* Microsoft.AspNetCore.Identity.EntityFrameworkCore
+
+***Think about extending Identity schema***
+Extend the User model from `IdentityUser`: if we want add additional data or use Claims ( populate the `Claim` object by providing the type and the value properties of the string type (`new Claim(string type, string value)`)
+
+If its complex use custom properties otherwise use Claims
+
 
 dotnet new webapp --auth Individual -o WebApp1
 
-The preceding command creates a Razor web app using SQLite. To create the web app with LocalDB, run the following command:
-.NET CLI
-
-dotnet new webapp --auth Individual -uld -o WebApp1
+The preceding command creates a Razor web app using SQLite. To create the web app with LocalDB, run the following command: dotnet new webapp --auth Individual -uld -o WebApp1
 
 The typical pattern is to call methods in the following order:
 
