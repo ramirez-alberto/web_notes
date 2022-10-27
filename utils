@@ -15,5 +15,17 @@ google dork > https://www.exploit-db.com/google-hacking-database
 flake8 python lynter
 https://www.atlassian.com/team-playbook
 
+
+Security
+
+Secrets in Linux -> pass > you can use with Gnu Privacy Guard (GPG) key
+
 Insecure application for testing
 git clone https://github.com/juice-shop/juice-shop.git
+
+Python
+Bandit -> Scan source code for vulnerabilities. Open-source static application security testing (SAST) tool 
+
+wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-CD0267EN-SkillsNetwork/labs/module3/web_app_example.py
+
+ flask-talisman for http headers
