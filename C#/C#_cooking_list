@@ -34,3 +34,11 @@ API: https://code-maze.com/net-core-series/
             Controllers and Routing in WEB API, GetAllOwners GET Request, Code Permissions , Using DTO and AutoMapper
         Implement Paging, Sorting, Searching, Ordering
         Data Shapping using recursion and HATEOAS
+
+Options Available:
+* Add a extension methods to handle configuration and custom services
+* Enable CORS
+* Custom logging
+* Repository Pattern Logic
+* Onion architecture
+* Global Error Handler
