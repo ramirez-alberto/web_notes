@@ -75,20 +75,115 @@ modelBuilder.ApplyConfiguration(new RoleConfiguration());
 Next we create and apply migration 
 
 ## User Registration
-1. Create the model for user registration
-2. Add a controller to handle registration GET / POST
+1. Create the model for user registrations
+2. Add a controller to handle registration GET / POST.
 3. Create the View
-4. Install AutoMapper to map UserRegistrationModel to UserModel, register in Program.cs -> builder.Services.AddAutoMapper(typeof(Program));
+4. Install AutoMapper (`AutoMapper.Extensions.Microsoft.DependencyInjection`) to map UserRegistrationModel to UserModel, register in Program.cs -> `builder.Services.AddAutoMapper(typeof(Program));`
 and add the MappingProfile
-5. In the example we use, add a partial view in the _Layout to display the link to Register form
-6. Inject automapper and UserManager in the controller, UserManager\<model>  come from Microsoft.AspNetCore.Identity
+
+   ***Note*** If we want to map to another property, in the profile we can use `ForMember(modelProperty,options)` method
+   ```csharp
+      public class MappingProfile : Profile
+      {
+         public MappingProfile()
+         {
+               CreateMap<DTO,Model>();
+               CreateMap<UserRegistrationModel, User>()
+               .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
+         }
+      }
+   ```
+
+5. In the example we use a partial view in the _Layout to display the link to Register form
+6. Inject Automapper ( using `IMapper`) and UserManager in the controller, `UserManager<model>`  come from `Microsoft.AspNetCore.Identity`
 7. Apply logic for register a new user
-   * Check ModelState.isValid
-   * Map to user
-   * Store the result from CreateAsync(user, userModel.Password) method in userManager (This method hashes the password)
-   * Send the errors or add the role if succeed and redirect
+   * Check `ModelState.isValid`
+   * Map to user `Map<ToModel>(FromModel)`
+   * Store the result from `CreateAsync(user, userModel.Password)` method in userManager (This method [hashes the password]("https://code-maze.com/data-protection-aspnet-core/"))
+   * Send the errors or add the role `AddToRoleAsync(user,RoleName)` if `result.Succeeded` and redirect
+     ```csharp
+         var result = await _userManager.CreateAsync(user, userModel.Password);
+         if(!result.Succeeded)
+         {
+            foreach (var error in result.Errors)
+            {
+                  ModelState.TryAddModelError(error.Code, error.Description);
+            }
+            return View(userModel);
+         }
+         await _userManager.AddToRoleAsync(user, "Visitor");
+         return RedirectToAction(nameof(HomeController.Index), "Home");
+     ``` 
 
 ## Authentication
 
 1.  Add the [Authorize] attribute on top of the action or controller and add app.UseAuthentication() auth middleware above the app.UseAuthorization()
-2.  For the Login implementation, we need to create a UserLoginModel model, add the actions for GET and POST in the controller. Note: the http Post receive a UserLoginModel and add a link to the Login form
+2.  For the Login implementation, we need to create a UserLoginModel model, add the actions for GET and POST in the controller. 
+
+      ***Note:***
+      the http Post receive a UserLoginModel
+3. Create a link to Accountn/Login (Default route) and create the Login View
+4. Implement the Login Controller
+   * Modify Login action to receive the return url `string returnUrl = null` and save it in the ViewData for the GET response `ViewData["ReturnUrl"] = returnUrl;`
+   * For the POST action implement a method to check if the url is local
+      ```csharp
+         return RedirectToLocal(returnUrl);
+         private IActionResult RedirectToLocal(string returnUrl)
+            {
+            if (Url.IsLocalUrl(returnUrl))
+               return Redirect(returnUrl);
+            else
+               return RedirectToAction(nameof(HomeController.Index), "Home");
+            
+            }
+      ```
+   * Modify Login Form `asp-route-returnUrl="@ViewData["ReturnUrl"]"`
+   * Check `!ModelState.isValid`
+   * Find the user with `userManager.FindByEmailAsync(userLoginModel.Email)` <- We use FindEmail because the email is our username
+   * Check if the response is not null and `CheckPasswordAsync(responseFromFindByEmail, userLoginModel.Password)`
+   * If True: Instance a new `ClaimIdentity` and add the Claims for NameIdentifier and Name
+      ```csharp
+              var identity = new ClaimsIdentity(IdentityConstants.ApplicationScheme);
+               identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
+               identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
+      ```
+   * SignIn by providing the scheme parameter and the claims principal. 
+      ```csharp
+         await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme,
+            new ClaimsPrincipal(identity));`
+      ```
+   * Redirect to Index `return RedirectToAction(nameof(HomeController.Index), "Home");`
+   * If False: Add a ModelError and return the View without parameters 
+   `ModelState.AddModelError("", "Invalid UserName or Password");`
+
+      ***Note :***
+      We can check the claims details with:
+      ```csharp
+            <h2>Claim details</h2>
+            <ul>
+            @foreach (var claim in User.Claims)
+            {
+               <li><strong>@claim.Type</strong>: @claim.Value</li>
+            }
+            </ul>
+      ```
+
+## Identity Options
+
+### Rules
+   We can find and adjust this rules, such as password validation or check if an email is already registered, in `IdentityOptions`. This options are configured in `AddIdentity`
+   ```csharp
+         builder.Services.AddIdentity<User, IdentityRole>(opt =>
+         {
+         opt.Password.RequiredLength = 7;
+         opt.Password.RequireDigit = false;
+         opt.Password.RequireUppercase = false;
+         })
+         .AddEntityFrameworkStores<ApplicationContext>();
+   ```
+
+### Default Routes
+
+   When you are not authenticated, the app redirect to Account/Login, to change that
+   we need to change the LoginPath when configuring services
+   `services.ConfigureApplicationCookie(o => o.LoginPath = "/Authentication/Login");`

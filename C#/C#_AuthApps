@@ -4,17 +4,60 @@ https://code-maze.com/identity-asp-net-core-project/
 
 ASP.NET Core Identity is the membership system for web applications that includes membership, login and user data. ASP.NET Core Identity is a user store
 
-### Implementation: 
+## Implementation: 
 
-**Packages**
+### Packages
 
 * Microsoft.AspNetCore.Identity.EntityFrameworkCore
+* AutoMapper.Extensions.Microsoft.DependencyInjection
 
-***Think about extending Identity schema***
-Extend the User model from `IdentityUser`: if we want add additional data or use Claims ( populate the `Claim` object by providing the type and the value properties of the string type (`new Claim(string type, string value)`)
+1. Configure User Model
 
-If its complex use custom properties otherwise use Claims
+    ***Think about extending Identity schema***: 
+    Extend the User model from `IdentityUser` if we want add additional data or use Claims ( populate the `Claim` object by providing the type and the value properties of the string type (`new Claim(string type, string value)`)
 
+    If its complex use custom properties otherwise use Claims
+
+2. Inherit from `IdentityDbContext<User>` in the class Context.
+3. Register Identity 
+    Use `AddIdentityCore<TUser>` or `AddIdentity<TUser, TRole>`:
+
+        AddIdentityCore method adds the services that are necessary for user-management actions, such as creating users, hashing passwords, password validation, etc. If your project doesn’t require any additional features, then you should use this method for the implementation.
+        If your project requires those features and any additional ones like supporting Roles not only Users, supporting external authentication, and SingInManager, as our application does, you have to use the AddIdentity method.
+    Add `AddEntityFrameworkStores<Context>` to register the required EF Core implementation of Identity stores
+
+    ```csharp
+        builder.Services.AddIdentity<User, IdentityRole>()
+        .AddEntityFrameworkStores<ApplicationContext>();
+    ```
+
+4. Add Roles ( Custom Implementation ) to the Db, apply the roles configuration in the `OnModelCreating` method
+    Create a public class inherit from `IEntityTypeConfiguration<IdentityRole>` and add the method `Configure`    
+    ```csharp
+        public class RoleConfiguration : IEntityTypeConfiguration<IdentityRole>
+        {
+            public void Configure(EntityTypeBuilder<IdentityRole> builder)
+            {
+                builder.HasData(
+                new IdentityRole
+                {
+                    Name = "Visitor",
+                    NormalizedName = "VISITOR"
+                },);
+            }
+        }
+    ```
+
+    Apply this configuration in the context class
+    ```csharp
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfiguration(new RoleConfiguration());
+    }
+    ```
+
+5. Add Migrations and Update the databasea
 
 dotnet new webapp --auth Individual -o WebApp1
 
