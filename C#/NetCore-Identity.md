@@ -139,6 +139,9 @@ and add the MappingProfile
       ```
    * Modify Login Form `asp-route-returnUrl="@ViewData["ReturnUrl"]"`
    * Check `!ModelState.isValid`
+  
+   If you want to take the complete control over the auth process follow this steps:
+
    * Find the user with `userManager.FindByEmailAsync(userLoginModel.Email)` <- We use FindEmail because the email is our username
    * Check if the response is not null and `CheckPasswordAsync(responseFromFindByEmail, userLoginModel.Password)`
    * If True: Instance a new `ClaimIdentity` and add the Claims for NameIdentifier and Name
@@ -152,6 +155,19 @@ and add the MappingProfile
          await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme,
             new ClaimsPrincipal(identity));`
       ```
+---
+   
+   The next steps use `SignInManger<TUser>` class  to speed up the process of auth
+   * Inject `SignInManager<User>` in the controller
+   * Save the result of `PasswordSignInAsync()` method, accepts four parameters: Username, Password, Persist Cookie, and LockOut on Failure
+   
+   ```csharp
+    var result = await _signInManager.PasswordSignInAsync(userModel.Email, userModel.Password, userModel.RememberMe, false);
+   ```
+   * Check if the `result.Succeeded`
+
+---   
+
    * Redirect to Index `return RedirectToAction(nameof(HomeController.Index), "Home");`
    * If False: Add a ModelError and return the View without parameters 
    `ModelState.AddModelError("", "Invalid UserName or Password");`
@@ -167,6 +183,30 @@ and add the MappingProfile
             }
             </ul>
       ```
+### Logout Implementation
+   1. Add an action Logout method with the POST attribute in the Controller, with the `SignInManager` you can use the `SignOutAsync()` method
+   2. Redirect to Index
+   3. Modify the View, inject the SignInManager and UserManager classes and then just check if our user is signed in to display a welcome message and the Logout button or with `@if (User.Identity.IsAuthenticated)`
+   ```csharp
+         @using Microsoft.AspNetCore.Identity
+         @inject SignInManager<User> SignInManager
+         @inject UserManager<User> UserManager
+         //---------------------------------------
+         @if (SignInManager.IsSignedIn(User))
+      {
+         <li class="nav-item">
+               <a class="nav-link text-dark" asp-controller="Home" asp-action="Index" 
+                  title="Welcome">Welcome @User.Identity.Name!</a>
+         </li>
+         <li class="nav-item">
+               <form class="form-inline" asp-controller="Account" asp-action="Logout">
+                  <button type="submit" class="nav-link btn btn-link text-info">Logout</button>
+               </form>
+         </li>
+      }
+   ```
+
+
 
 ## Identity Options
 
@@ -187,3 +227,40 @@ and add the MappingProfile
    When you are not authenticated, the app redirect to Account/Login, to change that
    we need to change the LoginPath when configuring services
    `services.ConfigureApplicationCookie(o => o.LoginPath = "/Authentication/Login");`
+
+### Custom Claims
+
+   In order to add custom properties declared in the User extension model, we need to override 
+   the `GenerateClaimsAsync` method.
+   1. Create a custom class, inherit from UserClaimsPrincipalFactory<TUser> and send `UserManager<User>` and `IOptions<IdentityOptions>` objects
+   ```csharp
+      public class CustomClaimsFactory : UserClaimsPrincipalFactory<User>
+      {
+         public CustomClaimsFactory(UserManager<User> userManager, IOptions<IdentityOptions> optionsAccessor)
+            : base(userManager, optionsAccessor)
+         {
+         }
+      }
+   ```
+   2. Override `GenerateClaimsAsync` method, pass a User model, this method return `ClaimsIdentity`. Pass the user to the base implementation method and save it.
+   3. Add Claims with the custom properties, add the roles and return the identity
+   ```csharp
+         protected override async Task<ClaimsIdentity> GenerateClaimsAsync(User user)
+         {
+            var identity = await base.GenerateClaimsAsync(user);
+            identity.AddClaim(new Claim("firstname", user.FirstName));
+            identity.AddClaim(new Claim("lastname", user.LastName));
+
+            var roles = await UserManager.GetRolesAsync(user);
+            foreach (var role in roles)
+            {
+               identity.AddClaim(new Claim(ClaimTypes.Role, role));
+            }
+                     
+            return identity;
+         }
+   ```
+   1. Register the class 
+   ```csharp
+      services.AddScoped<IUserClaimsPrincipalFactory<User>, CustomClaimsFactory>(); 
+   ```
