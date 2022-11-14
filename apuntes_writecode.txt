@@ -32,7 +32,7 @@ function myName() {
 
  Principles for clean code:
  https://onextrapixel.com/10-principles-for-keeping-your-programming-code-clean/
- 1. Revise Your Logic Before Coding
+1. Revise Your Logic Before Coding
 2. Clearly Expose the Structure of the Page
 3. Use the Correct Indentation
 4.- Write explanatory comments
@@ -51,3 +51,15 @@ Examples of good comment use are:
 8. Treat Changes with Caution
 9. Avoid Indiscriminate Mixing of Coding Languages
 10. Summarize Your Imports
+
+Refactor:
+
+Make a series of small, careful, obviously-correct refactorings that gradually improve the code.
+https://stackoverflow.com/questions/51432522/more-elegant-linq-alternative-to-foreach-extension
+
+    Extract complex code to helper methods
+    Replace ForEach with real loops
+    Eliminate unnecessary ToLists
+    Revisit earlier decisions when you realize there's an improvement to be made
+    Recognize when you are re-implementing simple helper methods
+    Don't stop with one improvement! Each improvement makes it possible to do another.
