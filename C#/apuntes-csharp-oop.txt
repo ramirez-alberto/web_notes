@@ -67,7 +67,7 @@ Inheritance (https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/tutoria
     You can apply the sealed keyword to indicate that a class cannot serve as a 
             base class for any additional classes. 
 
-    Syntax class DerivedClass : BaseClass
+    Syntax scope class DerivedClass : BaseClass
     Constructor for derived class 
         Derived class must explicitly call constructor of base class. You declare a 
         constructor that can pass arguments to the base class constructor.
@@ -78,9 +78,11 @@ Inheritance (https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/tutoria
 
 Polymorfism
     In the base class declare a virtual function
-        public virtual void MyFunction(){}
+        scope virtual void MyFunction(){}
     Define the new implementation in the derived class (overriding the base class implementation)
-        public override void MyFunction(){}
+        scope override void MyFunction(){}
+    If you want to, you can still access the inherited method, even when you override it, 
+    using the base keyword.
 
     For abstract methods the derived class must re-implement the methods
         Note The base class does not provide an implementation for an abstract method
@@ -90,11 +92,14 @@ Polymorfism
          This technique allows you to have a single implementation for initializing 
          an object even though client code can choose one of many constructors.
 
-        public MyConstructor(string name, decimal initialBalance) : this(name, initialBalance, 0) { }
+        public MyConstructor(string name, decimal initialBalance) 
+            : this(name, initialBalance, 0) { }
         public BankAccount(string name, decimal initialBalance, decimal minimumBalance)
 
         Derived class
-        public MyDerivedClassConstructor(string name, decimal initialBalance, decimal creditLimit) : base(name, initialBalance, -creditLimit)
+        public MyDerivedClassConstructor
+            (string name, decimal initialBalance, decimal creditLimit) 
+            : base(name, initialBalance, -creditLimit)
 
 Assign a higher rank object to a lower rank object using the “as” keyword
     XMLWriter newWriter = writer as XMLWriter;

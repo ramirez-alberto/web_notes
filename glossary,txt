@@ -49,5 +49,6 @@ In HTML, accessibility is important
  service-in-service scenario in which you inject the MessageService into the 
  HeroService which is injected into the HeroesComponent
 
-
  Substitution parameters in SQL
+
+ RIGID CODE code with dependencies
