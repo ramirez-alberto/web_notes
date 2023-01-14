@@ -29,3 +29,4 @@ Bandit -> Scan source code for vulnerabilities. Open-source static application s
 wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-CD0267EN-SkillsNetwork/labs/module3/web_app_example.py
 
  flask-talisman for http headers
+ ClosedXML nuget 

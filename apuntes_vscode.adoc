@@ -1,0 +1,53 @@
+= Vscode
+
+== Quick shortcuts
+
+Ctrl-Shift-P	Editor PlayGround 
+
+*Add a cursor*
+Ctrl-Alt-Up or  Ctrl-Alt-Down or Alt-Click
+Select a word and Ctrl-Shift-L for select all instances.
+
+*Intellisense*
+Ctrl-Space
+
+*Line Actions*
+Shift-Alt-Up or Shift-Alt-Down :	Copy a line
+Alt-Up or Alt-Down:	Move Line
+Ctrl-Shift-K	Remove Line
+Ctrl-/:	Comment Line
+
+*Rename Refactoring*
+F2 in a sybol for renama all instances
+
+*Formatting*
+Shift-Alt-F all document
+Ctrl K Ctrl-F Current selection
+
+*Code Folding*
+Ctrl-Shift-[ for folding
+
+*Errors*
+F8	Navigate Errors
+
+*Snippets*
+*
+
+Ctrl-\	Split Screen
+
+
+== Generate SSH key for development hosts
+
+*For Windows* 
+----
+ssh-keygen -t ed25519 -f "$HOME\.ssh\id_ed25519-remote-ssh"
+----
+Set the PUBKEYPATH to the id_ed25519-remote-ssh.pub file instead.
+
+*Authorize your macOS or Linux machine to connect*
+----
+$USER_AT_HOST="your-user-name-on-host@hostname"
+$PUBKEYPATH="$HOME\.ssh\id_ed25519.pub"
+
+$pubKey=(Get-Content "$PUBKEYPATH" | Out-String); ssh "$USER_AT_HOST" "mkdir -p ~/.ssh && chmod 700 ~/.ssh && echo '${pubKey}' >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
+----
