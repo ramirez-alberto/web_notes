@@ -54,3 +54,5 @@ In HTML, accessibility is important
  RIGID CODE code with dependencies
  
  proof of concept (PoC) implementation
+
+ Code-first: FIrst you create the data-access layer like model and next you program controllers and views

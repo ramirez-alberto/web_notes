@@ -1,0 +1,12 @@
+= SQL Notes
+
+== Execution Order
+
+. FROM, JOIN
+. WHERE
+. GROUP BY
+. HAVING
+. SELECT
+. DISTINCT
+. ORDER BY
+. FETCH FIRST
