@@ -1,71 +1,147 @@
 = AWS Technical Essentials
+:source-highlighter: highlight.js
 
 == Introducing AWS Amazon Web Services
 
 Cloud computing is the on-demand delivery of IT resources over the internet with pay-as-you-go pricing.
 We’ll need to use these AWS services to architect a scalable, highly available, and cost effective infrastructure to host our application. 
- There are the six main advantages to running your workloads on AWS.
-Pay as you go
-Benefit from massive economies of scale.
-Stop guessing capacity
-Increase speed and agility
-Stop spending money running and maintaining data centers
-Stop spending money running and maintaining data centers
-Go global in minutes.
+There are the six main advantages to running your workloads on AWS.
 
-https://aws.amazon.com/what-is-cloud-computing/
-http://docs.aws.amazon.com/whitepapers/latest/aws-overview/types-of-cloud-computing.html
-https://aws.amazon.com/what-is-aws/
+- Pay as you go
+- Benefit from massive economies of scale.
+- Stop guessing capacity
+- Increase speed and agility
+- Stop spending money running and maintaining data centers
+- Stop spending money running and maintaining data centers
+- Go global in minutes.
 
-Availability Zones or AZ are clusters of datacenters.An AZ consists of one or more data centers with redundant power, networking, and connectivity. 
-Region are cluster of AZ
+=== Resources:
 
-As a basic rule, there are four aspects you need to consider
-when deciding which AWS region to use:
-compliance, latency, price, and service availability. 
+https://aws.amazon.com/what-is-cloud-computing/[What is Cloud Computing]
 
-Latency is all about about how close your IT resources are
-to your user base. 
+http://docs.aws.amazon.com/whitepapers/latest/aws-overview/types-of-cloud-computing.html[Types of Cloud Computing]
+
+https://aws.amazon.com/what-is-aws/[What is AWS]
+
+`Availability Zones` or AZ are clusters of datacenters.An AZ consists of one or more data centers with redundant power, networking, and connectivity. 
+`Region` are cluster of AZ
 
 AWS Regions are independent from one another. This means that your data is not replicated from one Region to another, without your explicit consent and authorization.
 
-Latency. If your application is sensitive to latency, choose a Region that is close to your user base. This helps prevent long wait times for your customers. Synchronous applications such as gaming, telephony, WebSockets, and IoT are significantly affected by higher latency, but even asynchronous workloads, such as ecommerce applications, can suffer from an impact on user connectivity.
- 
-Price. Due to the local economy and the physical nature of operating data centers, prices may vary from one Region to another. The pricing in a Region can be impacted by internet connectivity, prices of imported pieces of equipment, customs, real estate, and more. Instead of charging a flat rate worldwide, AWS charges based on the financial factors specific to the location.  
- 
-Service availability. Some services may not be available in some Regions. The AWS documentation provides a table containing the Regions and the available services within each one.
- 
-Data compliance. Enterprise companies often need to comply with regulations that require customer data to be stored in a specific geographic territory. If applicable, you should choose a Region that meets your compliance requirements.
+As a basic rule, there are four aspects you need to consider when deciding which AWS region to use:
+*compliance*, *latency*, *price*, and *service availability*. 
 
-Maintain Resiliency
+`Latency` is all about about how close your IT resources are to your user base. If your application is sensitive to latency, choose a Region that is close to your user base. This helps prevent long wait times for your customers. Synchronous applications such as gaming, telephony, WebSockets, and IoT are significantly affected by higher latency, but even asynchronous workloads, such as ecommerce applications, can suffer from an impact on user connectivity.
+ 
+`Price`. Due to the local economy and the physical nature of operating data centers, prices may vary from one Region to another. The pricing in a Region can be impacted by internet connectivity, prices of imported pieces of equipment, customs, real estate, and more. Instead of charging a flat rate worldwide, AWS charges based on the financial factors specific to the location.  
+ 
+`Service availability`. Some services may not be available in some Regions. The AWS documentation provides a table containing the Regions and the available services within each one.
+ 
+`Data compliance`. Enterprise companies often need to comply with regulations that require customer data to be stored in a specific geographic territory. If applicable, you should choose a Region that meets your compliance requirements.
+
+== Maintain Resiliency
 
 To keep your application available, you need to maintain high availability and resiliency. A well-known best practice for cloud architecture is to use Region-scoped, managed services.
 When that is not possible, make sure the workload is replicated across multiple AZs. At a minimum, you should use two AZs. If one entire AZ fails, your application will have infrastructure up and running in at least a second AZ to take over the traffic.
 
+=== Resources
+
 https://aws.amazon.com/about-aws/global-infrastructure/
+
 https://docs.aws.amazon.com/whitepapers/latest/aws-overview/global-infrastructure.html
+
 https://aws.amazon.com/about-aws/global-infrastructure/regions_az/
+
 https://docs.aws.amazon.com/general/latest/gr/rande.html
+
 https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/
 
-You can make these API calls in several ways
-but the three main ways we're going to talk about
-are the AWS Management Console,
-the AWS Command Line Interface
-and the AWS Software Development Kits or SDKs. 
+== Interact with AWS via API calls
 
-Working with AWS API
+You can make API calls in several ways but the three main ways we're going 
+to talk about are the `AWS Management Console`, the `AWS Command Line Interface`
+and the `AWS Software Development Kits` or SDKs. 
+
+=== Working with AWS API
+
 https://docs.aws.amazon.com/awsconsolehelpdocs/latest/gsg/getting-started.html
+
 https://aws.amazon.com/cli/
+
 https://aws.amazon.com/es/developer/tools/
 
+== AWS Shared Responsibility Model
 
+https://aws.amazon.com/compliance/shared-responsibility-model/[AWS: Shared Responsibility Model]
 
+=== Root User
 
+The root user is the email you use to create an AWS account, and has two sets of credentials associated with it.
+One set is the username/password used to create the account which allow access to AWS Management Console. The second set is called access keys, which allow you to make requests from the AWS CLI or AWS API. 
+Access keys consist in an access key ID and a secret access key
 
+.To ensure the safety of the root user:
 
+   - Choose a strong password for the root user.
 
+   - Never share your root user password or access keys with anyone.
 
+   - Disable or delete the access keys associated with the root user.
+
+   - Do not use the root user for administrative tasks or everyday tasks
+
+.Delete Your Keys to Stay Safe
+
+If you don't already have an access key for your AWS account root user, don't create one unless you absolutely need to. If you do have an access key for your AWS account root user and want to delete the keys:
+
+    Go to the  My Security Credentials page in the AWS Management Console and sign in with the root user’s email address and password.
+
+    Open the Access keys section.
+
+    Under Actions, click Delete.
+
+    Click Yes.
+
+https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_enable_physical.html[AWS: Enabling a Hardware MFA Device (Console)]
+
+https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_enable_u2f.html[AWS: Enabling a U2F Security Key (Console)]
+
+https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_enable_virtual.html[AWS: Enabling a Virtual Multi-Factor Authentication (MFA) Device (Console)]
+
+https://aws.amazon.com/iam/features/mfa/[AWS: Table of Supported MFA Devices]
+
+https://docs.aws.amazon.com/general/latest/gr/root-vs-iam.html#aws_tasks-that-require-root[Tasks that require the use of root user credentials ]
+
+== AWS Identity and Access Management
+
+IAM is a web service that enables you to manage access to your AWS account and resources. It also provides a centralized view of who and what are allowed inside your AWS account (authentication), and who and what have permissions to use and work with your AWS resources (authorization).
+
+All API call in AWS must be both signed and authenticated - no matter if the resources live in the same account.
+Everything in AWS is an API call. IAM policies are JSON-based documents. 
+This IAM policy document contains permissions that allow the identity to which it's attached to perform
+any EC2-related action. The structure of an IAM policy has an effect which is either allow or deny,
+and action, which is the AWS API call. In this case, we have ec2:* 
+
+[source,json]
+----
+{
+    "Statement" : [{
+        "Effect" : "Allow",
+        "Action" : "ec2:*",
+        "Resource" : 
+        "Condition":{}
+    }]
+}
+----
+
+You can use IAM to generate credentials for administrative users, but you need to use role based access in the 
+application level.
+
+https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html[What is IAM?]
+
+https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html[AWS IAM Identities]
+
+https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html[Access Management with AWS IAM]
 
 
 the new product feature’s time-to-market is increasing 
