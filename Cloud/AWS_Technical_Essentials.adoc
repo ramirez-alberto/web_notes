@@ -117,7 +117,8 @@ https://docs.aws.amazon.com/general/latest/gr/root-vs-iam.html#aws_tasks-that-re
 IAM is a web service that enables you to manage access to your AWS account and resources. It also provides a centralized view of who and what are allowed inside your AWS account (authentication), and who and what have permissions to use and work with your AWS resources (authorization).
 
 All API call in AWS must be both signed and authenticated - no matter if the resources live in the same account.
-Everything in AWS is an API call. IAM policies are JSON-based documents. 
+Everything in AWS is an API call. IAM policies are JSON-based documents. Policies can be applied to AWS identities
+like users and groups to assign permissions. 
 This IAM policy document contains permissions that allow the identity to which it's attached to perform
 any EC2-related action. The structure of an IAM policy has an effect which is either allow or deny,
 and action, which is the AWS API call. In this case, we have ec2:* 
@@ -136,6 +137,7 @@ and action, which is the AWS API call. In this case, we have ec2:*
 
 You can use IAM to generate credentials for administrative users, but you need to use role based access in the 
 application level.
+User access keys only expire when you or the admin of your account rotates these keys. User login credentials expire if you have applied a password policy to your account that forces users to rotate their passwords.
 
 https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html[What is IAM?]
 
@@ -143,5 +145,75 @@ https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html[AWS IAM Identities]
 
 https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html[Access Management with AWS IAM]
 
+=== IAM Roles.
+An IAM role is an identity that can be assumed by someone or something who needs temporary access to AWS credentials,
+and they are automatically rotated. The credentials that they provide expire and roles are assumed programmatically
+
+=== IAM Best practices
+
+- Lock Down the AWS Root User
+- Follow the Principle of Least Privilege
+- Use IAM Roles When Possible
+- Consider Using an Identity Provider
+- Consider AWS IAM Identity Center (Successor to AWS Single Sign-On)
+
+=== Resources
+https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html[AWS: Security Best Practices in IAM]
+https://aws.amazon.com/blogs/security/how-to-create-and-manage-users-within-aws-sso/[How to create and manage users within AWS IAM Identity Center]
+
+=== Hosting an app
+
+Every EC2 instance you launch using AWS must live inside of a network, you can use the deafult VPC (Virtual Private Cloud).
+`Amazon EC2` Elastic Compute Cloud is a compute service that allows you to host virtual machines called instances
+
+== Compute as a Service
+
+=== Resources
+
+https://docs.aws.amazon.com/whitepapers/latest/aws-overview/compute-services.html[AWS: Compute Services Whitepaper]
+https://aws.amazon.com/products/compute/[AWS: Compute on AWS]
+https://aws.amazon.com/blogs/compute/[AWS: AWS Compute Blog]
+
+== Amazon Elastic Compute Cloud
+
+Pay per second or per hour,depending on the type of instance.
+
+To select the operating system for your server,you must choose an `Amazon Machine Image` or an `AMI`.
+
+https://aws.amazon.com/ec2/[AWS: Amazon EC2]
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html[AWS: Amazon Machine Images (AMI)]
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html[AWS: Creating an Amazon EBS-backed Linux AMI]
+https://docs.aws.amazon.com/imagebuilder/latest/userguide/what-is-image-builder.html[AWS: What Is EC2 Image Builder?]
+
+You only get charged for an EC2 instance if you are in the running state or if you are in the stopping state, preparing to hibernate. 
+
+=== EC2 Lyfecycle
+
+Your instance sizing will depend on both the demands of your application and the anticipated size of your user base.
+Instance types consist of a prefix identifying the type of workloads they’re optimized for, followed by a size.
+Any resource you put inside the default VPC will be public and accessible by the internet
+AWS services that are scoped at the Availability Zone level must be architected with high availability in mind.
+When architecting any application for high availability, consider using at least two EC2 instances in two separate Availability Zones.
+
+To understand EC2 pricing, let’s decouple the instance price from other services attached to it, such as storage and networking costs. 
+In this unit we refer to the instance cost as the cost associated with the instance in terms of specifications and not the total blended 
+cost of running an instance.
+
+Once an instance is launched in your AWS account, the billing usually accrues on a per-second basis.
+One exception to this pricing convention may be third-party AMIs purchased from the AWS Marketplace, 
+which may have a minimum billing of 1 hour. For more details, check out the resources section of this unit.
+
+https://aws.amazon.com/ec2/[AWS: Amazon EC2]
+https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html[AWS: Default VPC and default subnets]
+https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html[AWS: AWS Reliability Pillar]
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html[AWS: Instance lifecycle]
+https://aws.amazon.com/ec2/pricing/[AWS: Amazon EC2 pricing]
+https://aws.amazon.com/ec2/pricing/on-demand/[Amazon EC2 On-Demand Pricing]
+https://aws.amazon.com/ec2/spot/pricing/[AWS: Amazon EC2 Spot Instances Pricing]
+https://aws.amazon.com/ec2/pricing/reserved-instances/pricing/[AWS: Amazon EC2 Reserved Instances Pricing]
+
+
+
 
 the new product feature’s time-to-market is increasing 
+build a standard three tier application, where you have web servers, application servers and database servers.
