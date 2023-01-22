@@ -204,13 +204,159 @@ One exception to this pricing convention may be third-party AMIs purchased from 
 which may have a minimum billing of 1 hour. For more details, check out the resources section of this unit.
 
 https://aws.amazon.com/ec2/[AWS: Amazon EC2]
+
 https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html[AWS: Default VPC and default subnets]
+
 https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html[AWS: AWS Reliability Pillar]
+
 https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html[AWS: Instance lifecycle]
+
 https://aws.amazon.com/ec2/pricing/[AWS: Amazon EC2 pricing]
+
 https://aws.amazon.com/ec2/pricing/on-demand/[Amazon EC2 On-Demand Pricing]
+
 https://aws.amazon.com/ec2/spot/pricing/[AWS: Amazon EC2 Spot Instances Pricing]
+
 https://aws.amazon.com/ec2/pricing/reserved-instances/pricing/[AWS: Amazon EC2 Reserved Instances Pricing]
+
+== Container Services in AWS
+
+In AWS, containers run on EC2 instances. While running one instance is easy to manage, it lacks high availability 
+and scalability. Most companies and organizations run many containers on many EC2 instances across several Availability Zones.
+
+If you’re trying to manage your compute at a large scale, you need to know:
+
+    How to place your containers on your instances.
+
+    What happens if your container fails.
+
+    What happens if your instance fails.
+
+    How to monitor deployments of your containers.
+
+This coordination is handled by a container orchestration service. AWS offers two container orchestration services: 
+`Amazon Elastic Container Service (ECS)` and `Amazon Elastic Kubernetes Service (EKS)`.
+
+To run and manage your containers, you need to install the Amazon ECS Container Agent on your EC2 instances
+
+=== Amazon ECS Container Agent
+
+To prepare your application to run on Amazon ECS, you create a task definition json text file  that describes one or more containers.
+
+.Example
+
+[source,json]
+----
+{
+    "family": "webserver",
+    "containerDefinitions": [ {
+        "name": "web",
+        "image": "nginx",
+        "memory": "100",
+        "cpu": "99"
+    } ],
+    "requiresCompatibilities": [ "FARGATE" ],
+    "networkMode": "awsvpc",
+    "memory": "512",
+    "cpu": "256"
+}
+----
+
+=== Amazon Elastic Kubernetes Service (Amazon EKS)
+
+Amazon EKS is conceptually similar to Amazon ECS, but there are some differences.
+
+- An EC2 instance with the ECS Agent installed and configured is called a container instance. In Amazon EKS, it is called a worker node.
+- An ECS Container is called a task. In the Amazon EKS ecosystem, it is called a pod.
+
+While Amazon ECS runs on AWS native technology, Amazon EKS runs on top of Kubernetes.
+
+=== Resources
+
+https://aws.amazon.com/containers/services/[AWS: Containers on AWS]
+
+https://www.docker.com/resources/what-container[Docker: What Is a Container?]
+
+https://aws.amazon.com/ecs/[AWS: Amazon Elastic Container Service]
+
+https://github.com/aws/amazon-ecs-agent[Github: Amazon ECS Agent]
+
+https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_instances.html[AWS: Amazon ECS container instances]
+
+https://www.coursera.org/learn/containerized-apps-on-aws[Course: Building Containerized Applications on AWS]
+
+=== AWS Serverless container orchestration
+
+AWS Fargate is a compute platform which can run EKS or ECS on top.
+Every definition of serverless mentions four aspects.
+
+- No servers to provision or manage.
+- Scales with usage.
+- You never pay for idle resources.
+- Availability and fault tolerance are built-in.
+
+=== AWS Lamdba
+
+Lambdba allow you to package and upload your code to the Lambda service creating a "Lambda function". Lambda functions
+run in response to triggers.
+
+Common triggers examples:  HTTP request, an upload of a file to the storage service, Amazon S3, events originating from other AWS services
+or even in-app activity from mobile devices. you only get billed for the resources that you use, down to 100 millisecond intervals.  
+
+.AWS Lambda function handler
+
+When your function is invoked, Lambda runs the handler method. When the handler exits or returns a response, 
+it becomes available to handle another event.
+You can use the following general syntax when creating a function handler in Python:
+
+[source,python]
+----
+def handler_name(event, context): 
+    ...
+    return some_value
+----
+
+.Naming
+
+The Lambda function handler name specified at the time you create a Lambda function is derived from the following:
+the name of the file in which the Lambda handler function is located
+the name of the Python handler function
+
+A function handler can be any name; however, the default on the Lambda console is lambda_function.lambda_handler. 
+This name reflects the function name as lambda_handler, and the file where the handler code is stored in lambda_function.py.
+
+If you choose a different name for your function handler on the Lambda console, you must update the name on the Runtime settings pane. 
+
+.Billing
+
+AWS Lambda lets you run code without provisioning or managing servers, and you pay only for what you use. 
+You are charged for the number of times your code is triggered (requests) and for the time your code executes, 
+rounded up to the nearest 1ms (duration). 
+https://aws.amazon.com/blogs/aws/new-for-aws-lambda-1ms-billing-granularity-adds-cost-savings/[Read more.]
+
+https://aws.amazon.com/blogs/compute/resize-images-on-the-fly-with-amazon-s3-aws-lambda-and-amazon-api-gateway/ [Demo]
+
+https://aws.amazon.com/serverless/#:~:text=Serverless%20is%20the%20native%20architecture,services%20without%20thinking%20about%20servers.[AWS: Serverless]
+
+https://aws.amazon.com/serverless/resources/?serverless.sort-by=item.additionalFields.createdDate&serverless.sort-order=desc[AWS: AWS Serverless resources]
+
+https://aws.amazon.com/lambda/serverless-architectures-learn-more/[AWS: Building Applications with Serverless Architectures]
+
+https://aws.amazon.com/blogs/compute/best-practices-for-organizing-larger-serverless-applications/[AWS: Best practices for organizing larger serverless applications]
+
+https://docs.aws.amazon.com/lambda/latest/dg/lambda-functions.html[AWS: Managing AWS Lambda functions]
+
+https://aws.amazon.com/blogs/architecture/ten-things-serverless-architects-should-know/[AWS: 10 Things Serverless Architects Should Know]
+
+https://alienattack.workshop.aws/[AWS: AWS Alien Attack! A Serverless Adventure]
+
+
+
+
+
+
+
+
 
 
 
