@@ -364,6 +364,8 @@ To create a subnet we need to choose a VPC, IP RANGE and an AZ (Availability Zon
 
 To enable internet connectivity in our VPC we need to attach an Internet gateway (IGW)
 
+A common design pattern is organizing your resources into different groups and creating security groups for each to control network communication between them.
+
 === Virtual Private Gateway (VGW)
 
 Create a VPN between our on-premise data like a data center and the VPC. This ensure our on-premise data is not exposed to the public.
@@ -371,6 +373,11 @@ Create a VPN between our on-premise data like a data center and the VPC. This en
 === Amazon VPC Routing
 
 When you create a new VPC, AWS create a "Main Route Table" which allow traffic between all subnets local to the VPC.
+
+=== Common steps
+
+- *Create* : VPC, Subnet, Gateways, Custom Route tables.
+- *Secure* : Use Network ACL to secure subnets, use Security Groups for EC2 instances. 
 
 === Resources
 
