@@ -351,10 +351,61 @@ https://aws.amazon.com/blogs/architecture/ten-things-serverless-architects-shoul
 https://alienattack.workshop.aws/[AWS: AWS Alien Attack! A Serverless Adventure]
 
 
+== Networking in AWS
+
+A VPC is an isolated network
+
+Min range of ip's in AWS is 16 (/28 in CIDR) and 65,536 (/16).
+
+When creating a VPC you first need to specify the REGION and the IP RANGE in CIDR notation. Next we can create a subnet to 
+achieve a granular control over our resources. Like public data inside a subnet and the db in another subnet. In AWS this act like a VLAN
+
+To create a subnet we need to choose a VPC, IP RANGE and an AZ (Availability Zone).
+
+To enable internet connectivity in our VPC we need to attach an Internet gateway (IGW)
+
+=== Virtual Private Gateway (VGW)
+
+Create a VPN between our on-premise data like a data center and the VPC. This ensure our on-premise data is not exposed to the public.
+
+=== Amazon VPC Routing
+
+When you create a new VPC, AWS create a "Main Route Table" which allow traffic between all subnets local to the VPC.
+
+=== Resources
+
+.CIDR notation and networking
+
+https://web.stanford.edu/class/cs101/network-1-introduction.html[Stanford: Introduction to Computer Networking]
+
+https://www.ionos.com/digitalguide/server/know-how/cidr-classless-inter-domain-routing/[Ionos: CIDR: What is classless inter-domain routing?]
+
+.AWS VPC
+
+https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenario2.html[AWS: VPC with public and private subnets (NAT)]
+
+https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html#CustomRouteTables[AWS: custom route tables]
+
+https://docs.aws.amazon.com/vpn/latest/s2svpn/how_it_works.html#CustomerGateway[Customer Gateway ]
+
+https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html[AWS: What Is Amazon VPC? ]
+
+https://docs.aws.amazon.com/vpc/latest/userguide/how-it-works.html[AWS: VPCs and subnets]
 
 
+.AWS Security and Route Tables
 
+https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html[AWS: Route tables]
 
+https://docs.aws.amazon.com/vpc/latest/userguide/route-table-options.html[AWS: Example routing options]
+
+https://docs.aws.amazon.com/vpc/latest/userguide/WorkWithRouteTables.html[AWS: Working with routing tables]
+
+https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html[AWS: Network ACLs]
+
+https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html[AWS: Security groups for your VPC]
+
+https://aws.amazon.com/es/premiumsupport/knowledge-center/connect-http-https-ec2/[AWS: I host a website on an EC2 instance. How do I allow my users to connect on HTTP (80) or HTTPS (443)?]
 
 
 
