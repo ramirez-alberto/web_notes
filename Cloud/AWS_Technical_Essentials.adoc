@@ -496,7 +496,7 @@ all objects are redundantly stored across multiple AZ
 
 Next, you need to choose a name, this name must be unique across all AWS accounts. The object name is refered as key name
 
-==== S3 Use Cases
+=== S3 Use Cases
 
 The following list summarizes some of the most common ways you can use Amazon S3. 
 
