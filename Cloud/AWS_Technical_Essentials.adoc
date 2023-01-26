@@ -474,13 +474,113 @@ https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html[AWS: Amazon E
 https://aws.amazon.com/ebs/faqs/[AWS: Amazon EBS FAQs]
 
 
+== Amazon RDS
 
+Built off of compute and storage. Underneath the DB is a EC2 instance.
 
+Supported RDBMS
+    
+- Commercial: Oracle, SQL Server
+- Open Source: MySQL, PostgreSQL, MariaDB
+- Cloud Native: Amazon Aurora
 
+Supported Instance families:
 
+- Standard, which include general-purpose instances
+- Memory Optimized, which are optimized for memory-intensive applications
+- Burstable Performance, which provides a baseline performance level, with the ability to burst to full CPU usage.
 
+The storage layer uses Amazon EBS and you can choose between three types of storage:
 
+- General purpose (SSD)
+- Provisioned IOPS (SSD)
+- Magnetic storage (not recommended)
 
+DB subnet group are the subnets where the DB instance reside. To create a DB subnet group you specify:
+
+- The Availability Zones (AZs) that include the subnets you want to add
+- The subnets in that AZ where your DB instance are placed
+
+The subnets you add should be private so they don’t have a route to the internet gateway.
+Access to the DB instance can be further restricted by using network access control lists (ACLs) and security groups. 
+
+=== Automated backups
+
+- Automated backups are turned on by default at a DB instance level and the transaction logs.
+Keep in mind that if you set it to 0, it will also delete all existing automated backups.
+
+If you restore data from an automated backup, you have the ability to do point-in-time recovery. Point-in-time recovery creates a new DB instance using data restored from a specific point in time.
+
+=== Manual Backups
+
+If you want to keep your automated backups longer than 35 days
+
+We can leverage automated and manual backups.
+
+=== Amazon RDS Multi-AZ
+
+ Creates a redundant copy of your database in another AZ. You end up with two copies of your database: a primary copy in a subnet in one AZ and a standby copy in a subnet in a second AZ. 
+
+ The primary copy of your database provides access to your data so that applications can query and display that information. 
+
+The data in the primary copy is synchronously replicated to the standby copy. The standby copy is not considered an active database, and does not get queried by applications.
+
+The reason you can select multiple subnets for an Amazon RDS database is because of the Multi-AZ configuration. You’ll want to ensure that you have used subnets in different AZs for your primary and standby copies.
+
+=== Choosing a DB
+
+.AWS Database Services
+[width="80%",cols="2,8,5",options="header"]
+|=========================================================
+|Database Type |Use Cases |AWS Service
+
+|Relational |Traditional applications, ERP, CRM, e-commerce | Amazon RDS, Amazon Aurora, Amazon Redshift
+
+|Key-value |High-traffic web apps, e-commerce systems, gaming applications | Amazon DynamoDB
+
+|In-memory |Caching, session management, gaming leaderboards, geospatial applications | 
+Amazon ElastiCache for Memcached, Amazon ElastiCache for Redis
+
+|Document | Content management, catalogs, user profiles | Amazon DocumentDB (with MongoDB compatibility)
+|Wide column | High-scale industrial apps for equipment maintenance, fleet management, and route optimization |
+Amazon Keyspaces (for Apache Cassandra)
+
+|Graph | Fraud detection, social networking, recommendation engines | Amazon Neptune
+
+|Time series | IoT applications, DevOps, industrial telemetry | Amazon Timestream
+|Ledger | Systems of record, supply chain, registrations, banking transactions | Amazon QLDB
+
+|=========================================================
+
+=== Resources
+
+.Basics RDBMS
+
+https://aws.amazon.com/relational-database/[AWS: What Is a Relational Database?]
+
+https://aws.amazon.com/products/databases/[AWS: Databases on AWS]
+
+.Amazon RDS
+
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html[AWS: Working With Backups]
+
+https://aws.amazon.com/rds/details/backup/[AWS: Amazon RDS Backup and Restore]
+
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.IAMPolicy.html[AWS: Creating and Using an IAM Policy for IAM Database Access]
+
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.html[AWS: Amazon Virtual Private Cloud VPCs and Amazon RDS]
+
+.Amazon DynamoDB 
+
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html[Introduction to Amazon DynamoDB]
+
+.Choosing a DB
+
+https://aws.amazon.com/products/databases/[AWS: Databases on AWS]
+
+https://aws.amazon.com/blogs/database/?nc=sn&loc=4[AWS: AWS Database Blog]
+
+https://aws.amazon.com/products/databases/freedom/?nc=sn&loc=5[AWS: Database Freedom]
 
 
 
