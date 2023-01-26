@@ -684,9 +684,19 @@ https://aws.amazon.com/blogs/database/?nc=sn&loc=4[AWS: AWS Database Blog]
 
 https://aws.amazon.com/products/databases/freedom/?nc=sn&loc=5[AWS: Database Freedom]
 
+== Monitoring on AWS 
 
+`Amazon CloudWatch` is a monitoring and observability service that collects data
 
+The act of collecting, analyzing, and using data to make decisions or answer questions about your IT resources and systems is called monitoring.You can use the data you collect to watch for operational issues caused by events like over-utilization of resources, application flaws, resource misconfiguration, or security-related events.
 
+You can think of each individual data point that is created by a resource as a metric. Metrics that are collected and analyzed over time become statistic
+
+You could be interested in a wide variety of metrics depending on the types of resources you are using, the goals you have, or the types of questions you want answered.
+
+When you monitor resources, events, and systems over time, you create what is called a baseline. A baseline defines what activity is normal. Using a baseline, you can spot anomalies like unusual traffic spikes or unusual IP addresses accessing your resources.
+
+https://aws.amazon.com/cloudwatch/[AWS: Amazon CloudWatch]
 
 
 
