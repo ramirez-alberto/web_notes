@@ -1,5 +1,9 @@
 = AWS Technical Essentials
 :source-highlighter: highlight.js
+:toc:
+:toc-placement!:
+
+toc::[]
 
 == Introducing AWS Amazon Web Services
 
