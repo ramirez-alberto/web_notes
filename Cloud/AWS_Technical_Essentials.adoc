@@ -473,6 +473,108 @@ https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html[AWS: Amazon E
 
 https://aws.amazon.com/ebs/faqs/[AWS: Amazon EBS FAQs]
 
+.Choose the right storage 
+
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Storage.html[AWS: Storage]
+
+https://aws.amazon.com/products/storage/[AWS: Cloud Storage on AWS]
+
+https://docs.aws.amazon.com/efs/latest/ug/how-it-works.html[Amazon EFS: How it works]
+
+https://aws.amazon.com/fsx/windows/[Amazon FSx for Windows File Server]
+
+https://aws.amazon.com/fsx/lustre/[Amazon FSx for Lustre]
+
+
+
+== Amazon Simple Storage Service (S3)
+
+Amazon is an object storage service, where you can storage objects in containers called buckets. Everything in S3 is provate by default
+
+To create a bucket, at minimum, you need to choose a region and a name. When you choose a region, 
+all objects are redundantly stored across multiple AZ
+
+Next, you need to choose a name, this name must be unique across all AWS accounts. The object name is refered as key name
+
+==== S3 Use Cases
+
+The following list summarizes some of the most common ways you can use Amazon S3. 
+
+- Backup and storage: AWS stores your EBS snapshots in S3.
+- Media hosting: Because you can store unlimited objects, and each individual object can be up to 5 TBs.
+- Software delivery: You can use S3 to host your software applications that customers can download.
+- Data lakes: S3 is an optimal foundation for a data lake because of its virtually unlimited scalability. You can increase storage from gigabytes to petabytes of content, paying only for what you use.
+- Static websites: You can configure your bucket to host a static website of HTML, CSS, and client-side scripts.
+- Static content: Because of the limitless scaling, the support for large files, and the fact that you access any object over the web at any time, S3 is the perfect place to store static content.
+
+=== Access Management for S3
+
+==== IAM Policies
+
+You should use IAM policies for private buckets when:
+
+- You have many buckets with different permission requirements. Instead of defining many different S3 bucket policies, you can use IAM policies instead.
+- You want all policies to be in a centralized location. Using IAM policies allows you to manage all policy information in one location.
+
+==== S3 Bucket Policies
+
+Are attached only a S3 buckets, similar to IAM policies. This bucket policies defined what actions are allowed o denied on the bucket.
+
+You should use S3 bucket policies when: 
+
+- You need a simple way to do cross-account access to S3, without using IAM roles.
+- Your IAM policies bump up against the defined size limit. S3 bucket policies have a larger size limit.
+    
+.Example:
+
+[source,json]
+----
+{
+    "Version":"2012-10-17",
+        "Statement":[{
+            "Sid":"PublicRead",
+            "Effect":"Allow",
+            "Principal": "*",
+            "Action":["s3:GetObject"],
+            "Resource":["arn:aws:s3:::employeebucket/*"]
+        }]
+}
+----
+
+==== Encrypt S3
+
+Amazon S3 reinforces encryption in transit (as it travels to and from Amazon S3) and at rest. To protect data at rest, you can use:
+
+- Server-side encryption: This allows Amazon S3 to encrypt your object before saving it on disks in its data centers and then decrypt it when you download the objects.
+- Client-side encryption: Encrypt your data client-side and upload the encrypted data to Amazon S3. In this case, you manage the encryption process, the encryption keys, and all related tools.
+
+To encrypt in transit, you can use client-side encryption or Secure Sockets Layer (SSL).
+
+==== Use Versioning to Preserve Objects
+
+Versioning enables you to keep multiple versions of a single object in the same bucket. 
+Has three states: Unversioned, Versioning-enabled, Versioning-suspended
+
+==== S3 storage classes
+
+S3 storage classes let you change your storage tier as your data characteristics change. There are six storage classes:
+
+. Amazon S3 Standard
+. Amazon S3 Intelligent-Tiering
+. Amazon S3 Standard-Infrequent Access (S3 Standard-IA)
+. Amazon S3 One Zone-Infrequent Access (S3 One Zone-IA)
+. Amazon S3 Glacier
+. Amazon S3 Glacier Deep Archive
+
+*Automate Tier Transitions with Object Lifecycle Management*
+
+- Transition actions are used to define when you should transition your objects to another storage class.
+- Expiration actions define when objects expire and should be permanently deleted.
+
+The following use cases are good candidates for lifecycle management. 
+
+- Periodic logs: If you upload periodic logs to a bucket, your application might need them for a week or a month. After that, you might want to delete them.
+- Data that changes in access frequency: Some documents are frequently accessed for a limited period of time. After that, they are infrequently accessed. At some point, you might not need real-time access to them, but your organization or regulations might require you to archive them for a specific period. After that, you can delete them.
 
 == Amazon RDS
 
