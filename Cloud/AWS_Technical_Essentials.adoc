@@ -798,7 +798,8 @@ The last challenge to address when having more than one server is the type of av
 
 When you have multiple EC2 scaled horizontally, you can use the ELB service to distribute the requests across the servers (fleet).
 
-By design is highly available and automatically scalable service, that means is a Region service.
+By design is highly available and automatically scalable service, that means is a Region service. 
+You can use ELB the route traffic to EC2 instances as well as containers, IP addresses, and AWS Lambda functions.
 
 ==== Types of Load Balancers
 
@@ -806,6 +807,45 @@ By design is highly available and automatically scalable service, that means is 
 - Network Load Balancer, that load balances TCP, UDP, and TLS traffic.
 - Gateway Load Balancer,which is mostly for routing traffic to third-party applications. 
 
+=== Load Balancing on AWS
+
+Load balancing refers to the process of distributing tasks across a set of resources.
+
+*Steps to distribute request with a Load Balancer*
+
+. Enable the load balancer to take all of the traffic and redirect it to the backend servers based on algorithm. One of the most popular is the round-robin which sends the traffic  ot each server one after the other.
+
+
+==== Features of ELB
+
+- The fact that ELB can load balance to IP addresses means that it can work in a hybrid mode as well, where it also load balances to on-premises servers.
+- ELB is highly available. The only option you have to ensure is that the load balancer is deployed across multiple Availability Zones.
+- In terms of scalability, ELB automatically scales to meet the demand of the incoming traffic. It handles the incoming traffic and sends it to your backend application.
+
+*Connection draining*: ELB can prevent EC2 Auto Scaling from terminating the EC2 instance until all connections to that instance end, while preventing any new connections.
+
+==== ELB Components
+
+- Listeners: Listen for incoming traffic (client-side). There can be many listeners for a single load balancer.
+- Target groups: Define the backend servers and the health checks for each target group.
+- Rules: Used to associate target groups to a listener.
+
+==== Select ELB types
+
+[width="80",cols="1,1,1"]
+|========================================================
+|Feature | Application Load Balancer|Network Load Balancer 
+|Protocols |HTTP, HTTPS | 
+|Connection draining (deregistration delay) | ✔ | 
+|IP addresses as targets | ✔ | ✔
+|Static IP and Elastic IP address | | ✔
+|Preserve Source IP address | | ✔
+|Routing based on Source IP address, path, host, HTTP headers, HTTP method, and query string | ✔ | 
+|Redirects | ✔ |
+|Fixed response | ✔ | 
+|User authentication | ✔ |
+	
+|========================================================
 
 
 === Resources
@@ -815,6 +855,17 @@ By design is highly available and automatically scalable service, that means is 
 https://docs.aws.amazon.com/whitepapers/latest/real-time-communication-on-aws/high-availability-and-scalability-on-aws.html[High Availability and Scalability on AWS]
 
 https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html[AWS: AWS Reliability Pillar: AWS Well-Architected Framework]
+
+.Load Balancing
+
+https://aws.amazon.com/elasticloadbalancing/features/#Product_comparisons[AWS: Elastic Load Balancer product comparison]
+
+https://aws.amazon.com/certificate-manager/[AWS: AWS Certificate Manager]
+
+https://docs.aws.amazon.com/elasticloadbalancing/latest/application/listener-authenticate-users.html[AWS: Authenticate users using an Application Load Balancer]
+
+https://docs.aws.amazon.com/waf/latest/developerguide/how-aws-waf-works.html[AWS: How AWS WAF works]
+
 
 the new product feature’s time-to-market is increasing 
 build a standard three tier application, where you have web servers, application servers and database servers.
