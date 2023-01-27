@@ -768,5 +768,79 @@ https://aws.amazon.com/sns/[AWS: Amazon Simple Notification Service]
 
 https://aws.amazon.com/ec2/autoscaling/[AWS: EC2 Auto Scaling Actions]
 
+== Optimizing solutions on AWS
+
+=== Availability
+
+It is expressed as a percentage of uptime in a given year or as a number of nines.
+
+.List of the percentages of availability based on the downtime per year
+[width="80",cols="1,1",options="header"]
+|==========================================================
+|Availability (%) |Downtime (per year)
+|90% ("one nine") | 36.53 days
+|99% ("two nines") | 3.65 days
+|99.9% ("three nines") | 8.77 hours
+|99.95% ("three and a half nines") | 4.38 hours
+|99.99% ("four nines") | 52.60 minutes
+|99.995% ("four and a half nines") | 26.30 minutes
+|99.999% ("five nines") | 5.26 minutes
+|==========================================================
+
+Understand the Types of High Availability
+The last challenge to address when having more than one server is the type of availability you need—either be an active-passive or an active-active system. 
+
+- *Active-Passive*: With an active-passive system, only one of the two instances is available at a time. One advantage of this method is that for stateful applications where data about the client’s session is stored on the server, there won’t be any issues as the customers are always sent to the same server where their session is stored.
+
+- *Active-Active*: A disadvantage of active-passive and where an active-active system shines is scalability. By having both servers available, the second server can take some load for the application, thus allowing the entire system to take more load. However, if the application is stateful, there would be an issue if the customer’s session isn’t available on both servers. Stateless applications work better for active-active systems.
+
+=== Elastic Load Balancing Service (ELB Service)
+
+When you have multiple EC2 scaled horizontally, you can use the ELB service to distribute the requests across the servers (fleet).
+
+By design is highly available and automatically scalable service, that means is a Region service.
+
+==== Types of Load Balancers
+
+- Application Load Balancer, that load balances HTTP and HTTPS traffic.
+- Network Load Balancer, that load balances TCP, UDP, and TLS traffic.
+- Gateway Load Balancer,which is mostly for routing traffic to third-party applications. 
+
+
+
+=== Resources
+
+.Availability
+
+https://docs.aws.amazon.com/whitepapers/latest/real-time-communication-on-aws/high-availability-and-scalability-on-aws.html[High Availability and Scalability on AWS]
+
+https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html[AWS: AWS Reliability Pillar: AWS Well-Architected Framework]
+
 the new product feature’s time-to-market is increasing 
 build a standard three tier application, where you have web servers, application servers and database servers.
+
+availabilty and redundancy
+
+To meet this demands,
+we could scale our instances vertically,
+meaning we could increase the size of the instances we have,
+or we could scale our instances horizontally,
+meaning we could add more instances
+to create a fleet of instances.
+If we scale vertically,
+eventually we'll reach the upper limit
+of scalability for that instance. 
+
+we were simply using
+the instance public DNS name or public IP address,
+but when you have multiple instances,
+you have multiple IPs to route to.
+Instead of maintaining the logic
+to send requests to your various servers,
+you could use a load balancer
+to distribute to those requests
+across a set of resources for you.
+And since you can connect from your load balancer
+to access the application,
+you no longer need to use the public IPs
+of your EC2 instances. 
