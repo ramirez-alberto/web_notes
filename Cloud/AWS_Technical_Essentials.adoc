@@ -700,9 +700,73 @@ You could be interested in a wide variety of metrics depending on the types of r
 
 When you monitor resources, events, and systems over time, you create what is called a baseline. A baseline defines what activity is normal. Using a baseline, you can spot anomalies like unusual traffic spikes or unusual IP addresses accessing your resources.
 
+Many services send information for free as at a rate of one point per metric per 5 minutes interval. This is known as `basic monitoring`.
+
+For `detailed monitoring` you need to pay a fee. This feature send metrics every minute. 
+
+=== Break Down Metrics
+
+Has a timestamp and is organized into containers called *namespaces*. Every metric has attached
+a *dimension*. A *dimension* is a name/value pair. This is used to filter the results. 
+
+You can create custom metrics. And if you want more granularity you can use *high-resolution custom metrics* which enable you to collect custom metrics down to a 1-second resolution.
+
+Other examples of custom metrics are: 
+
+- Web page load times
+- Request error rates
+- Number of processes or threads on your instance
+- Amount of work performed by your application
+
+=== Amazon Cloudwatch
+
+It is a managed service. You can create dashboards and pull data from different Regions into a single dashboard in order to create a global view of your architecture.
+
+You can use external or custom tools to ingest and analyze CloudWatch metrics using the GetMetricData API.
+
+You can control who has access to view or manage Cloudwatch through AWS IAM policies.
+
+CloudWatch Logs can monitor, store, and access your log files from apps running on Amazon EC2 instances.
+
+==== CloudWatch Logs Terminology
+
+*Log event*: A log event is a record of activity recorded by the application or resource being monitored, and it has a timestamp and an event message.
+
+*Log stream*: Log events are then grouped into log streams, which are sequences of log events that all belong to the same resource being monitored.
+
+*Log groups*: Log streams are then organized into log groups. A log group is composed of log streams that all share the same retention and permissions settings.
+
+==== CloudWatch Alarm
+
+Automatically initiate actions based on sustained state changes of your metrics. To set up an alarm you need to choose the metric, the threshold, and the time period.
+
+An alarm has three possible states.
+
+- OK: The metric is within the defined threshold. Everything appears to be operating like normal.
+- ALARM: The metric is outside of the defined threshold. This could be an operational issue.
+- INSUFFICIENT_DATA: The alarm has just started, the metric is not available, or not enough data is available for the metric to determine the alarm state.
+
+Actions can be an Amazon EC2 action, an Auto Scaling action, or a notification sent to Amazon Simple Notification Service (SNS).
+
+=== Resources
+
 https://aws.amazon.com/cloudwatch/[AWS: Amazon CloudWatch]
 
+.Alarms and Logging
 
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/GettingStarted.html[AWS: Getting Started with Amazon CloudWatch]
+
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html[AWS: What Is Amazon CloudWatch Logs?]
+
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/aws-services-cloudwatch-metrics.html[AWS Services That Publish CloudWatch Metrics]
+
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/viewing_metrics_with_cloudwatch.html[AWS: View Available Metrics]
+
+https://aws.amazon.com/cloudwatch/pricing/[AWS: Amazon CloudWatch Pricing]
+
+https://aws.amazon.com/sns/[AWS: Amazon Simple Notification Service]
+
+https://aws.amazon.com/ec2/autoscaling/[AWS: EC2 Auto Scaling Actions]
 
 the new product feature’s time-to-market is increasing 
 build a standard three tier application, where you have web servers, application servers and database servers.
