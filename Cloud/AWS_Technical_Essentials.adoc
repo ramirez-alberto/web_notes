@@ -866,6 +866,20 @@ https://docs.aws.amazon.com/elasticloadbalancing/latest/application/listener-aut
 
 https://docs.aws.amazon.com/waf/latest/developerguide/how-aws-waf-works.html[AWS: How AWS WAF works]
 
+.EC2 Autoscaling 
+
+https://aws.amazon.com/ec2/autoscaling/[AWS: Amazon EC2 Auto Scaling]
+
+https://aws.amazon.com/ec2/autoscaling/faqs/[AWS: Amazon EC2 Auto Scaling FAQs]
+
+https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-capacity-limits.html[AWS: Setting capacity limits for your Auto Scaling Group]
+
+https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scaling-simple-step.html[AWS: Step and simple scaling policies for Amazon EC2 Auto Scaling]
+
+https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scaling-target-tracking.html[AWS: Target tracking scaling policies for Amazon EC2 Auto Scaling]
+
+https://docs.aws.amazon.com/autoscaling/ec2/userguide/create-asg-launch-template.html[AWS: Creating an Auto Scaling Group using a launch template]
+
 
 the new product feature’s time-to-market is increasing 
 build a standard three tier application, where you have web servers, application servers and database servers.
