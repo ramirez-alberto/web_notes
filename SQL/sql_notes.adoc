@@ -10,3 +10,14 @@
 . DISTINCT
 . ORDER BY
 . FETCH FIRST
+
+== Transactions
+
+Transactions are an unit of work, consisting of one or more SQL statements. 
+
+In development there are ACID transactions:
+
+- *Atomic* - All changes must be performed successfully or not at all.
+- *Consistent* - Data must be in a consistent state before and after the transaction.
+- *Isolated* - No other process can change the data while the transaction is running.
+- *Durable* - The changes made by the transaction must persist. 
