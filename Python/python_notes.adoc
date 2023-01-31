@@ -9,6 +9,9 @@ Alberto R
 |type(value)
 |Check for type bool,int,float,etc
 
+|id(var_name)
+|Check if var point to the same position in memory
+
 |int(value)
 |Cast to type
 
@@ -40,10 +43,12 @@ def decorator(func):
 
 @decorator
 def my_func():
-    return value;
+    return value
 
 #the same as decorator(my_func) 
 ----
+
+== Methods
 
 Static code analysis (pylint):
     Pylint check for non-compliant lines
@@ -53,7 +58,7 @@ figlet
 Expression with operator
     24//5 - Divide and round, the symbol // represent integer value
 
-Strings 
+=== Strings 
     Are immutable, string methods always return new values
     "hola"[0] = "sd" --no se puede
     "Hola"[::2] - stride, show each second char [begin:end exclusive:stride]
@@ -62,8 +67,8 @@ Strings
 
     Method: string.upper, string.replace(), string.find()
 
-Tuple sorted(Tuple)
-Dictionary 
+=== Tuple sorted(Tuple)
+=== Dictionary 
     del(Dict[key]), key in Dict , Dict.keys(), Dict.values()
 Set like a list but only hold unique values(remove duplicates). We can cast a list to a set set(List) {}
     set.Add(), set.remove("value"), value in Set
@@ -100,7 +105,7 @@ functions:
             mutable objects pass as reference hence you can make changes to the original var
 
 Objects:
-    All is a objects, function dir(object) check attr and class methods
+    All is an objects, function dir(object) check attr and class methods
     class className(object):
         def __init__(self,var1,var2):
             self.var1 = var1
@@ -195,160 +200,10 @@ Readability counts. This is an important point in the zen of Python.
     Name your constants in all capital letters with underscores separating words, like MAX_FILE_UPLOAD_SIZE, YEAR.
 
 ​ For more information you can refer to https://www.python.org/dev/peps/pep-0008/
-    int(value) - Cast to type
-    sys.float_info - check for float specifics (max value for runtime environment,etc)
-    len() 
-    for n,m in zip(list1,list2)
-figlet
-Folder structure: 1st folder> Project_name , 2nd> App_name
-Decorators
 
-Static code analysis (pylint):
-    Pylint check for non-compliant lines
+== Modules
 
+=== Flask
 
-Expression with operator
-    24//5 - Divide and round, the symbol // represent integer value
-
-Strings 
-    Are immutable, string methods always return new values
-    "hola"[0] = "sd" --no se puede
-    "Hola"[::2] - stride, show each second char [begin:end exclusive:stride]
-    3*"Hola" = "HolaHolaHola"
-    print(r"Hola \") - the letter r is for escape char in the string
-
-    Method: string.upper, string.replace(), string.find()
-
-Tuple sorted(Tuple)
-Dictionary 
-    del(Dict[key]), key in Dict , Dict.keys(), Dict.values()
-Set like a list but only hold unique values(remove duplicates). We can cast a list to a set set(List) {}
-    set.Add(), set.remove("value"), value in Set
-    To get the intersection of two sets use & - set1 & set2 return new set with coincidences
-    set1.difference(set2)
-    set1.intersection(set2)
-    set1.union(set2) return all elements
-    set1,issubset(set2) True or False
-    set1.issuperset(set2)
- List
-    Are mutables
-    newList = oldList[:] - copy the list contents into a new list
-    list.extend([1,2,3]) - extend the list
-    list.append([1,2,3]) - append the list
-    list.sort() , string.split(), del(List[index_of_value_to_remove])
-
-Branching:
-    if: else: elif:
-Conditional: and or not
-
-Loops:
-    for i in range(n,n-1), for i in ['a','b','c'], for i,value_in_list in enumerate(list)
-
-Exceptions:
-    https://docs.python.org/3/library/exceptions.html?utm_medium=Exinfluencer&utm_source=Exinfluencer&utm_content=000026UJ&utm_term=10006555&utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkPY0101ENSkillsNetwork19487395-2021-01-01
-    try ... except or except(ExceptionName): or exception(Name1,Name2,Name3)...
-    else (execute something only if there were no errors.) ... 
-    finally (always execute)
-functions:
-    def name(values): or def name(*var_name): pass any arguments, def name(**var): pass args as Dict
-        you can 'return value' or 'pass' if function does nothing,
-        '''Documentation, this display when call help(miFunction)''' 
-    Notes: keyword global myvar to make it global scope available
-            mutable objects pass as reference hence you can make changes to the original var
-
-Objects:
-    All is a objects, function dir(object) check attr and class methods
-    class className(object):
-        def __init__(self,var1,var2):
-            self.var1 = var1
-            self.var2 = var2
-        
-        def custom_Function(self) -> Any: #must return Any type
-        
-File operations
-    with open(file_path,mode) as file:
-        file.readline() , file.readlines(), file.read() or for loop #read functiona
-        file.write("text")    # write functions
-    When use r+ you can file.truncate() 
-    Cursor function:
-        .tell() - returns the current position in bytes
-*       .seek(offset,from) - changes the position by 'offset' bytes with respect 
-            to 'from'. From can take the value of 0,1,2 corresponding to beginning,
-            relative to current position and end
-
-Pandas
-    A DataFrame is a two-dimensional data structure, i.e., data is aligned in a 
-        tabular fashion in rows and columns.
-
-        A Pandas DataFrame will be created by loading the datasets from existing storage.
-        Storage can be SQL Database, CSV file, an Excel file, etc.
-        It can also be created from the lists, dictionary, and from a list of dictionaries.
-
-    Series represents a one-dimensional array of indexed data. It has two main components :
-
-        An array of actual data.
-        An associated array of indexes or data labels.
-
-    functions:
-        df = pd.read_csv(path) or read_excel
-        Convert dictionary,list into df: df=pandas.DataFrame(myDict), call column: df[['ID']] or df[['ID','C2','C3']]
-        To view column as a series use one bracket df['ID']
-        loc[] key based,.iloc[] index based - df.iloc(0,0) or df.loc(0,'ID')
-        .set_index("Name") set a index for loc: df1.loc['Jane', 'Salary'] now you can check by name 
-        .head display first 5 rows
-        .index make a new index
-    Slicing:
-        df.loc[0:3,'dep':'id'] 
-
-    The index is used to access individual data values. You can also get a column 
-    of a dataframe as a Series. You can think of a Pandas series as a 1-D dataframe.
-
-Numpy : check version np.__array__
-    numpy.array(list)
-    vector addition: z = numpyArray1 + numpyArray2 or np.add(numpyArray1,numpyArray2)
-    vector multiplication with a scalar: z = 2y
-    Product of two arrays: z=u*v
-    dot product check how similar two vectors are: z= np.dot(u,v)
-    Broadcasting: z=u+1 add 1 to each value in array
-    Universal functions:
-        array.mean(), max(), np.pi, np.sin(vector), .std() standard deviation
-    Plotting math functions: np.linspace(start,end,num= number?samples)  
-    c[3:5] = 300, 400 assign values to fourth and fifth element or c[listOfIndexes]
-    transposed matrix : 2darray.T
-
-    function: .dtype() get the datatype
-    attr: .size , ndim rank, shape size in each dimension
-
-Test Driven Development 
-    Test runners (example pyunit in examples):
-        unittest = built-in in python: python3 -m unittest or unittest -v for verbose
-        Nose = color coded(Pinocchio) code coverage and better test output: nosetests -v
-               or installing pinocchio: nosetests --with-spec --spec-color
-               or installing coverage: nosetests --with-spec --spec-color --with-coverage
-               coverage report -m check the lines of code missing test cases
-               You can create a setup.cfg (View Week2 Lab TDD)
-
-
-Conventions:
-    Underscore in variable name new_value (serpent case)
-
-Notes:
-    pip install -r requirements.txt 
-    Repo with class and test: REPO: git clone https://github.com/ibm-developer-skills-network/duwjx-tdd_bdd_PracticeCode.git
-    https://labs.cognitiveclass.ai/tools/jupyterlite/lab/tree/labs/PY0101EN/PY0101EN-1-1-Write_your_first_python_code.ipynb?lti=true
-
-Python Style Guide
-
-Readability counts. This is an important point in the zen of Python.
-    Prefer Spaces no tabs for indentation.
-    Use 4 spaces per indentation level.
-    Wrap lines so that they don’t exceed 79 characters.
-    Use blank lines to separate functions and classes, and larger blocks of code inside functions.
-    Put comments on a line of their own
-    Use docstrings.
-    Use spaces around operators and after commas.
-    Name your functions and methods using lower_case_with_underscores
-    Name your classes using CamelCase.
-    Name your constants in all capital letters with underscores separating words, like MAX_FILE_UPLOAD_SIZE, YEAR.
-
-​ For more information you can refer to https://www.python.org/dev/peps/pep-0008/ 
+https://flask.palletsprojects.com/en/0.12.x/tutorial/[Tutorial]
+https://stackoverflow.com/questions/43911510/how-to-write-docstring-for-url-parameters[API with Swagger]
