@@ -64,8 +64,20 @@ Delete branch:
     git branch -D <branch_name>   
     git push --delete origin branch-name delete branch from remote repo
 
+Stash
+    git stash - save the current progress in the stash. This revert the current state
+    of the project to the last commit.
+    git stash pop - Retrieve the last save state and remove it.
+    git stash apply - Only retrieve the last save state.
+
 Rebase
     git rebase -i Change the history of commits
+
+Update code base
+. git remote add upstream github-remote-path
+. git checkout main
+. git pull upstream main
+. git branch -d branch-merged
 
 +Git commit with VSCODE
 git config --global core.editor "code --wait".
