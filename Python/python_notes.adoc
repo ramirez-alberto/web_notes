@@ -1,5 +1,41 @@
 = Python Notes
 Alberto R
+:source-highlighter: highlight.js
+:toc:
+:toc-placement!:
+
+toc::[]
+
+
+== Types
+
+*Dates* - datetime, calendar
+
+=== Other common types
+
+`namedtuple` - A tuple where every position has a indentifier
+
+[source,python]
+----
+Point2D = namedtuple('Point2D', ['x', 'y'])
+offset = Point2D(x=-10, y=-10)
+----
+
+`OrderedDict` - For python 3.6 and below, a OrdereDict is a dict that remembers the order that keys were first inserted
+
+`deque` - In a list, the extraction or insertion of an item has a performance penalty. deque is optimised for this and you can use it as a queue.
+
+`Counter` - Dict where the key is the items in a collection and the values are the number of repetitions.
+
+`defaultdict` - dict with values by default, must pass a callable (function)
+
+
+
+[source,python]
+----
+Point2D = namedtuple('Point2D', ['x', 'y'])
+offset = Point2D(x=-10, y=-10)
+----
 
 == Functions
 
@@ -33,6 +69,7 @@ Project_name
 
 == Decorators
 Wrap another function in order to extent the behaviour of the wrapped function
+Check cache decorator @lru_cache and check @wraps(target)
 
 === Syntax
 
@@ -50,13 +87,29 @@ def my_func():
 
 == Methods
 
-Static code analysis (pylint):
+Static code analysis (pylint) and flake8:
     Pylint check for non-compliant lines
 
+dateutil or Arrow for datetime
+
 figlet
+code vulnerabilities: bandit
 
 Expression with operator
     24//5 - Divide and round, the symbol // represent integer value
+None is null in python
+Ellipsis ... - used as placeholder
+NotImplemented
+
+=== Operators
+
+*Destructured assignation* - a,b = 1,2   , discard elements *_
+
+*Identity* - var1 is var2 , var1 is not var2
+*Equality* - var1 == var2
+*Check for type* type(42) is int
+*Division* - quotient, reminder = divmod(15, 4)
+*Pertenency* - in, not in
 
 === Strings 
     Are immutable, string methods always return new values
@@ -65,12 +118,27 @@ Expression with operator
     3*"Hola" = "HolaHolaHola"
     print(r"Hola \") - the letter r is for escape char in the string
 
-    Method: string.upper, string.replace(), string.find()
+- Method: string.upper, string.replace(), string.find()
+
+- Multiline text """ multililne text """
+
+- We can concatenate without operator: print("HELLO" "WORLD")
+
+- Format https://docs.python.org/3/library/string.html#formatspec
 
 === Tuple sorted(Tuple)
+
+
 === Dictionary 
-    del(Dict[key]), key in Dict , Dict.keys(), Dict.values()
-Set like a list but only hold unique values(remove duplicates). We can cast a list to a set set(List) {}
+    del(Dict[key]) or del Dict[key], key in Dict , Dict.keys(), Dict.values(), Dict.items()
+    dict([('red', 3), ('orange', 2), ('green', 1)])
+    dict.get(key) - return the value
+    Add another dict - danger_level_by_color.update({'black': 1000, 'red': 100, 'orange': 10})
+    Unpack dict - {**danger_level_by_color, 'black': 4, 'red': 3, 'orange': 2}
+
+=== Set 
+
+Like a list but only hold unique values(remove duplicates). We can cast a list to a set set(List) {}
     set.Add(), set.remove("value"), value in Set
     To get the intersection of two sets use & - set1 & set2 return new set with coincidences
     set1.difference(set2)
@@ -78,31 +146,37 @@ Set like a list but only hold unique values(remove duplicates). We can cast a li
     set1.union(set2) return all elements
     set1,issubset(set2) True or False
     set1.issuperset(set2)
- List
+
+=== List
     Are mutables
+    Unpack a list - extended_color = [*list_of_colors, 'super-violet', 'ultraviolet']
     newList = oldList[:] - copy the list contents into a new list
     list.extend([1,2,3]) - extend the list
     list.append([1,2,3]) - append the list
     list.sort() , string.split(), del(List[index_of_value_to_remove])
 
-Branching:
-    if: else: elif:
+=== Branching:
+if: else: elif:
 Conditional: and or not
 
-Loops:
+=== Loops:
     for i in range(n,n-1), for i in ['a','b','c'], for i,value_in_list in enumerate(list)
 
-Exceptions:
+=== Exceptions:
     https://docs.python.org/3/library/exceptions.html?utm_medium=Exinfluencer&utm_source=Exinfluencer&utm_content=000026UJ&utm_term=10006555&utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkPY0101ENSkillsNetwork19487395-2021-01-01
     try ... except or except(ExceptionName): or exception(Name1,Name2,Name3)...
     else (execute something only if there were no errors.) ... 
     finally (always execute)
-functions:
+
+=== Functions:
+
     def name(values): or def name(*var_name): pass any arguments, def name(**var): pass args as Dict
         you can 'return value' or 'pass' if function does nothing,
         '''Documentation, this display when call help(miFunction)''' 
     Notes: keyword global myvar to make it global scope available
             mutable objects pass as reference hence you can make changes to the original var
+
+    closure 
 
 Objects:
     All is an objects, function dir(object) check attr and class methods
@@ -180,6 +254,32 @@ Test Driven Development
 Conventions:
     Underscore in variable name new_value (serpent case)
 
+=== Controlled failure
+
+- `assert` - used when debugging code, if not true will raise an AssertionError
+
+[source,python]
+----
+assert self._state == 'OPEN', 'state of the request is invalid'
+----
+
+- `raise` - raise an exception
+
+[source,python]
+----
+raise RuntimeError(f'method must be one of {accepted}')
+----
+
+=== Annotations
+
+These are arbitrary values.
+To explicit type a parameter use `parameter: type` and to type the return value use `-> return_type`
+
+[source,python]
+----
+def send(self, method: str) -> None:
+----
+
 Notes:
     pip install -r requirements.txt 
     Repo with class and test: REPO: git clone https://github.com/ibm-developer-skills-network/duwjx-tdd_bdd_PracticeCode.git
@@ -200,6 +300,25 @@ Readability counts. This is an important point in the zen of Python.
     Name your constants in all capital letters with underscores separating words, like MAX_FILE_UPLOAD_SIZE, YEAR.
 
 ​ For more information you can refer to https://www.python.org/dev/peps/pep-0008/
+
+=== Libs
+
+Programmatically  import a module: importlib.import_module('decimal')
+Extract elemento from module: getattr(collections, 'namedtuple')
+Modules load in order from sys.path
+Cached modules in sys.modules
+
+=== Common practices with modules
+
+Add a shebang: #!/usr/bin/env python3
+Add codification and license in comments, next is the docstring and the author ..moduleauthor: MyName <hola@mail.com>
+[python]
+----
+# -*- encoding: utf-8 -*-
+
+----
+You can versioning your modules with __version__ = '1.2.3', check https://www.python.org/dev/peps/pep-0396/
+Private definition starts with a underscore def _main()
 
 == Modules
 
