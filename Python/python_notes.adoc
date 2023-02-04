@@ -186,6 +186,25 @@ Objects:
             self.var2 = var2
         
         def custom_Function(self) -> Any: #must return Any type
+    
+    @classmethod -  You must pass a class as a parameter to the method, by convention the keyword `cls` is used.
+
+    @staticmethod - the method behave as a function
+
+    Stop dynamics creation of attributes with __slots__
+
+    You can define a method behave like a read-only property with @property decorator, to define
+    a setter you need to create a method and decorate with method_name.setter
+
+    isinstance e issubclass \
+
+=== Multiple Inheritance
+
+    Class.__bases__ - check inherit class or __bases__[0].__bases__ for multiple inheritance 
+
+    You can access the attributes of the base class with super().method()
+
+    With `__mro__` (Method Resolution Order) you can check how python navigate super classes 
         
 File operations
     with open(file_path,mode) as file:
