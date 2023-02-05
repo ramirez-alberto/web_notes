@@ -204,8 +204,72 @@ Objects:
 
     You can access the attributes of the base class with super().method()
 
-    With `__mro__` (Method Resolution Order) you can check how python navigate super classes 
-        
+    With `__mro__` (Method Resolution Order) you can check how python navigate super classes
+
+=== Dynamic typing 
+
+==== Annotations
+
+Access annotations with `ClassName.__annotations__`  or `typing.get_type_hints(ClassName)`
+
+.Examples
+[source,python]
+----
+def myFunc(var: type,var2: type) -> return_type
+
+var, var2 = value,value # type: int,str
+
+# Only 3.6 and above
+class MyClass:
+    version: str = '2.0'
+
+----
+
+=== Logging
+
+*Module: logging*
+
+Default logging is WARNING, you can change the level with `logging.basicConfig(level=logging.DEBUG)`
+
+.Logging Levels
+[cols='1,^1,4',options="header",width="80%"]
+|================================================================
+|Value 	|Nivel 	|Descrición
+|50 	|CRITICAL 	|Un problema que implica el fin de la ejecución.
+|40 	|ERROR    	|Un problema que requiere la intervención del usuario.
+|30 	|WARNING 	|Advierte de un posible problema futuro.
+|20 	|INFO 	    |Confirman que las cosas funcionan como se espera.
+|10 	|DEBUG  	|Información detallada, por motivos de diagnóstico.
+|================================================================
+
+Log an exception with `logger.exception('Someone tried to divide between 0')` inside the except block
+
+.Create multiple loggers
+[source,python]
+----
+import logging
+logging.basicConfig() 
+# Custom format: logging.basicConfig(format='%(asctime)s [%(levelname)s] %(name)s: %(message)s')
+# Append log to file: logging.basicConfig(filename='application.log') 
+control = logging.getLogger('control')
+defense = logging.getLogger('defense')
+control.warning('Enemy approaching')
+defense.warning('Running out of ammo...')
+
+# or per logging module
+
+import logging
+logging.basicConfig()
+logger = logging.getLogger(__name__)
+logger.warning('May I have your attention, please?')
+----
+
+[source,python]
+----
+import logging
+logging.warning('')
+----
+
 File operations
     with open(file_path,mode) as file:
         file.readline() , file.readlines(), file.read() or for loop #read functiona
