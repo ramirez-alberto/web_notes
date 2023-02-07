@@ -1,0 +1,24 @@
+= Flask Notes
+:source-highlighter: highlight.js
+
+
+== Blueprints
+
+A *Blueprint* is a way to organize a group of related views and other code. You register blueprints with `app.register_blueprint(blueprint_var)` 
+
+.Syntax
+[source,python]
+----
+#name, Where it's defined, prepend predix in the uri
+bp = Blueprint('auth', __name__, url_prefix='/auth') 
+
+@bp.route("/")
+def register();
+    ...
+----
+
+You can use `@bp.before_app_request` registers a function that runs before the view function, no matter what URL is requested.
+
+When using a blueprint, the name of the blueprint is prepended to the name of the function, so the endpoint for the login function you wrote above is 'auth.login'.
+
+`g` is a special object that is unique for each request. It is used to store data that might be accessed by multiple functions during the request.

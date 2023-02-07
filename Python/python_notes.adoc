@@ -409,3 +409,8 @@ Private definition starts with a underscore def _main()
 
 https://flask.palletsprojects.com/en/0.12.x/tutorial/[Tutorial]
 https://stackoverflow.com/questions/43911510/how-to-write-docstring-for-url-parameters[API with Swagger]
+
+
+== Publicacion
+
+pip install freeze > requirements.txt - generate a file with required dependencies.
