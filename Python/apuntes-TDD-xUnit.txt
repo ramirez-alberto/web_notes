@@ -21,3 +21,7 @@ Test fixtures
 Factories and Fakes:
 
 Mocking:
+
+== Python test tools
+
+pip install pytest coverage

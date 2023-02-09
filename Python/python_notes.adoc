@@ -411,6 +411,48 @@ https://flask.palletsprojects.com/en/0.12.x/tutorial/[Tutorial]
 https://stackoverflow.com/questions/43911510/how-to-write-docstring-for-url-parameters[API with Swagger]
 
 
-== Publicacion
+== Publication
 
 pip install freeze > requirements.txt - generate a file with required dependencies.
+
+=== Describe your project
+
+Create a `setup.py` file to describe the project:
+
+[source,python]
+----
+from setuptools import find_packages, setup
+
+setup(
+    name='flaskr',
+    version='1.0.0',
+    packages=   #include package directories to include 
+    find_packages(), #finds these directories automatically 
+    include_package_data=True, #include other files (static dirs,etc...)
+    install_requires=[
+        'flask',
+    ],
+)
+----
+
+Python needs another file named MANIFEST.in to tell what this other data is.
+`MANIFEST.in`:
+
+[source]
+----
+include flaskr/schema.sql
+graft flaskr/static 
+graft flaskr/templates
+global-exclude *.pyc
+----
+
+This tells Python to copy everything in the static and templates directories, and the schema.sql file, but to exclude all bytecode files
+
+[source,bash]
+----
+pip install -e .
+----
+
+This tells pip to find setup.py in the current directory and install it in editable or development mode. Editable mode means that as you make changes to your local code, you’ll only need to re-install if you change the metadata about the project, such as its dependencies.
+
+You can observe that the project is now installed with `pip list`.

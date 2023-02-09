@@ -21,4 +21,37 @@ You can use `@bp.before_app_request` registers a function that runs before the v
 
 When using a blueprint, the name of the blueprint is prepended to the name of the function, so the endpoint for the login function you wrote above is 'auth.login'.
 
-`g` is a special object that is unique for each request. It is used to store data that might be accessed by multiple functions during the request.
+`app.add_url_rule()` associates the endpoint name 'index' with the / url so that url_for('index') or url_for('blog.index') will both work, generating the same / URL either way
+
+`g` is a special object that is unique for each request. It is used to store data that might be accessed by multiple functions during the request. Is automatically available in templates
+
+== Templates
+
+Anything between *{{* and *}}* is an expression that will be output to the final document. *{%* and *%}* denotes a control flow statement like if and for.
+
+Make a base layout, another views will extend this view. The base template is directly in the templates directory. To keep the others organized, the templates for a blueprint will be placed in a directory with the same name as the blueprint.
+
+- Use `get_flashed_messages()` to get the `flash()` messages.
+
+`loop.last` used to display a line after every row except the last row
+
+== TESTS
+
+https://flask.palletsprojects.com/en/2.2.x/tutorial/tests/ WIP
+
+== Deploying 
+
+pip install wheel # current standard for distribution
+
+python setup.py bdist_wheel #build a wheel distribution file
+
+You can find the file in dist/flaskr-1.0.0-py3-none-any.whl. The file name is in the format of {project name}-{version}-{python tag} -{abi tag}-{platform tag}. Install it with pip install
+
+use a production WSGI server or a dedicated HTTP server in front of a WSGI server
+https://flask.palletsprojects.com/en/2.2.x/deploying/
+
+=== Configure the Secret Key¶
+
+python -c 'import secrets; print(secrets.token_hex())' Output random secret key 
+
+Create a config.py in the instance folder with SECRET_KEY = key
