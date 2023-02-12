@@ -8,8 +8,8 @@ An atomic commit is a commit that includes changes related to only one feature o
 If applied, this commit will 
 
 Steps for new repo
-    Add README, Add licence (Apache), Add CODE OF CONDUCT (CODE_OF_CONDUCT.md) like "Contributor Covenant", 
-        Add contribution guidelines
+    Add README, Add licence (Apache), Add CODE OF CONDUCT (CODE_OF_CONDUCT.md) like 
+    "Contributor Covenant", Add contribution guidelines
 
 + git config
 git config --global user.name "Your name"
@@ -36,7 +36,8 @@ git add .    //add all files
 + Add a comment to the commit
 git commit -m "Add file.txt"
 git commit -s --sign a commit
-git commit --amend  After add a file to the staging area, replaces the last commit. Use only before push
+git commit --amend  After add a file to the staging area, replaces the last commit. 
+Use only before push
 
 +View log
 git log
@@ -52,6 +53,7 @@ Feature branches
     git branch <branch_name> create a new branch or without arguments to see the branches
     git checkout <branch_name> change to the new branch
     git checkout -b <branch_name> create a new branch and change to it
+    # You can use git switch and git restore
     - Workflow fetch from main/master to branch:
         git checkout main | git pull main | git checkout branch | git rebase main 
         If git find any conflicts, resolve it and:  git add path/to/file | git rebase --continue
@@ -78,6 +80,20 @@ Update code base
 . git checkout main
 . git pull upstream main
 . git branch -d branch-merged
+
+== Working with branches
+
+git clone https://github.com/learn-git-fast/git-branch-examples.git
+git checkout -b new-branch
+git branch -a
+touch devolution.jpg
+git add .
+git commit -m "Are we not gender neutral people? We are Devo?"
+git push --set-upstream origin new-branch
+touch eden.html
+git add .
+git commit -m "Eden added"
+git push origin
 
 +Git commit with VSCODE
 git config --global core.editor "code --wait".
