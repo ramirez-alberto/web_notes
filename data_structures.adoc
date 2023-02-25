@@ -1,0 +1,33 @@
+= Data structures
+:source-highlighter: highlight.js
+:toc:
+:toc-placement!:
+
+> Notes from A Common-Sense Guide to Data Structures and Algorithms
+
+toc::[]
+
+== Introduction
+
+To understand the performance of a data structure we analyze the common ways that our code
+might interact with that data structure.
+
+=== Operations
+- _Read_: Refers to looking something up from a particular spot within the structure.
+- _Search_: Refers to looking for a particular value within a structure
+- _Insert_: Refers to adding another value to the structure 
+- _Delete_: Refers to removing a value from our data structure
+
+We measure the speed of an operation by the number of steps it takes. This is known as
+measuring its `time complexity`
+
+=== List of data structures
+
+- Array: A list of data
+- Set: The data must be unique
+- Ordered Array: The values are always kept in order.
+
+=== List of Algorithms
+
+- Linear search: Check each cell one at a time until we find the value we're looking for
+- Binary search: When used on an ordered array, check the value in the middle cell of the array and check if it is greater or less. 
