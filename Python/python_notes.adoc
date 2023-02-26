@@ -57,6 +57,12 @@ offset = Point2D(x=-10, y=-10)
 |len()
 |Get the lenght of a object 
 
+|string.isidentifier()
+|Check if a value is an identifier 
+
+|issubclass(bool, int)
+|Check if the value to the right is subclass of left
+
 |for n,m in zip(list1,list2)
 |Yield tuples and assign each positional value to n and m 
 |===
@@ -108,7 +114,7 @@ NotImplemented
 *Identity* - var1 is var2 , var1 is not var2
 *Equality* - var1 == var2
 *Check for type* type(42) is int
-*Division* - quotient, reminder = divmod(15, 4)
+*Division* - quotient, reminder = divmod(15, 4) , Integer Division: 15 // 4
 *Pertenency* - in, not in
 
 === Strings 
@@ -154,6 +160,8 @@ Like a list but only hold unique values(remove duplicates). We can cast a list t
     list.extend([1,2,3]) - extend the list
     list.append([1,2,3]) - append the list
     list.sort() , string.split(), del(List[index_of_value_to_remove])
+    
+=== None , check if value is None with var is None
 
 === Branching:
 if: else: elif:
