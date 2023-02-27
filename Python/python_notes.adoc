@@ -91,6 +91,23 @@ def my_func():
 #the same as decorator(my_func) 
 ----
 
+When we decorate, the function loses information, We can use `from functools import wraps` tp maintain that information
+
+[source,python]
+----
+def decorator(target):
+    @wraps(target)
+    def _decorated(*args, **kwargs)
+        return any_value
+    return _decorated
+
+@decorator
+def my_func():
+    return value
+
+#the same as decorator(my_func) 
+----
+
 == Methods
 
 Static code analysis (pylint) and flake8:
@@ -132,6 +149,49 @@ NotImplemented
 
 - Format https://docs.python.org/3/library/string.html#formatspec
 
+=== Regex
+
+A regex expression must be compiled with `re.compile(r'expression')` or you can use a 
+expression with some functions in the `re` module like `re.fullmatch(r'ab*', 'abb')`. 
+Compiling an expression is slow, so if you're going to use the
+same expression over and over again, it is convenient to compile it.
+
+==== Methods
+
+[cols='1,1']
+|===
+|Método 	|Significado
+
+|match() 	|Se reconoce el comienzo de la cadena.
+
+|fullmatch() 	|Se reconoce toda la cadena encaja.
+
+|search() 	|Se reconoce alguna subcadena.
+
+|findall() 	|Devuelve todas subcadenas reconocidas en una lista.
+
+|finditer() 	|Igual que antes, pero en un iterador.
+|===
+
+We can pass multiple flags with `re.IGNORECASE | re.ASCII`
+
+[cols='1,1,1']
+|===
+|Flag 	|Forma larga 	|Significado
+
+|re.A 	|re.ASCII 	|Sólo caracteres ASCII (no Unicode).
+
+|- 	|re.DEBUG 	|Muestra información sobre la compilación.
+
+|re.I 	|re.IGNORECASE 	|Ignora la capitalización.
+
+|re.M 	|re.MULTILINE 	|Trata cada nueva línea como una cadena distinta.
+
+|re.S 	|re.DOTALL 	|Hace que el carácter comodín . reconozca los saltos de línea.
+
+|re.X 	|re.VERBOSE 	|Cambia la sintaxis de las expresiones regulares a una más clara.
+|===
+
 === Tuple sorted(Tuple)
 
 
@@ -161,7 +221,7 @@ Like a list but only hold unique values(remove duplicates). We can cast a list t
     list.append([1,2,3]) - append the list
     list.sort() , string.split(), del(List[index_of_value_to_remove])
     
-=== None , check if value is None with var is None
+=== None , check if value is None with: var is None
 
 === Branching:
 if: else: elif:
