@@ -62,7 +62,7 @@ __with sqlalchemy__
 
 - *Dependencies*: flask, flask-sqlalchemy, flask-restful, flask-marshmallow
 
-=== Steps
+=== Introduction
 
 1. Create the app
 2. Import SQLAlchemy and pass the app to the SQLAlchemy object.
@@ -77,3 +77,18 @@ from app import db
 db.create_all()
 exit()
 ----
+
+=== Create the RESTful endpoints with Flask-RESTful
+
+. Import request from flask, and Api, Resource from flask-restful, create a object Api, pass app as an argument.
+. Define a resource to accept GET requests: create a class and inherit from Resource, make a get method, this method
+query the model and return a serialized object; register a resource with `api.add_resource`
+. Add the post method, get the data from `request.json['value']` and use the model to create the data, add and commit
+the contents of the session, dump the newly created data
+. Define another resource to retrieve just one row from the db, inside this resource we will create the CRUD methods
+
+__from https://github.com/jpadillaa/taller-api-flask/[Taller_api_flask]__
+
+=== Referencias 
+
+- https://flask-restful.readthedocs.io/en/latest/
