@@ -341,7 +341,7 @@ import logging
 logging.warning('')
 ----
 
-File operations
+=== File operations
     with open(file_path,mode) as file:
         file.readline() , file.readlines(), file.read() or for loop #read functiona
         file.write("text")    # write functions
@@ -351,6 +351,7 @@ File operations
 *       .seek(offset,from) - changes the position by 'offset' bytes with respect 
             to 'from'. From can take the value of 0,1,2 corresponding to beginning,
             relative to current position and end
+It is good practice to accept sys.stdout as a parameter when a function needs to write to a file.
 
 Pandas
     A DataFrame is a two-dimensional data structure, i.e., data is aligned in a 
@@ -424,6 +425,9 @@ assert self._state == 'OPEN', 'state of the request is invalid'
 raise RuntimeError(f'method must be one of {accepted}')
 ----
 
+https://docs.python.org/3/library/exceptions.html[Types of Exceptions]
+https://www.hanselman.com/blog/good-exception-management-rules-of-thumb[Rules of thumb]
+
 === Annotations
 
 These are arbitrary values.
@@ -455,24 +459,45 @@ Readability counts. This is an important point in the zen of Python.
 
 ​ For more information you can refer to https://www.python.org/dev/peps/pep-0008/
 
-=== Libs
+=== Modules, Packages, Application
 
-Programmatically  import a module: importlib.import_module('decimal')
-Extract elemento from module: getattr(collections, 'namedtuple')
-Modules load in order from sys.path
-Cached modules in sys.modules
+Importind a module means executing the contents of the module. Python check if the module does not exist in the cache, if not,
+Python will make it, add it to the cache and execute its content.
+
+- Programmatically  import a module: `importlib.import_module('decimal')`
+- Extract elemento from module: `getattr(collections, 'namedtuple')``
+- Cached modules in `sys.modules``
+
+Modules load in order from `sys.path`, blank string is the dir where the interpreter is launched
+
+__init__.py is optional but this module give extra functionality to the package, like __all__ = ['package'] 
+
+We can create __main__.py to give the package an application functionality.
 
 === Common practices with modules
 
-Add a shebang: #!/usr/bin/env python3
-Add codification and license in comments, next is the docstring and the author ..moduleauthor: MyName <hola@mail.com>
+- Add a shebang: #!/usr/bin/env python3
+- Add codification and license in comments, next is the docstring and the author `..moduleauthor: MyName <hola@mail.com>``
+
 [python]
 ----
 # -*- encoding: utf-8 -*-
-
 ----
+
 You can versioning your modules with __version__ = '1.2.3', check https://www.python.org/dev/peps/pep-0396/
-Private definition starts with a underscore def _main()
+
+The logic is in a private function if the module can be run as a script., private definition starts with a 
+underscore def _main()
+
+[python]
+----
+def _main():
+    ...
+
+if name == '__main__':
+    _main()
+----
+
 
 == Modules
 
@@ -527,3 +552,7 @@ pip install -e .
 This tells pip to find setup.py in the current directory and install it in editable or development mode. Editable mode means that as you make changes to your local code, you’ll only need to re-install if you change the metadata about the project, such as its dependencies.
 
 You can observe that the project is now installed with `pip list`.
+
+=== Command Line Interfaces
+
+Use argparse , check https://github.com/ramirez-alberto/Master-en-Programacion-con-Python_ed1/blob/master/fuentes/b03t10/calc.py[Example calc.py]
