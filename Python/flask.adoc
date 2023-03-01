@@ -55,3 +55,25 @@ https://flask.palletsprojects.com/en/2.2.x/deploying/
 python -c 'import secrets; print(secrets.token_hex())' Output random secret key 
 
 Create a config.py in the instance folder with SECRET_KEY = key
+
+
+== Flask API REST
+__with sqlalchemy__
+
+- *Dependencies*: flask, flask-sqlalchemy, flask-restful, flask-marshmallow
+
+=== Steps
+
+1. Create the app
+2. Import SQLAlchemy and pass the app to the SQLAlchemy object.
+3. Create the model class, inherit from Model in the SQLAlchemy object.
+4. Import Marshmallow and pass the app to the Marshmallow object.
+5. Configure the schema with the  marshmallow class to expose data from the model to the user, inherti from Schema.
+6. Initialize the schema (db), for simplicity, we can use the python interactive shell (REPL)
+
+[source,python]
+----
+from app import db
+db.create_all()
+exit()
+----
