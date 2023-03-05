@@ -9,7 +9,8 @@ MVC: https://github.com/CodeMazeBlog/aspnetcore-mvc-series
         Defining Model & Controller, Using Razor Markup to Create Views, The Concept of Partial Views, Layouts 
 
     State Management:
-        Cookies, Session State, Query strings ( if we provide the values for name and age as either form values, route values or query strings,
+        Cookies, Session State, Query strings ( if we provide the values for name and age as 
+        either form values, route values or query strings,
         we can bind those to the parameters of our action method. ), Hidden Fields, TempData, Passing Data into Views (Weakly Typed Data) with ViewBag and ViewData
 
     Routing 
@@ -34,3 +35,14 @@ API: https://code-maze.com/net-core-series/
             Controllers and Routing in WEB API, GetAllOwners GET Request, Code Permissions , Using DTO and AutoMapper
         Implement Paging, Sorting, Searching, Ordering
         Data Shapping using recursion and HATEOAS
+
+Options Available:
+* Add a extension methods to handle configuration and custom services
+* Enable CORS
+* Custom logging
+* Repository Pattern Logic
+* Onion architecture
+* Global Error Handler
+* Onion Architecture
+* Add Authentication
+* Pagination, Search and Filter

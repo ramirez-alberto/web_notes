@@ -12,5 +12,27 @@ search library > lucenenet
 
 google dork > https://www.exploit-db.com/google-hacking-database
 
+<<<<<<< HEAD
 free fronts
 https://www.fontsquirrel.com
+=======
+flake8 python lynter
+https://www.atlassian.com/team-playbook
+
+https://docs.github.com/es/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax(Markdown)
+
+Security
+
+Secrets in Linux -> pass > you can use with Gnu Privacy Guard (GPG) key
+
+Insecure application for testing
+git clone https://github.com/juice-shop/juice-shop.git
+
+Python
+Bandit -> Scan source code for vulnerabilities. Open-source static application security testing (SAST) tool 
+
+wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-CD0267EN-SkillsNetwork/labs/module3/web_app_example.py
+
+ flask-talisman for http headers
+ ClosedXML nuget 
+>>>>>>> 1259992b11f01f7fd62191ce064b13a1abc3ef04

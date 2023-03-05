@@ -1,16 +1,20 @@
-KubeCTL:
-    kubectl config get-clusters Get cluster informaction
-    kubectl config get-contexts context is a group of access parameters, 
-            including a cluster, a user, and a namespace. View your current context
-    kubectl get pods -List all the pods in your namespace or expand view: kubectl get pods -o wide
-    kubectl describe pod hello-world -Describe sample pod
-    kubectl delete pod hello-world -Delete the pod
-    kubectl expose deployment/hello-world -Expose app to the internet
-            Creates what is called a ClusterIP Service. This is an IP address that accessible within the cluster.
-    kubectl get services -Get the app/services available
-    kubectl proxy -the cluster IP is not accessible outside of the cluster we need a proxy (for the lab only 
-            and for testing purposes) curl -L localhost:8001/api/v1/namespaces/sn-labs-$USERNAME/services/hello-world/proxy
-    kubectl delete deployment/hello-world service/hello-world -Delete the deployment and services/app
+= Kubernetes Basics
+Alberto Ramirez ramirez.alberto@zoho.com
+
+== KubeCTL:
+
+- `kubectl config get-clusters` Get cluster information
+- `kubectl config get-contexts` context is a group of access parameters, including a cluster, a user, and a namespace. View your current context
+- `kubectl get pods` List all the pods in your namespace or expand view: kubectl get pods -o wide
+- `kubectl describe pod hello-world`` -Describe sample pod
+- `kubectl delete pod hello-world`` -Delete the pod
+- `kubectl expose deployment/hello-world`` -Expose app to the internet
+        Creates what is called a ClusterIP Service. This is an IP address that accessible within the cluster.
+- `kubectl get services` -Get the app/services available
+- `kubectl proxy` -the cluster IP is not accessible outside of the cluster we need a proxy (for the lab only 
+        and for testing purposes) curl -L localhost:8001/api/v1/namespaces/sn-labs-$USERNAME/services/hello-world/proxy
+- `kubectl delete deployment/hello-world service/hello-world` -Delete the deployment and services/app
+- `kubectl get events -w` Get events
 
 Imperatively create a pod:
     Create a pod with imperative command

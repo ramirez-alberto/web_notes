@@ -7,6 +7,54 @@ Public members are visible in derived classes and are part of the derived class'
 
 Create each new class in a different source file
 
+https://code-maze.com/csharp-intermediate-tutorial-oop/
+
+Extension methods: 
+    Only contained in static classes and must have this keyword in parameters
+    public static methodName(this string name)  ... "mystring".methodName()
+Anonymous Classes ( new {property = value})
+Partial Classes ( partial)
+Constructor overloads
+Structures ( struct ): 
+    Is a value type, An instance of a class lives on a heap memory 
+    while the instance of a structure lives on a stack.
+    Use structures when our structures need to be small and simple types and immutable
+Enumerations ( enum ): 
+    By default, assign the integer value to every element inside the enumerations.
+    We can change from int to another value type ( public enum Name: short)
+Interfaces
+Generic type T
+    A generic class can have more than one type parameter: public class CollectionKeyValueInitializer<TKey, TValue>
+    We can constraint a generic class with where > 
+        public class MyClass<T> where T: Student or where T: class work only with classes.
+        or where T: struct , work only with value types
+    and we can have generic methods public void ExampleMethod<T>(T param1, T param2), note if We
+    use a generic class, we need to change the T keyword for U,Y,R, etc.. Otherwise, 
+    the type T from a method will hide the type T from a class.
+
+Queue, Stack and Hashtable
+    Queue collection represents a first-in, first-out collection of objects
+        Syntax:
+            Queue<int> intCollection = new Queue<int>(); generic
+            Queue intCollection = new Queue(); stores objects of any data type
+        Count > check how many objects
+        Enqueue > add a object inside a collection
+        Dequeue  > Remove the firs object
+        Peek return the first object
+        Clear  > removes all elements in a collection
+    Stack collection represents a simple last-in, first-out collection. Same syntax as Queue
+        Push > insert an object at the top
+        Pop  > returns the last in object
+        Peek  > return object ready to exit
+        Clear, Count
+    Hashtable collection of a key-value pair that is organized based on the hash
+     code of the key. Syntax>  Hashtable hashTable = new Hashtable();
+        Methods: Add , Remove(key), ContainsKey, ContainsValue , Clear
+        Property; Count, Keys, Value,  
+
+
+
+
 Inheritance (https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/tutorials/inheritance)
     Inheritance applies only to classes and interfaces. Other type categories 
             (structs, delegates, and enums) do not support inheritance.
@@ -19,7 +67,7 @@ Inheritance (https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/tutoria
     You can apply the sealed keyword to indicate that a class cannot serve as a 
             base class for any additional classes. 
 
-    Syntax class DerivedClass : BaseClass
+    Syntax scope class DerivedClass : BaseClass
     Constructor for derived class 
         Derived class must explicitly call constructor of base class. You declare a 
         constructor that can pass arguments to the base class constructor.
@@ -30,9 +78,11 @@ Inheritance (https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/tutoria
 
 Polymorfism
     In the base class declare a virtual function
-        public virtual void MyFunction(){}
+        scope virtual void MyFunction(){}
     Define the new implementation in the derived class (overriding the base class implementation)
-        public override void MyFunction(){}
+        scope override void MyFunction(){}
+    If you want to, you can still access the inherited method, even when you override it, 
+    using the base keyword.
 
     For abstract methods the derived class must re-implement the methods
         Note The base class does not provide an implementation for an abstract method
@@ -42,8 +92,20 @@ Polymorfism
          This technique allows you to have a single implementation for initializing 
          an object even though client code can choose one of many constructors.
 
-        public MyConstructor(string name, decimal initialBalance) : this(name, initialBalance, 0) { }
+        public MyConstructor(string name, decimal initialBalance) 
+            : this(name, initialBalance, 0) { }
         public BankAccount(string name, decimal initialBalance, decimal minimumBalance)
 
         Derived class
-        public MyDerivedClassConstructor(string name, decimal initialBalance, decimal creditLimit) : base(name, initialBalance, -creditLimit)
+        public MyDerivedClassConstructor
+            (string name, decimal initialBalance, decimal creditLimit) 
+            : base(name, initialBalance, -creditLimit)
+
+Assign a higher rank object to a lower rank object using the “as” keyword
+    XMLWriter newWriter = writer as XMLWriter;
+
+Memory allocation 
+Class and struct
+The downside of classes is that both code and data are thrown onto the heap…with
+ a struct, only data is allocated. So if your class has many methods, and you 
+ start allocating many instances of the class, your memory will take a hit.

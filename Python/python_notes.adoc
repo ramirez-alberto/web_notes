@@ -1,0 +1,558 @@
+= Python Notes
+Alberto R
+:source-highlighter: highlight.js
+:toc:
+:toc-placement!:
+
+toc::[]
+
+
+== Types
+
+*Dates* - datetime, calendar
+
+=== Other common types
+
+`namedtuple` - A tuple where every position has a indentifier
+
+[source,python]
+----
+Point2D = namedtuple('Point2D', ['x', 'y'])
+offset = Point2D(x=-10, y=-10)
+----
+
+`OrderedDict` - For python 3.6 and below, a OrdereDict is a dict that remembers the order that keys were first inserted
+
+`deque` - In a list, the extraction or insertion of an item has a performance penalty. deque is optimised for this and you can use it as a queue.
+
+`Counter` - Dict where the key is the items in a collection and the values are the number of repetitions.
+
+`defaultdict` - dict with values by default, must pass a callable (function)
+
+
+
+[source,python]
+----
+Point2D = namedtuple('Point2D', ['x', 'y'])
+offset = Point2D(x=-10, y=-10)
+----
+
+== Functions
+
+[cols="1,1"]
+[%autowidth]
+|===
+|type(value)
+|Check for type bool,int,float,etc
+
+|id(var_name)
+|Check if var point to the same position in memory
+
+|int(value)
+|Cast to type
+
+|sys.float_info 
+|Check for float specifics (max value for runtime environment,etc)
+
+|len()
+|Get the lenght of a object 
+
+|string.isidentifier()
+|Check if a value is an identifier 
+
+|issubclass(bool, int)
+|Check if the value to the right is subclass of left
+
+|for n,m in zip(list1,list2)
+|Yield tuples and assign each positional value to n and m 
+|===
+
+== Folder structure 
+----
+Project_name
+|_ App_name
+----
+
+== Decorators
+Wrap another function in order to extent the behaviour of the wrapped function
+Check cache decorator @lru_cache and check @wraps(target)
+
+=== Syntax
+
+[source,python]
+----
+def decorator(func):
+    func()
+
+@decorator
+def my_func():
+    return value
+
+#the same as decorator(my_func) 
+----
+
+When we decorate, the function loses information, We can use `from functools import wraps` tp maintain that information
+
+[source,python]
+----
+def decorator(target):
+    @wraps(target)
+    def _decorated(*args, **kwargs)
+        return any_value
+    return _decorated
+
+@decorator
+def my_func():
+    return value
+
+#the same as decorator(my_func) 
+----
+
+== Methods
+
+Static code analysis (pylint) and flake8:
+    Pylint check for non-compliant lines
+
+dateutil or Arrow for datetime
+
+figlet
+code vulnerabilities: bandit
+
+Expression with operator
+    24//5 - Divide and round, the symbol // represent integer value
+None is null in python
+Ellipsis ... - used as placeholder
+NotImplemented
+
+=== Operators
+
+*Destructured assignation* - a,b = 1,2   , discard elements *_
+
+*Identity* - var1 is var2 , var1 is not var2
+*Equality* - var1 == var2
+*Check for type* type(42) is int
+*Division* - quotient, reminder = divmod(15, 4) , Integer Division: 15 // 4
+*Pertenency* - in, not in
+
+=== Strings 
+    Are immutable, string methods always return new values
+    "hola"[0] = "sd" --no se puede
+    "Hola"[::2] - stride, show each second char [begin:end exclusive:stride]
+    3*"Hola" = "HolaHolaHola"
+    print(r"Hola \") - the letter r is for escape char in the string
+
+- Method: string.upper, string.replace(), string.find()
+
+- Multiline text """ multililne text """
+
+- We can concatenate without operator: print("HELLO" "WORLD")
+
+- Format https://docs.python.org/3/library/string.html#formatspec
+
+=== Regex
+
+A regex expression must be compiled with `re.compile(r'expression')` or you can use a 
+expression with some functions in the `re` module like `re.fullmatch(r'ab*', 'abb')`. 
+Compiling an expression is slow, so if you're going to use the
+same expression over and over again, it is convenient to compile it.
+
+==== Methods
+
+[cols='1,1']
+|===
+|Método 	|Significado
+
+|match() 	|Se reconoce el comienzo de la cadena.
+
+|fullmatch() 	|Se reconoce toda la cadena encaja.
+
+|search() 	|Se reconoce alguna subcadena.
+
+|findall() 	|Devuelve todas subcadenas reconocidas en una lista.
+
+|finditer() 	|Igual que antes, pero en un iterador.
+|===
+
+We can pass multiple flags with `re.IGNORECASE | re.ASCII`
+
+[cols='1,1,1']
+|===
+|Flag 	|Forma larga 	|Significado
+
+|re.A 	|re.ASCII 	|Sólo caracteres ASCII (no Unicode).
+
+|- 	|re.DEBUG 	|Muestra información sobre la compilación.
+
+|re.I 	|re.IGNORECASE 	|Ignora la capitalización.
+
+|re.M 	|re.MULTILINE 	|Trata cada nueva línea como una cadena distinta.
+
+|re.S 	|re.DOTALL 	|Hace que el carácter comodín . reconozca los saltos de línea.
+
+|re.X 	|re.VERBOSE 	|Cambia la sintaxis de las expresiones regulares a una más clara.
+|===
+
+=== Tuple sorted(Tuple)
+
+
+=== Dictionary 
+    del(Dict[key]) or del Dict[key], key in Dict , Dict.keys(), Dict.values(), Dict.items()
+    dict([('red', 3), ('orange', 2), ('green', 1)])
+    dict.get(key) - return the value
+    Add another dict - danger_level_by_color.update({'black': 1000, 'red': 100, 'orange': 10})
+    Unpack dict - {**danger_level_by_color, 'black': 4, 'red': 3, 'orange': 2}
+
+=== Set 
+
+Like a list but only hold unique values(remove duplicates). We can cast a list to a set set(List) {}
+    set.Add(), set.remove("value"), value in Set
+    To get the intersection of two sets use & - set1 & set2 return new set with coincidences
+    set1.difference(set2)
+    set1.intersection(set2)
+    set1.union(set2) return all elements
+    set1,issubset(set2) True or False
+    set1.issuperset(set2)
+
+=== List
+    Are mutables
+    Unpack a list - extended_color = [*list_of_colors, 'super-violet', 'ultraviolet']
+    newList = oldList[:] - copy the list contents into a new list
+    list.extend([1,2,3]) - extend the list
+    list.append([1,2,3]) - append the list
+    list.sort() , string.split(), del(List[index_of_value_to_remove])
+    
+=== None , check if value is None with: var is None
+
+=== Branching:
+if: else: elif:
+Conditional: and or not
+
+=== Loops:
+    for i in range(n,n-1), for i in ['a','b','c'], for i,value_in_list in enumerate(list)
+
+=== Exceptions:
+    https://docs.python.org/3/library/exceptions.html?utm_medium=Exinfluencer&utm_source=Exinfluencer&utm_content=000026UJ&utm_term=10006555&utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkPY0101ENSkillsNetwork19487395-2021-01-01
+    try ... except or except(ExceptionName): or exception(Name1,Name2,Name3)...
+    else (execute something only if there were no errors.) ... 
+    finally (always execute) , except ExceptionName as ex:
+
+    raise Exception("String with useful information to the developer") or raise Exception
+
+
+=== Functions:
+
+    def name(values): or def name(*var_name): pass any arguments, def name(**var): pass args as Dict
+        you can 'return value' or 'pass' if function does nothing,
+        '''Documentation, this display when call help(miFunction)''' 
+    Notes: keyword global myvar to make it global scope available
+            mutable objects pass as reference hence you can make changes to the original var
+
+    closure 
+
+Objects:
+    All is an objects, function dir(object) check attr and class methods
+    class className(object):
+        def __init__(self,var1,var2):
+            self.var1 = var1
+            self.var2 = var2
+        
+        def custom_Function(self) -> Any: #must return Any type
+    
+    @classmethod -  You must pass a class as a parameter to the method, by convention the keyword `cls` is used.
+
+    @staticmethod - the method behave as a function
+
+    Stop dynamics creation of attributes with __slots__
+
+    You can define a method behave like a read-only property with @property decorator, to define
+    a setter you need to create a method and decorate with method_name.setter
+
+    isinstance e issubclass \
+
+=== Multiple Inheritance
+
+    Class.__bases__ - check inherit class or __bases__[0].__bases__ for multiple inheritance 
+
+    You can access the attributes of the base class with super().method()
+
+    With `__mro__` (Method Resolution Order) you can check how python navigate super classes
+
+=== Dynamic typing 
+
+==== Annotations
+
+Access annotations with `ClassName.__annotations__`  or `typing.get_type_hints(ClassName)`
+
+.Examples
+[source,python]
+----
+def myFunc(var: type,var2: type) -> return_type
+
+var, var2 = value,value # type: int,str
+
+# Only 3.6 and above
+class MyClass:
+    version: str = '2.0'
+
+----
+
+=== Logging
+
+*Module: logging*
+
+Default logging is WARNING, you can change the level with `logging.basicConfig(level=logging.DEBUG)`
+
+.Logging Levels
+[cols='1,^1,4',options="header",width="80%"]
+|================================================================
+|Value 	|Nivel 	|Descrición
+|50 	|CRITICAL 	|Un problema que implica el fin de la ejecución.
+|40 	|ERROR    	|Un problema que requiere la intervención del usuario.
+|30 	|WARNING 	|Advierte de un posible problema futuro.
+|20 	|INFO 	    |Confirman que las cosas funcionan como se espera.
+|10 	|DEBUG  	|Información detallada, por motivos de diagnóstico.
+|================================================================
+
+Log an exception with `logger.exception('Someone tried to divide between 0')` inside the except block
+
+.Create multiple loggers
+[source,python]
+----
+import logging
+logging.basicConfig() 
+# Custom format: logging.basicConfig(format='%(asctime)s [%(levelname)s] %(name)s: %(message)s')
+# Append log to file: logging.basicConfig(filename='application.log') 
+control = logging.getLogger('control')
+defense = logging.getLogger('defense')
+control.warning('Enemy approaching')
+defense.warning('Running out of ammo...')
+
+# or per logging module
+
+import logging
+logging.basicConfig()
+logger = logging.getLogger(__name__)
+logger.warning('May I have your attention, please?')
+----
+
+[source,python]
+----
+import logging
+logging.warning('')
+----
+
+=== File operations
+    with open(file_path,mode) as file:
+        file.readline() , file.readlines(), file.read() or for loop #read functiona
+        file.write("text")    # write functions
+    When use r+ you can file.truncate() 
+    Cursor function:
+        .tell() - returns the current position in bytes
+*       .seek(offset,from) - changes the position by 'offset' bytes with respect 
+            to 'from'. From can take the value of 0,1,2 corresponding to beginning,
+            relative to current position and end
+It is good practice to accept sys.stdout as a parameter when a function needs to write to a file.
+
+Pandas
+    A DataFrame is a two-dimensional data structure, i.e., data is aligned in a 
+        tabular fashion in rows and columns.
+
+        A Pandas DataFrame will be created by loading the datasets from existing storage.
+        Storage can be SQL Database, CSV file, an Excel file, etc.
+        It can also be created from the lists, dictionary, and from a list of dictionaries.
+
+    Series represents a one-dimensional array of indexed data. It has two main components :
+
+        An array of actual data.
+        An associated array of indexes or data labels.
+
+    functions:
+        df = pd.read_csv(path) or read_excel
+        Convert dictionary,list into df: df=pandas.DataFrame(myDict), call column: df[['ID']] or df[['ID','C2','C3']]
+        To view column as a series use one bracket df['ID']
+        loc[] key based,.iloc[] index based - df.iloc(0,0) or df.loc(0,'ID')
+        .set_index("Name") set a index for loc: df1.loc['Jane', 'Salary'] now you can check by name 
+        .head display first 5 rows
+        .index make a new index
+    Slicing:
+        df.loc[0:3,'dep':'id'] 
+
+    The index is used to access individual data values. You can also get a column 
+    of a dataframe as a Series. You can think of a Pandas series as a 1-D dataframe.
+
+Numpy : check version np.__array__
+    numpy.array(list)
+    vector addition: z = numpyArray1 + numpyArray2 or np.add(numpyArray1,numpyArray2)
+    vector multiplication with a scalar: z = 2y
+    Product of two arrays: z=u*v
+    dot product check how similar two vectors are: z= np.dot(u,v)
+    Broadcasting: z=u+1 add 1 to each value in array
+    Universal functions:
+        array.mean(), max(), np.pi, np.sin(vector), .std() standard deviation
+    Plotting math functions: np.linspace(start,end,num= number?samples)  
+    c[3:5] = 300, 400 assign values to fourth and fifth element or c[listOfIndexes]
+    transposed matrix : 2darray.T
+
+    function: .dtype() get the datatype
+    attr: .size , ndim rank, shape size in each dimension
+
+Test Driven Development 
+    Test runners (example pyunit in examples):
+        unittest = built-in in python: python3 -m unittest or unittest -v for verbose
+        Nose = color coded(Pinocchio) code coverage and better test output: nosetests -v
+               or installing pinocchio: nosetests --with-spec --spec-color
+               or installing coverage: nosetests --with-spec --spec-color --with-coverage
+               coverage report -m check the lines of code missing test cases
+               You can create a setup.cfg (View Week2 Lab TDD)
+
+
+Conventions:
+    Underscore in variable name new_value (serpent case)
+
+=== Controlled failure
+
+- `assert` - used when debugging code, if not true will raise an AssertionError
+
+[source,python]
+----
+assert self._state == 'OPEN', 'state of the request is invalid'
+----
+
+- `raise` - raise an exception
+
+[source,python]
+----
+raise RuntimeError(f'method must be one of {accepted}')
+----
+
+https://docs.python.org/3/library/exceptions.html[Types of Exceptions]
+https://www.hanselman.com/blog/good-exception-management-rules-of-thumb[Rules of thumb]
+
+=== Annotations
+
+These are arbitrary values.
+To explicit type a parameter use `parameter: type` and to type the return value use `-> return_type`
+
+[source,python]
+----
+def send(self, method: str) -> None:
+----
+
+Notes:
+    pip install -r requirements.txt 
+    Repo with class and test: REPO: git clone https://github.com/ibm-developer-skills-network/duwjx-tdd_bdd_PracticeCode.git
+    https://labs.cognitiveclass.ai/tools/jupyterlite/lab/tree/labs/PY0101EN/PY0101EN-1-1-Write_your_first_python_code.ipynb?lti=true
+
+Python Style Guide
+
+Readability counts. This is an important point in the zen of Python.
+    Prefer Spaces no tabs for indentation.
+    Use 4 spaces per indentation level.
+    Wrap lines so that they don’t exceed 79 characters.
+    Use blank lines to separate functions and classes, and larger blocks of code inside functions.
+    Put comments on a line of their own
+    Use docstrings.
+    Use spaces around operators and after commas.
+    Name your functions and methods using lower_case_with_underscores
+    Name your classes using CamelCase.
+    Name your constants in all capital letters with underscores separating words, like MAX_FILE_UPLOAD_SIZE, YEAR.
+
+​ For more information you can refer to https://www.python.org/dev/peps/pep-0008/
+
+=== Modules, Packages, Application
+
+Importind a module means executing the contents of the module. Python check if the module does not exist in the cache, if not,
+Python will make it, add it to the cache and execute its content.
+
+- Programmatically  import a module: `importlib.import_module('decimal')`
+- Extract elemento from module: `getattr(collections, 'namedtuple')``
+- Cached modules in `sys.modules``
+
+Modules load in order from `sys.path`, blank string is the dir where the interpreter is launched
+
+__init__.py is optional but this module give extra functionality to the package, like __all__ = ['package'] 
+
+We can create __main__.py to give the package an application functionality.
+
+=== Common practices with modules
+
+- Add a shebang: #!/usr/bin/env python3
+- Add codification and license in comments, next is the docstring and the author `..moduleauthor: MyName <hola@mail.com>``
+
+[python]
+----
+# -*- encoding: utf-8 -*-
+----
+
+You can versioning your modules with __version__ = '1.2.3', check https://www.python.org/dev/peps/pep-0396/
+
+The logic is in a private function if the module can be run as a script., private definition starts with a 
+underscore def _main()
+
+[python]
+----
+def _main():
+    ...
+
+if name == '__main__':
+    _main()
+----
+
+
+== Modules
+
+=== Flask
+
+https://flask.palletsprojects.com/en/0.12.x/tutorial/[Tutorial]
+https://stackoverflow.com/questions/43911510/how-to-write-docstring-for-url-parameters[API with Swagger]
+
+
+== Publication
+
+pip install freeze > requirements.txt - generate a file with required dependencies.
+
+=== Describe your project
+
+Create a `setup.py` file to describe the project:
+
+[source,python]
+----
+from setuptools import find_packages, setup
+
+setup(
+    name='flaskr',
+    version='1.0.0',
+    packages=   #include package directories to include 
+    find_packages(), #finds these directories automatically 
+    include_package_data=True, #include other files (static dirs,etc...)
+    install_requires=[
+        'flask',
+    ],
+)
+----
+
+Python needs another file named MANIFEST.in to tell what this other data is.
+`MANIFEST.in`:
+
+[source]
+----
+include flaskr/schema.sql
+graft flaskr/static 
+graft flaskr/templates
+global-exclude *.pyc
+----
+
+This tells Python to copy everything in the static and templates directories, and the schema.sql file, but to exclude all bytecode files
+
+[source,bash]
+----
+pip install -e .
+----
+
+This tells pip to find setup.py in the current directory and install it in editable or development mode. Editable mode means that as you make changes to your local code, you’ll only need to re-install if you change the metadata about the project, such as its dependencies.
+
+You can observe that the project is now installed with `pip list`.
+
+=== Command Line Interfaces
+
+Use argparse , check https://github.com/ramirez-alberto/Master-en-Programacion-con-Python_ed1/blob/master/fuentes/b03t10/calc.py[Example calc.py]

@@ -5,7 +5,8 @@ Entity Framework Power Tools
 Make a new API project
 - Install libraries from NuGet: Microsoft.EntityFrameworkCore , Microsoft.EntityFrameworkCore.SqlServer
 
-- Make a folder structure: In the project, create folder Entities and inside a class named MyModelName
+- Make a folder structure: In the project, create folder Entities and inside a 
+class named MyModelName
     All the public properties from this class are going to be mapped to the table’s 
     columns with the same names. Finally, EF Core uses a naming convention to create 
     a primary key, from the StudentId property
@@ -68,6 +69,7 @@ Concepts:
                 representing one-to-many relationship, or,in the child (Dependent entity) add a 
                  reference navigation property, if it isn't fully defined, efcore create a shadow property 
                  like parentID.
+                 
 Detecting concurrency conflicts> DbConcurrencyException         
 
 
@@ -75,3 +77,41 @@ Design inheritance in db (called table-per-hierarchy (TPH) inheritance )
   discriminator column to indicate which type each row represents
   This pattern of making a database table for each entity class
    is called table-per-type (TPT) inheritance
+
+
+## DataAnnotations
+
+System.ComponentModel.DataAnnotations.Schema;
+System.ComponentModel.DataAnnotations;
+
+```
+Formatting
+    [Display(Name = "Number")]
+    [DataType(DataType.Date)]
+    [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+    [DataType(DataType.Currency)]
+    [Timestamp] //Concurrency
+    [DisplayFormat(NullDisplayText = "No grade")]
+
+Validation:
+    [Range(0, 5)]
+    [EmailAddress]
+    [StringLength(50, MinimumLength = 3)]
+    [MaxLength(20, ErrorMessage = "Maximum length for the Position is 20 characters.")]
+    [MaxLength(100, "{0} can have a max of {1} characters")]
+        {0} = Property Name
+        {1} = Max Length
+        {2} = Min Length
+    [Required]
+    [Required(ErrorMessage = "Email is required")]
+    [Compare("Password")]
+
+EFCore
+    [Table("Owner")]
+    [Column(TypeName = "money")] //defined using the SQL Server money type in the database
+    [Column("OwnerId")]
+    [DatabaseGenerated(DatabaseGeneratedOption.None)]
+    [Key]
+    [ForeignKey(nameof(Owner))]
+
+```

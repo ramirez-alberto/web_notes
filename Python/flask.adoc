@@ -1,0 +1,113 @@
+= Flask Notes
+:source-highlighter: highlight.js
+
+
+== Blueprints
+
+A *Blueprint* is a way to organize a group of related views and other code. You register blueprints with `app.register_blueprint(blueprint_var)` 
+
+.Syntax
+[source,python]
+----
+#name, Where it's defined, prepend predix in the uri
+bp = Blueprint('auth', __name__, url_prefix='/auth') 
+
+@bp.route("/")
+def register();
+    ...
+----
+
+You can use `@bp.before_app_request` registers a function that runs before the view function, no matter what URL is requested.
+
+When using a blueprint, the name of the blueprint is prepended to the name of the function, so the endpoint for the login function you wrote above is 'auth.login'.
+
+`app.add_url_rule()` associates the endpoint name 'index' with the / url so that url_for('index') or url_for('blog.index') will both work, generating the same / URL either way
+
+`g` is a special object that is unique for each request. It is used to store data that might be accessed by multiple functions during the request. Is automatically available in templates
+
+== Templates
+
+Anything between *{{* and *}}* is an expression that will be output to the final document. *{%* and *%}* denotes a control flow statement like if and for.
+
+Make a base layout, another views will extend this view. The base template is directly in the templates directory. To keep the others organized, the templates for a blueprint will be placed in a directory with the same name as the blueprint.
+
+- Use `get_flashed_messages()` to get the `flash()` messages.
+
+`loop.last` used to display a line after every row except the last row
+
+== TESTS
+
+https://flask.palletsprojects.com/en/2.2.x/tutorial/tests/ WIP
+
+== Deploying 
+
+pip install wheel # current standard for distribution
+
+python setup.py bdist_wheel #build a wheel distribution file
+
+You can find the file in dist/flaskr-1.0.0-py3-none-any.whl. The file name is in the format of {project name}-{version}-{python tag} -{abi tag}-{platform tag}. Install it with pip install
+
+use a production WSGI server or a dedicated HTTP server in front of a WSGI server
+https://flask.palletsprojects.com/en/2.2.x/deploying/
+
+=== Configure the Secret Key¶
+
+python -c 'import secrets; print(secrets.token_hex())' Output random secret key 
+
+Create a config.py in the instance folder with SECRET_KEY = key
+
+
+== Flask API REST
+__with sqlalchemy__
+
+- *Dependencies*: flask, flask-sqlalchemy, flask-restful, flask-marshmallow
+
+=== Introduction
+
+1. Create the app
+2. Import SQLAlchemy and pass the app to the SQLAlchemy object.
+3. Create the model class, inherit from Model in the SQLAlchemy object.
+4. Import Marshmallow and pass the app to the Marshmallow object.
+5. Configure the schema with the  marshmallow class to expose data from the model to the user, inherti from Schema.
+6. Initialize the schema (db), for simplicity, we can use the python interactive shell (REPL)
+
+[source,python]
+----
+from app import db
+db.create_all()
+exit()
+----
+
+=== Create the RESTful endpoints with Flask-RESTful
+
+. Import request from flask, and Api, Resource from flask-restful, create a object Api, pass app as an argument.
+. Define a resource to accept GET requests: create a class and inherit from Resource, make a get method, this method
+query the model and return a serialized object; register a resource with `api.add_resource`
+. Add the post method, get the data from `request.json['value']` and use the model to create the data, add and commit
+the contents of the session, dump the newly created data
+. Define another resource to retrieve just one row from the db, inside this resource we will create the CRUD methods, for PUT use `request.json.get('value',default_value)` to update
+
+__from https://github.com/jpadillaa/taller-api-flask/[Taller_api_flask]__
+
+=== Referencias 
+
+- https://flask-restful.readthedocs.io/en/latest/
+
+
+== Flask Web App
+
+- Dependencies: marshmallow-sqlalchemy, flask, flask, flask-sqlalchemy, flask-restful
+
+=== Steps
+
+. Create an application factory
+. Create the models as classes with `flask-sqlalchemy`, the classes inherit from `Model` and has properties that defines 
+the column of the tables
+. Create the relationships, one-to-one is defined as a column in the class, one-to-many uses the `relationship` method, 
+and many-to-many uses a join-table: when you define the relation in both classes use the `secondary` argument with the name 
+of the join-table in the `relationship` method to indicate a many-to-many relationship
+. Create a schema as a class to Serialize and deserialize the objects in the db as JSON with `marshmallow-sqlalchemy`, 
+the classes inherit from `SQLAlchemyAutoSchema` and has a nested class `Meta` with the folowing properties `model = Album`,
+`include_relationships = True`, `load_instance = True`; Optionally, to make a custom serializer, create a class that inherit from `fields.Field` and has a method `def _serialize(self, value, attr, obj, **kwargs)`
+. Create CRUD operations for the classes with `flask-restful`, define new classes for the views that inherits from `Resource` and
+create the methods for the CRUD operations. Use `instance_of_schema.dumps()` to return data for this methods as JSON. 

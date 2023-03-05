@@ -21,9 +21,12 @@ The outer variable is only used if there’s no local one.
 
 Naming a function... One function – one action
 
-Functions are actions. So their name is usually a verb. It should be brief, as accurate as possible and describe what the function does, so that someone reading the code gets an indication of what the function does.
+Functions are actions. So their name is usually a verb. It should be brief, 
+as accurate as possible and describe what the function does, so that someone 
+reading the code gets an indication of what the function does.
 
-It is a widespread practice to start a function with a verbal prefix which vaguely describes the action. There must be an agreement within the team on the meaning of the prefixes.
+It is a widespread practice to start a function with a verbal prefix which 
+vaguely describes the action. There must be an agreement within the team on the meaning of the prefixes.
 
 For instance, functions that start with "show" usually show something.
 

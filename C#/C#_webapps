@@ -1,6 +1,10 @@
 #https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/adding-controller?view=aspnetcore-6.0&tabs=visual-studio
 //https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/data/ef-mvc/intro/samples/cu-final
 
+If you want to use a ServiceExtension class, the scope must be public and static 
+
+WHen seeding data you can use configuration specific code for each model, implement IEntityTypeConfiguration and create a Configure method
+
 MVC  -follows DRY principle (You can declaratively specify validation rules in one place (in the model class) and the rules are enforced everywhere in the app.)
     Controller (Retrieve data and decide the response to the browser):
         Every public method in a controller is callable as an HTTP endpoint (Controller methods are referred to as action methods)

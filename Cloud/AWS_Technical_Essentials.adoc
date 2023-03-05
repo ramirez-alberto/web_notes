@@ -1,0 +1,911 @@
+= AWS Technical Essentials
+:source-highlighter: highlight.js
+:toc:
+:toc-placement!:
+
+toc::[]
+
+== Introducing AWS Amazon Web Services
+
+Cloud computing is the on-demand delivery of IT resources over the internet with pay-as-you-go pricing.
+We’ll need to use these AWS services to architect a scalable, highly available, and cost effective infrastructure to host our application. 
+There are the six main advantages to running your workloads on AWS.
+
+- Pay as you go
+- Benefit from massive economies of scale.
+- Stop guessing capacity
+- Increase speed and agility
+- Stop spending money running and maintaining data centers
+- Stop spending money running and maintaining data centers
+- Go global in minutes.
+
+=== Resources:
+
+https://aws.amazon.com/what-is-cloud-computing/[What is Cloud Computing]
+
+http://docs.aws.amazon.com/whitepapers/latest/aws-overview/types-of-cloud-computing.html[Types of Cloud Computing]
+
+https://aws.amazon.com/what-is-aws/[What is AWS]
+
+`Availability Zones` or AZ are clusters of datacenters.An AZ consists of one or more data centers with redundant power, networking, and connectivity. 
+`Region` are cluster of AZ
+
+AWS Regions are independent from one another. This means that your data is not replicated from one Region to another, without your explicit consent and authorization.
+
+As a basic rule, there are four aspects you need to consider when deciding which AWS region to use:
+*compliance*, *latency*, *price*, and *service availability*. 
+
+`Latency` is all about about how close your IT resources are to your user base. If your application is sensitive to latency, choose a Region that is close to your user base. This helps prevent long wait times for your customers. Synchronous applications such as gaming, telephony, WebSockets, and IoT are significantly affected by higher latency, but even asynchronous workloads, such as ecommerce applications, can suffer from an impact on user connectivity.
+ 
+`Price`. Due to the local economy and the physical nature of operating data centers, prices may vary from one Region to another. The pricing in a Region can be impacted by internet connectivity, prices of imported pieces of equipment, customs, real estate, and more. Instead of charging a flat rate worldwide, AWS charges based on the financial factors specific to the location.  
+ 
+`Service availability`. Some services may not be available in some Regions. The AWS documentation provides a table containing the Regions and the available services within each one.
+ 
+`Data compliance`. Enterprise companies often need to comply with regulations that require customer data to be stored in a specific geographic territory. If applicable, you should choose a Region that meets your compliance requirements.
+
+== Maintain Resiliency
+
+To keep your application available, you need to maintain high availability and resiliency. A well-known best practice for cloud architecture is to use Region-scoped, managed services.
+When that is not possible, make sure the workload is replicated across multiple AZs. At a minimum, you should use two AZs. If one entire AZ fails, your application will have infrastructure up and running in at least a second AZ to take over the traffic.
+
+=== Resources
+
+https://aws.amazon.com/about-aws/global-infrastructure/
+
+https://docs.aws.amazon.com/whitepapers/latest/aws-overview/global-infrastructure.html
+
+https://aws.amazon.com/about-aws/global-infrastructure/regions_az/
+
+https://docs.aws.amazon.com/general/latest/gr/rande.html
+
+https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/
+
+== Interact with AWS via API calls
+
+You can make API calls in several ways but the three main ways we're going 
+to talk about are the `AWS Management Console`, the `AWS Command Line Interface`
+and the `AWS Software Development Kits` or SDKs. 
+
+=== Working with AWS API
+
+https://docs.aws.amazon.com/awsconsolehelpdocs/latest/gsg/getting-started.html
+
+https://aws.amazon.com/cli/
+
+https://aws.amazon.com/es/developer/tools/
+
+== AWS Shared Responsibility Model
+
+https://aws.amazon.com/compliance/shared-responsibility-model/[AWS: Shared Responsibility Model]
+
+=== Root User
+
+The root user is the email you use to create an AWS account, and has two sets of credentials associated with it.
+One set is the username/password used to create the account which allow access to AWS Management Console. The second set is called access keys, which allow you to make requests from the AWS CLI or AWS API. 
+Access keys consist in an access key ID and a secret access key
+
+.To ensure the safety of the root user:
+
+   - Choose a strong password for the root user.
+
+   - Never share your root user password or access keys with anyone.
+
+   - Disable or delete the access keys associated with the root user.
+
+   - Do not use the root user for administrative tasks or everyday tasks
+
+.Delete Your Keys to Stay Safe
+
+If you don't already have an access key for your AWS account root user, don't create one unless you absolutely need to. If you do have an access key for your AWS account root user and want to delete the keys:
+
+    Go to the  My Security Credentials page in the AWS Management Console and sign in with the root user’s email address and password.
+
+    Open the Access keys section.
+
+    Under Actions, click Delete.
+
+    Click Yes.
+
+https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_enable_physical.html[AWS: Enabling a Hardware MFA Device (Console)]
+
+https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_enable_u2f.html[AWS: Enabling a U2F Security Key (Console)]
+
+https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_enable_virtual.html[AWS: Enabling a Virtual Multi-Factor Authentication (MFA) Device (Console)]
+
+https://aws.amazon.com/iam/features/mfa/[AWS: Table of Supported MFA Devices]
+
+https://docs.aws.amazon.com/general/latest/gr/root-vs-iam.html#aws_tasks-that-require-root[Tasks that require the use of root user credentials ]
+
+== AWS Identity and Access Management
+
+IAM is a web service that enables you to manage access to your AWS account and resources. It also provides a centralized view of who and what are allowed inside your AWS account (authentication), and who and what have permissions to use and work with your AWS resources (authorization).
+
+All API call in AWS must be both signed and authenticated - no matter if the resources live in the same account.
+Everything in AWS is an API call. IAM policies are JSON-based documents. Policies can be applied to AWS identities
+like users and groups to assign permissions. 
+This IAM policy document contains permissions that allow the identity to which it's attached to perform
+any EC2-related action. The structure of an IAM policy has an effect which is either allow or deny,
+and action, which is the AWS API call. In this case, we have ec2:* 
+
+[source,json]
+----
+{
+    "Statement" : [{
+        "Effect" : "Allow",
+        "Action" : "ec2:*",
+        "Resource" : 
+        "Condition":{}
+    }]
+}
+----
+
+You can use IAM to generate credentials for administrative users, but you need to use role based access in the 
+application level.
+User access keys only expire when you or the admin of your account rotates these keys. User login credentials expire if you have applied a password policy to your account that forces users to rotate their passwords.
+
+https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html[What is IAM?]
+
+https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html[AWS IAM Identities]
+
+https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html[Access Management with AWS IAM]
+
+=== IAM Roles.
+An IAM role is an identity that can be assumed by someone or something who needs temporary access to AWS credentials,
+and they are automatically rotated. The credentials that they provide expire and roles are assumed programmatically
+
+=== IAM Best practices
+
+- Lock Down the AWS Root User
+- Follow the Principle of Least Privilege
+- Use IAM Roles When Possible
+- Consider Using an Identity Provider
+- Consider AWS IAM Identity Center (Successor to AWS Single Sign-On)
+
+=== Resources
+https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html[AWS: Security Best Practices in IAM]
+https://aws.amazon.com/blogs/security/how-to-create-and-manage-users-within-aws-sso/[How to create and manage users within AWS IAM Identity Center]
+
+=== Hosting an app
+
+Every EC2 instance you launch using AWS must live inside of a network, you can use the deafult VPC (Virtual Private Cloud).
+`Amazon EC2` Elastic Compute Cloud is a compute service that allows you to host virtual machines called instances
+
+== Compute as a Service
+
+=== Resources
+
+https://docs.aws.amazon.com/whitepapers/latest/aws-overview/compute-services.html[AWS: Compute Services Whitepaper]
+https://aws.amazon.com/products/compute/[AWS: Compute on AWS]
+https://aws.amazon.com/blogs/compute/[AWS: AWS Compute Blog]
+
+== Amazon Elastic Compute Cloud
+
+Pay per second or per hour,depending on the type of instance.
+
+To select the operating system for your server,you must choose an `Amazon Machine Image` or an `AMI`.
+
+https://aws.amazon.com/ec2/[AWS: Amazon EC2]
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html[AWS: Amazon Machine Images (AMI)]
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html[AWS: Creating an Amazon EBS-backed Linux AMI]
+https://docs.aws.amazon.com/imagebuilder/latest/userguide/what-is-image-builder.html[AWS: What Is EC2 Image Builder?]
+
+You only get charged for an EC2 instance if you are in the running state or if you are in the stopping state, preparing to hibernate. 
+
+=== EC2 Lyfecycle
+
+Your instance sizing will depend on both the demands of your application and the anticipated size of your user base.
+Instance types consist of a prefix identifying the type of workloads they’re optimized for, followed by a size.
+Any resource you put inside the default VPC will be public and accessible by the internet
+AWS services that are scoped at the Availability Zone level must be architected with high availability in mind.
+When architecting any application for high availability, consider using at least two EC2 instances in two separate Availability Zones.
+
+To understand EC2 pricing, let’s decouple the instance price from other services attached to it, such as storage and networking costs. 
+In this unit we refer to the instance cost as the cost associated with the instance in terms of specifications and not the total blended 
+cost of running an instance.
+
+Once an instance is launched in your AWS account, the billing usually accrues on a per-second basis.
+One exception to this pricing convention may be third-party AMIs purchased from the AWS Marketplace, 
+which may have a minimum billing of 1 hour. For more details, check out the resources section of this unit.
+
+https://aws.amazon.com/ec2/[AWS: Amazon EC2]
+
+https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html[AWS: Default VPC and default subnets]
+
+https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html[AWS: AWS Reliability Pillar]
+
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html[AWS: Instance lifecycle]
+
+https://aws.amazon.com/ec2/pricing/[AWS: Amazon EC2 pricing]
+
+https://aws.amazon.com/ec2/pricing/on-demand/[Amazon EC2 On-Demand Pricing]
+
+https://aws.amazon.com/ec2/spot/pricing/[AWS: Amazon EC2 Spot Instances Pricing]
+
+https://aws.amazon.com/ec2/pricing/reserved-instances/pricing/[AWS: Amazon EC2 Reserved Instances Pricing]
+
+== Container Services in AWS
+
+In AWS, containers run on EC2 instances. While running one instance is easy to manage, it lacks high availability 
+and scalability. Most companies and organizations run many containers on many EC2 instances across several Availability Zones.
+
+If you’re trying to manage your compute at a large scale, you need to know:
+
+    How to place your containers on your instances.
+
+    What happens if your container fails.
+
+    What happens if your instance fails.
+
+    How to monitor deployments of your containers.
+
+This coordination is handled by a container orchestration service. AWS offers two container orchestration services: 
+`Amazon Elastic Container Service (ECS)` and `Amazon Elastic Kubernetes Service (EKS)`.
+
+To run and manage your containers, you need to install the Amazon ECS Container Agent on your EC2 instances
+
+=== Amazon ECS Container Agent
+
+To prepare your application to run on Amazon ECS, you create a task definition json text file  that describes one or more containers.
+
+.Example
+
+[source,json]
+----
+{
+    "family": "webserver",
+    "containerDefinitions": [ {
+        "name": "web",
+        "image": "nginx",
+        "memory": "100",
+        "cpu": "99"
+    } ],
+    "requiresCompatibilities": [ "FARGATE" ],
+    "networkMode": "awsvpc",
+    "memory": "512",
+    "cpu": "256"
+}
+----
+
+=== Amazon Elastic Kubernetes Service (Amazon EKS)
+
+Amazon EKS is conceptually similar to Amazon ECS, but there are some differences.
+
+- An EC2 instance with the ECS Agent installed and configured is called a container instance. In Amazon EKS, it is called a worker node.
+- An ECS Container is called a task. In the Amazon EKS ecosystem, it is called a pod.
+
+While Amazon ECS runs on AWS native technology, Amazon EKS runs on top of Kubernetes.
+
+=== Resources
+
+https://aws.amazon.com/containers/services/[AWS: Containers on AWS]
+
+https://www.docker.com/resources/what-container[Docker: What Is a Container?]
+
+https://aws.amazon.com/ecs/[AWS: Amazon Elastic Container Service]
+
+https://github.com/aws/amazon-ecs-agent[Github: Amazon ECS Agent]
+
+https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_instances.html[AWS: Amazon ECS container instances]
+
+https://www.coursera.org/learn/containerized-apps-on-aws[Course: Building Containerized Applications on AWS]
+
+=== AWS Serverless container orchestration
+
+AWS Fargate is a compute platform which can run EKS or ECS on top.
+Every definition of serverless mentions four aspects.
+
+- No servers to provision or manage.
+- Scales with usage.
+- You never pay for idle resources.
+- Availability and fault tolerance are built-in.
+
+=== AWS Lamdba
+
+Lambdba allow you to package and upload your code to the Lambda service creating a "Lambda function". Lambda functions
+run in response to triggers.
+
+Common triggers examples:  HTTP request, an upload of a file to the storage service, Amazon S3, events originating from other AWS services
+or even in-app activity from mobile devices. you only get billed for the resources that you use, down to 100 millisecond intervals.  
+
+.AWS Lambda function handler
+
+When your function is invoked, Lambda runs the handler method. When the handler exits or returns a response, 
+it becomes available to handle another event.
+You can use the following general syntax when creating a function handler in Python:
+
+[source,python]
+----
+def handler_name(event, context): 
+    ...
+    return some_value
+----
+
+.Naming
+
+The Lambda function handler name specified at the time you create a Lambda function is derived from the following:
+the name of the file in which the Lambda handler function is located
+the name of the Python handler function
+
+A function handler can be any name; however, the default on the Lambda console is lambda_function.lambda_handler. 
+This name reflects the function name as lambda_handler, and the file where the handler code is stored in lambda_function.py.
+
+If you choose a different name for your function handler on the Lambda console, you must update the name on the Runtime settings pane. 
+
+.Billing
+
+AWS Lambda lets you run code without provisioning or managing servers, and you pay only for what you use. 
+You are charged for the number of times your code is triggered (requests) and for the time your code executes, 
+rounded up to the nearest 1ms (duration). 
+https://aws.amazon.com/blogs/aws/new-for-aws-lambda-1ms-billing-granularity-adds-cost-savings/[Read more.]
+
+https://aws.amazon.com/blogs/compute/resize-images-on-the-fly-with-amazon-s3-aws-lambda-and-amazon-api-gateway/ [Demo]
+
+https://aws.amazon.com/serverless/#:~:text=Serverless%20is%20the%20native%20architecture,services%20without%20thinking%20about%20servers.[AWS: Serverless]
+
+https://aws.amazon.com/serverless/resources/?serverless.sort-by=item.additionalFields.createdDate&serverless.sort-order=desc[AWS: AWS Serverless resources]
+
+https://aws.amazon.com/lambda/serverless-architectures-learn-more/[AWS: Building Applications with Serverless Architectures]
+
+https://aws.amazon.com/blogs/compute/best-practices-for-organizing-larger-serverless-applications/[AWS: Best practices for organizing larger serverless applications]
+
+https://docs.aws.amazon.com/lambda/latest/dg/lambda-functions.html[AWS: Managing AWS Lambda functions]
+
+https://aws.amazon.com/blogs/architecture/ten-things-serverless-architects-should-know/[AWS: 10 Things Serverless Architects Should Know]
+
+https://alienattack.workshop.aws/[AWS: AWS Alien Attack! A Serverless Adventure]
+
+
+== Networking in AWS
+
+A VPC is an isolated network
+
+Min range of ip's in AWS is 16 (/28 in CIDR) and 65,536 (/16).
+
+When creating a VPC you first need to specify the REGION and the IP RANGE in CIDR notation. Next we can create a subnet to 
+achieve a granular control over our resources. Like public data inside a subnet and the db in another subnet. In AWS this act like a VLAN
+
+To create a subnet we need to choose a VPC, IP RANGE and an AZ (Availability Zone).
+
+To enable internet connectivity in our VPC we need to attach an Internet gateway (IGW)
+
+A common design pattern is organizing your resources into different groups and creating security groups for each to control network communication between them.
+
+=== Virtual Private Gateway (VGW)
+
+Create a VPN between our on-premise data like a data center and the VPC. This ensure our on-premise data is not exposed to the public.
+
+=== Amazon VPC Routing
+
+When you create a new VPC, AWS create a "Main Route Table" which allow traffic between all subnets local to the VPC.
+
+=== Common steps
+
+- *Create* : VPC, Subnet, Gateways, Custom Route tables.
+- *Secure* : Use Network ACL to secure subnets, use Security Groups for EC2 instances. 
+
+=== Resources
+
+.CIDR notation and networking
+
+https://web.stanford.edu/class/cs101/network-1-introduction.html[Stanford: Introduction to Computer Networking]
+
+https://www.ionos.com/digitalguide/server/know-how/cidr-classless-inter-domain-routing/[Ionos: CIDR: What is classless inter-domain routing?]
+
+.AWS VPC
+
+https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenario2.html[AWS: VPC with public and private subnets (NAT)]
+
+https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html#CustomRouteTables[AWS: custom route tables]
+
+https://docs.aws.amazon.com/vpn/latest/s2svpn/how_it_works.html#CustomerGateway[Customer Gateway ]
+
+https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html[AWS: What Is Amazon VPC? ]
+
+https://docs.aws.amazon.com/vpc/latest/userguide/how-it-works.html[AWS: VPCs and subnets]
+
+
+.AWS Security and Route Tables
+
+https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html[AWS: Route tables]
+
+https://docs.aws.amazon.com/vpc/latest/userguide/route-table-options.html[AWS: Example routing options]
+
+https://docs.aws.amazon.com/vpc/latest/userguide/WorkWithRouteTables.html[AWS: Working with routing tables]
+
+https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html[AWS: Network ACLs]
+
+https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html[AWS: Security groups for your VPC]
+
+https://aws.amazon.com/es/premiumsupport/knowledge-center/connect-http-https-ec2/[AWS: I host a website on an EC2 instance. How do I allow my users to connect on HTTP (80) or HTTPS (443)?]
+
+
+== Storage (Amazon EC2 Instance Storage and Amazon Elastic Block Store)
+
+There are three types of storage in AWS: File storage, Block and Object.
+
+=== File Storage
+
+Follow a tree-like hierarchy that consist in folder and subfolders. File storage is ideal when you require centralized
+access to files that need to be easily shared and managed by multiple host computers
+
+Common use cases for file storage include: 
+
+- Large  content repositories
+- Development  environments
+- User  home directories
+
+=== Block Storage
+
+The file is split into fixed size chunks of data and stored.
+Since block storage is optimized for low-latency operations, it is a typical storage choice for high-performance enterprise workloads, such as databases or enterprise resource planning (ERP) systems, that require low-latency storage. 
+
+
+==== Instance volumes
+
+Instance store is ideal if you are hosting applications that replicate data to other EC2 instances, such as Hadoop clusters. For these cluster-based workloads, having the speed of locally attached volumes and the resiliency of replicated data helps you achieve data distribution at high performance. It’s also ideal for temporary storage of information that changes frequently, such as buffers, caches, scratch data, and other temporary content.
+
+==== EBS volumes
+
+Share a one-to-one relationship with EC2 instances, so they can't be shared or attached to multiple instances at one time.
+
+*Benefits of Using Amazon EBS*
+
+Here are the following benefits of using Amazon EBS:
+
+- High availability: When you create an EBS volume, it is automatically replicated within its Availability Zone to prevent data loss from single points of failure.
+- Data persistence: The storage persists even when your instance doesn’t.
+- Data encryption: All EBS volumes support encryption.
+- Flexibility: EBS volumes support on-the-fly changes. You can modify volume type, volume size, and input/output operations per second (IOPS) capacity without stopping your instance.
+- Backups: Amazon EBS provides you the ability to create backups of any EBS volume.
+
+*Backup your data, and think your use case, persistent data you want to use EBS*
+
+=== Object Storage
+
+Treat each file like a single unit of data. This type of storage often follows a WORM pattern ( write once, read many)
+With object storage, you can store almost any type of data, and there is no limit to the number of objects stored, making it easy to scale. Object storage is generally useful when storing large data sets, unstructured files like media assets, and static assets, such as photos.
+
+=== Resources
+
+https://aws.amazon.com/what-is-cloud-storage/[AWS: What Is Cloud Storage]
+
+https://aws.amazon.com/what-is-cloud-object-storage/#types[AWS: Types of Cloud Storage]
+
+.EBS and Instance store
+
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html[AWS: Amazon Elastic Block Store (Amazon EBS)]
+
+https://aws.amazon.com/ebs/faqs/[AWS: Amazon EBS FAQs]
+
+.Choose the right storage 
+
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Storage.html[AWS: Storage]
+
+https://aws.amazon.com/products/storage/[AWS: Cloud Storage on AWS]
+
+https://docs.aws.amazon.com/efs/latest/ug/how-it-works.html[Amazon EFS: How it works]
+
+https://aws.amazon.com/fsx/windows/[Amazon FSx for Windows File Server]
+
+https://aws.amazon.com/fsx/lustre/[Amazon FSx for Lustre]
+
+
+
+== Amazon Simple Storage Service (S3)
+
+Amazon is an object storage service, where you can storage objects in containers called buckets. Everything in S3 is provate by default
+
+To create a bucket, at minimum, you need to choose a region and a name. When you choose a region, 
+all objects are redundantly stored across multiple AZ
+
+Next, you need to choose a name, this name must be unique across all AWS accounts. The object name is refered as key name
+
+=== S3 Use Cases
+
+The following list summarizes some of the most common ways you can use Amazon S3. 
+
+- Backup and storage: AWS stores your EBS snapshots in S3.
+- Media hosting: Because you can store unlimited objects, and each individual object can be up to 5 TBs.
+- Software delivery: You can use S3 to host your software applications that customers can download.
+- Data lakes: S3 is an optimal foundation for a data lake because of its virtually unlimited scalability. You can increase storage from gigabytes to petabytes of content, paying only for what you use.
+- Static websites: You can configure your bucket to host a static website of HTML, CSS, and client-side scripts.
+- Static content: Because of the limitless scaling, the support for large files, and the fact that you access any object over the web at any time, S3 is the perfect place to store static content.
+
+=== Access Management for S3
+
+==== IAM Policies
+
+You should use IAM policies for private buckets when:
+
+- You have many buckets with different permission requirements. Instead of defining many different S3 bucket policies, you can use IAM policies instead.
+- You want all policies to be in a centralized location. Using IAM policies allows you to manage all policy information in one location.
+
+==== S3 Bucket Policies
+
+Are attached only a S3 buckets, similar to IAM policies. This bucket policies defined what actions are allowed o denied on the bucket.
+
+You should use S3 bucket policies when: 
+
+- You need a simple way to do cross-account access to S3, without using IAM roles.
+- Your IAM policies bump up against the defined size limit. S3 bucket policies have a larger size limit.
+    
+.Example:
+
+[source,json]
+----
+{
+    "Version":"2012-10-17",
+        "Statement":[{
+            "Sid":"PublicRead",
+            "Effect":"Allow",
+            "Principal": "*",
+            "Action":["s3:GetObject"],
+            "Resource":["arn:aws:s3:::employeebucket/*"]
+        }]
+}
+----
+
+==== Encrypt S3
+
+Amazon S3 reinforces encryption in transit (as it travels to and from Amazon S3) and at rest. To protect data at rest, you can use:
+
+- Server-side encryption: This allows Amazon S3 to encrypt your object before saving it on disks in its data centers and then decrypt it when you download the objects.
+- Client-side encryption: Encrypt your data client-side and upload the encrypted data to Amazon S3. In this case, you manage the encryption process, the encryption keys, and all related tools.
+
+To encrypt in transit, you can use client-side encryption or Secure Sockets Layer (SSL).
+
+==== Use Versioning to Preserve Objects
+
+Versioning enables you to keep multiple versions of a single object in the same bucket. 
+Has three states: Unversioned, Versioning-enabled, Versioning-suspended
+
+==== S3 storage classes
+
+S3 storage classes let you change your storage tier as your data characteristics change. There are six storage classes:
+
+. Amazon S3 Standard
+. Amazon S3 Intelligent-Tiering
+. Amazon S3 Standard-Infrequent Access (S3 Standard-IA)
+. Amazon S3 One Zone-Infrequent Access (S3 One Zone-IA)
+. Amazon S3 Glacier
+. Amazon S3 Glacier Deep Archive
+
+*Automate Tier Transitions with Object Lifecycle Management*
+
+- Transition actions are used to define when you should transition your objects to another storage class.
+- Expiration actions define when objects expire and should be permanently deleted.
+
+The following use cases are good candidates for lifecycle management. 
+
+- Periodic logs: If you upload periodic logs to a bucket, your application might need them for a week or a month. After that, you might want to delete them.
+- Data that changes in access frequency: Some documents are frequently accessed for a limited period of time. After that, they are infrequently accessed. At some point, you might not need real-time access to them, but your organization or regulations might require you to archive them for a specific period. After that, you can delete them.
+
+== Amazon RDS
+
+Built off of compute and storage. Underneath the DB is a EC2 instance.
+
+Supported RDBMS
+    
+- Commercial: Oracle, SQL Server
+- Open Source: MySQL, PostgreSQL, MariaDB
+- Cloud Native: Amazon Aurora
+
+Supported Instance families:
+
+- Standard, which include general-purpose instances
+- Memory Optimized, which are optimized for memory-intensive applications
+- Burstable Performance, which provides a baseline performance level, with the ability to burst to full CPU usage.
+
+The storage layer uses Amazon EBS and you can choose between three types of storage:
+
+- General purpose (SSD)
+- Provisioned IOPS (SSD)
+- Magnetic storage (not recommended)
+
+DB subnet group are the subnets where the DB instance reside. To create a DB subnet group you specify:
+
+- The Availability Zones (AZs) that include the subnets you want to add
+- The subnets in that AZ where your DB instance are placed
+
+The subnets you add should be private so they don’t have a route to the internet gateway.
+Access to the DB instance can be further restricted by using network access control lists (ACLs) and security groups. 
+
+=== Automated backups
+
+- Automated backups are turned on by default at a DB instance level and the transaction logs.
+Keep in mind that if you set it to 0, it will also delete all existing automated backups.
+
+If you restore data from an automated backup, you have the ability to do point-in-time recovery. Point-in-time recovery creates a new DB instance using data restored from a specific point in time.
+
+=== Manual Backups
+
+If you want to keep your automated backups longer than 35 days
+
+We can leverage automated and manual backups.
+
+=== Amazon RDS Multi-AZ
+
+ Creates a redundant copy of your database in another AZ. You end up with two copies of your database: a primary copy in a subnet in one AZ and a standby copy in a subnet in a second AZ. 
+
+ The primary copy of your database provides access to your data so that applications can query and display that information. 
+
+The data in the primary copy is synchronously replicated to the standby copy. The standby copy is not considered an active database, and does not get queried by applications.
+
+The reason you can select multiple subnets for an Amazon RDS database is because of the Multi-AZ configuration. You’ll want to ensure that you have used subnets in different AZs for your primary and standby copies.
+
+=== Choosing a DB
+
+.AWS Database Services
+[width="80%",cols="2,8,5",options="header"]
+|=========================================================
+|Database Type |Use Cases |AWS Service
+
+|Relational |Traditional applications, ERP, CRM, e-commerce | Amazon RDS, Amazon Aurora, Amazon Redshift
+
+|Key-value |High-traffic web apps, e-commerce systems, gaming applications | Amazon DynamoDB
+
+|In-memory |Caching, session management, gaming leaderboards, geospatial applications | 
+Amazon ElastiCache for Memcached, Amazon ElastiCache for Redis
+
+|Document | Content management, catalogs, user profiles | Amazon DocumentDB (with MongoDB compatibility)
+|Wide column | High-scale industrial apps for equipment maintenance, fleet management, and route optimization |
+Amazon Keyspaces (for Apache Cassandra)
+
+|Graph | Fraud detection, social networking, recommendation engines | Amazon Neptune
+
+|Time series | IoT applications, DevOps, industrial telemetry | Amazon Timestream
+|Ledger | Systems of record, supply chain, registrations, banking transactions | Amazon QLDB
+
+|=========================================================
+
+=== Resources
+
+.Basics RDBMS
+
+https://aws.amazon.com/relational-database/[AWS: What Is a Relational Database?]
+
+https://aws.amazon.com/products/databases/[AWS: Databases on AWS]
+
+.Amazon RDS
+
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html[AWS: Working With Backups]
+
+https://aws.amazon.com/rds/details/backup/[AWS: Amazon RDS Backup and Restore]
+
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.IAMPolicy.html[AWS: Creating and Using an IAM Policy for IAM Database Access]
+
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.html[AWS: Amazon Virtual Private Cloud VPCs and Amazon RDS]
+
+.Amazon DynamoDB 
+
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html[Introduction to Amazon DynamoDB]
+
+.Choosing a DB
+
+https://aws.amazon.com/products/databases/[AWS: Databases on AWS]
+
+https://aws.amazon.com/blogs/database/?nc=sn&loc=4[AWS: AWS Database Blog]
+
+https://aws.amazon.com/products/databases/freedom/?nc=sn&loc=5[AWS: Database Freedom]
+
+== Monitoring on AWS 
+
+`Amazon CloudWatch` is a monitoring and observability service that collects data
+
+The act of collecting, analyzing, and using data to make decisions or answer questions about your IT resources and systems is called monitoring.You can use the data you collect to watch for operational issues caused by events like over-utilization of resources, application flaws, resource misconfiguration, or security-related events.
+
+You can think of each individual data point that is created by a resource as a metric. Metrics that are collected and analyzed over time become statistic
+
+You could be interested in a wide variety of metrics depending on the types of resources you are using, the goals you have, or the types of questions you want answered.
+
+When you monitor resources, events, and systems over time, you create what is called a baseline. A baseline defines what activity is normal. Using a baseline, you can spot anomalies like unusual traffic spikes or unusual IP addresses accessing your resources.
+
+Many services send information for free as at a rate of one point per metric per 5 minutes interval. This is known as `basic monitoring`.
+
+For `detailed monitoring` you need to pay a fee. This feature send metrics every minute. 
+
+=== Break Down Metrics
+
+Has a timestamp and is organized into containers called *namespaces*. Every metric has attached
+a *dimension*. A *dimension* is a name/value pair. This is used to filter the results. 
+
+You can create custom metrics. And if you want more granularity you can use *high-resolution custom metrics* which enable you to collect custom metrics down to a 1-second resolution.
+
+Other examples of custom metrics are: 
+
+- Web page load times
+- Request error rates
+- Number of processes or threads on your instance
+- Amount of work performed by your application
+
+=== Amazon Cloudwatch
+
+It is a managed service. You can create dashboards and pull data from different Regions into a single dashboard in order to create a global view of your architecture.
+
+You can use external or custom tools to ingest and analyze CloudWatch metrics using the GetMetricData API.
+
+You can control who has access to view or manage Cloudwatch through AWS IAM policies.
+
+CloudWatch Logs can monitor, store, and access your log files from apps running on Amazon EC2 instances.
+
+==== CloudWatch Logs Terminology
+
+*Log event*: A log event is a record of activity recorded by the application or resource being monitored, and it has a timestamp and an event message.
+
+*Log stream*: Log events are then grouped into log streams, which are sequences of log events that all belong to the same resource being monitored.
+
+*Log groups*: Log streams are then organized into log groups. A log group is composed of log streams that all share the same retention and permissions settings.
+
+==== CloudWatch Alarm
+
+Automatically initiate actions based on sustained state changes of your metrics. To set up an alarm you need to choose the metric, the threshold, and the time period.
+
+An alarm has three possible states.
+
+- OK: The metric is within the defined threshold. Everything appears to be operating like normal.
+- ALARM: The metric is outside of the defined threshold. This could be an operational issue.
+- INSUFFICIENT_DATA: The alarm has just started, the metric is not available, or not enough data is available for the metric to determine the alarm state.
+
+Actions can be an Amazon EC2 action, an Auto Scaling action, or a notification sent to Amazon Simple Notification Service (SNS).
+
+=== Resources
+
+https://aws.amazon.com/cloudwatch/[AWS: Amazon CloudWatch]
+
+.Alarms and Logging
+
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/GettingStarted.html[AWS: Getting Started with Amazon CloudWatch]
+
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html[AWS: What Is Amazon CloudWatch Logs?]
+
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/aws-services-cloudwatch-metrics.html[AWS Services That Publish CloudWatch Metrics]
+
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/viewing_metrics_with_cloudwatch.html[AWS: View Available Metrics]
+
+https://aws.amazon.com/cloudwatch/pricing/[AWS: Amazon CloudWatch Pricing]
+
+https://aws.amazon.com/sns/[AWS: Amazon Simple Notification Service]
+
+https://aws.amazon.com/ec2/autoscaling/[AWS: EC2 Auto Scaling Actions]
+
+== Optimizing solutions on AWS
+
+=== Availability
+
+It is expressed as a percentage of uptime in a given year or as a number of nines.
+
+.List of the percentages of availability based on the downtime per year
+[width="80",cols="1,1",options="header"]
+|==========================================================
+|Availability (%) |Downtime (per year)
+|90% ("one nine") | 36.53 days
+|99% ("two nines") | 3.65 days
+|99.9% ("three nines") | 8.77 hours
+|99.95% ("three and a half nines") | 4.38 hours
+|99.99% ("four nines") | 52.60 minutes
+|99.995% ("four and a half nines") | 26.30 minutes
+|99.999% ("five nines") | 5.26 minutes
+|==========================================================
+
+Understand the Types of High Availability
+The last challenge to address when having more than one server is the type of availability you need—either be an active-passive or an active-active system. 
+
+- *Active-Passive*: With an active-passive system, only one of the two instances is available at a time. One advantage of this method is that for stateful applications where data about the client’s session is stored on the server, there won’t be any issues as the customers are always sent to the same server where their session is stored.
+
+- *Active-Active*: A disadvantage of active-passive and where an active-active system shines is scalability. By having both servers available, the second server can take some load for the application, thus allowing the entire system to take more load. However, if the application is stateful, there would be an issue if the customer’s session isn’t available on both servers. Stateless applications work better for active-active systems.
+
+=== Elastic Load Balancing Service (ELB Service)
+
+When you have multiple EC2 scaled horizontally, you can use the ELB service to distribute the requests across the servers (fleet).
+
+By design is highly available and automatically scalable service, that means is a Region service. 
+You can use ELB the route traffic to EC2 instances as well as containers, IP addresses, and AWS Lambda functions.
+
+==== Types of Load Balancers
+
+- Application Load Balancer, that load balances HTTP and HTTPS traffic.
+- Network Load Balancer, that load balances TCP, UDP, and TLS traffic.
+- Gateway Load Balancer,which is mostly for routing traffic to third-party applications. 
+
+=== Load Balancing on AWS
+
+Load balancing refers to the process of distributing tasks across a set of resources.
+
+*Steps to distribute request with a Load Balancer*
+
+. Enable the load balancer to take all of the traffic and redirect it to the backend servers based on algorithm. One of the most popular is the round-robin which sends the traffic  ot each server one after the other.
+
+
+==== Features of ELB
+
+- The fact that ELB can load balance to IP addresses means that it can work in a hybrid mode as well, where it also load balances to on-premises servers.
+- ELB is highly available. The only option you have to ensure is that the load balancer is deployed across multiple Availability Zones.
+- In terms of scalability, ELB automatically scales to meet the demand of the incoming traffic. It handles the incoming traffic and sends it to your backend application.
+
+*Connection draining*: ELB can prevent EC2 Auto Scaling from terminating the EC2 instance until all connections to that instance end, while preventing any new connections.
+
+==== ELB Components
+
+- Listeners: Listen for incoming traffic (client-side). There can be many listeners for a single load balancer.
+- Target groups: Define the backend servers and the health checks for each target group.
+- Rules: Used to associate target groups to a listener.
+
+==== Select ELB types
+
+[width="80",cols="1,1,1"]
+|========================================================
+|Feature | Application Load Balancer|Network Load Balancer 
+|Protocols |HTTP, HTTPS | 
+|Connection draining (deregistration delay) | ✔ | 
+|IP addresses as targets | ✔ | ✔
+|Static IP and Elastic IP address | | ✔
+|Preserve Source IP address | | ✔
+|Routing based on Source IP address, path, host, HTTP headers, HTTP method, and query string | ✔ | 
+|Redirects | ✔ |
+|Fixed response | ✔ | 
+|User authentication | ✔ |
+	
+|========================================================
+
+
+=== Resources
+
+.Availability
+
+https://docs.aws.amazon.com/whitepapers/latest/real-time-communication-on-aws/high-availability-and-scalability-on-aws.html[High Availability and Scalability on AWS]
+
+https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html[AWS: AWS Reliability Pillar: AWS Well-Architected Framework]
+
+.Load Balancing
+
+https://aws.amazon.com/elasticloadbalancing/features/#Product_comparisons[AWS: Elastic Load Balancer product comparison]
+
+https://aws.amazon.com/certificate-manager/[AWS: AWS Certificate Manager]
+
+https://docs.aws.amazon.com/elasticloadbalancing/latest/application/listener-authenticate-users.html[AWS: Authenticate users using an Application Load Balancer]
+
+https://docs.aws.amazon.com/waf/latest/developerguide/how-aws-waf-works.html[AWS: How AWS WAF works]
+
+.EC2 Autoscaling 
+
+https://aws.amazon.com/ec2/autoscaling/[AWS: Amazon EC2 Auto Scaling]
+
+https://aws.amazon.com/ec2/autoscaling/faqs/[AWS: Amazon EC2 Auto Scaling FAQs]
+
+https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-capacity-limits.html[AWS: Setting capacity limits for your Auto Scaling Group]
+
+https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scaling-simple-step.html[AWS: Step and simple scaling policies for Amazon EC2 Auto Scaling]
+
+https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scaling-target-tracking.html[AWS: Target tracking scaling policies for Amazon EC2 Auto Scaling]
+
+https://docs.aws.amazon.com/autoscaling/ec2/userguide/create-asg-launch-template.html[AWS: Creating an Auto Scaling Group using a launch template]
+
+
+the new product feature’s time-to-market is increasing 
+build a standard three tier application, where you have web servers, application servers and database servers.
+
+availabilty and redundancy
+
+To meet this demands,
+we could scale our instances vertically,
+meaning we could increase the size of the instances we have,
+or we could scale our instances horizontally,
+meaning we could add more instances
+to create a fleet of instances.
+If we scale vertically,
+eventually we'll reach the upper limit
+of scalability for that instance. 
+
+we were simply using
+the instance public DNS name or public IP address,
+but when you have multiple instances,
+you have multiple IPs to route to.
+Instead of maintaining the logic
+to send requests to your various servers,
+you could use a load balancer
+to distribute to those requests
+across a set of resources for you.
+And since you can connect from your load balancer
+to access the application,
+you no longer need to use the public IPs
+of your EC2 instances. 

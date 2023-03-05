@@ -13,52 +13,91 @@ npm cache clean --force
 
 Create a new project: ng new AccountOwnerClient --strict false
 Third-Party Libraries as Part Of Angular Project Preparation:
-    ng add ngx-bootstrap  -> Angular bootstrap
+    ng add ngx-bootstrap  -> [Angular bootstrap](https://valor-software.com/ngx-bootstrap/#/components/datepicker?tab=overview)
 Run our app and also open it in a browser automatically (-o flag): ng serve -o
 
 Creating Angular Components
     ng g component home --skip-tests or ng g component dir/not-found --skip-tests
-Creating Angular Modules>
+Creating Angular Modules with routes
     ng g module owner --routing=true --module app.module
+    ng generate module app-routing --flat --module=app -> --flat puts the file 
+        in src/app instead of its own directory and --module tell to register it in the imports array of the AppModule
 Create a new services>
     ng g service shared/services/environment-url --skip-tests
+Create a new shared module
+    ng g module shared --module owner
+Create a new directive
+    ng g directive shared/directives/append --skip-tests
+
+## Template Basics
+    {{ var }} -> Interpolation
+    <tag *ngFor="let var of var[]"> or *ngIf="condition" -> Structural Directives
+    [property]="var" -> property binding
+    (event)="function()" -> Event binding
+    [(ngModel)]="property in class" -> two way binding , data can flow in both directions 
+        from the class to the view and viceversa.
+    [class.selected] ="condition" -> Class binding add and remove a CSS class conditionally. 
+            Add to the element you want to style
+
+
+## Components
+    Define an area of responsability in the UI and allow shared functionality. Must be declared in
+    exactly one NgModule.
 ## Important pages
     app.component.html -> app root html
     AppRoutingModlue -> app routes
     src/environments -> prod env and dev
 
 ## Add modules to app root
+    Other files and libraries the application requires is called metadata.
     import { CollapseModule } from 'ngx-bootstrap/collapse'; add module in imports array
         CollapseModule.forRoot() --> for root is for app root if another use forChild()
-## Markup for html
+## Markup for html  
  {{notFoundText}} put var in html , its called interpolation
  (click)="isCollapsed = !isCollapsed" -> click event
  [attr.aria-expanded]="!isCollapsed"
  [collapse]="!isCollapsed" [isAnimated]="true"
     + Styling Links
-        [routerLink]="['/home']" replace href in linka (<a>) when using routing
+        [routerLink]="['/home']" replace href in linka (\<a\>) when using routing and
+            is the selector for the RouterLink directive .
         [routerLinkActiveOptions]="{exact: true}"
-    *ngFor="let owner of owners"> => *ngFor directive loop over all the owners
+    *ngFor="let owner of owners"> => *ngFor directive loop over all the owners, put in the host tag
     <td>{{owner.dateOfBirth | date: 'dd/MM/yyyy'}}</td>>  Date pipe | date: 'dd/MM/yyyy' to format
     <div class="row" *ngIf='owner?.accounts.length <= 2; else advancedUser'> *ngIf directive
         <ng-template #advancedUser>some template <ng-template>
 
 ## Routes
+Best practice is to load and configure the router in a separate, top-level module.
     1.- Import the component if you use in the route 
         and add router-outlet tag in html is a container for the routing content
   { path: 'home', component: HomeComponent }, 
   { path: '', redirectTo: '/home', pathMatch: 'full' }
   { path: '**' --> wildcard route, match any route. A wildcard route is the last route
 
+## Redirection
+    this.router.navigate(['/owner/list']); or inject Location and use back() > (location.back())
+
 ## Angular HTTP Client
     import the HttpClientModule inside the app.module.ts and  place it inside the imports array,
     make a wrapper for CRUD request, Create,Update must provide a body and headers. If you receive a response object must createa strongly typed HTTP method, like http.put<Model>(values)
-    + Subscription on the HTTP Calls
-        wrapper functions need a subscription, and these function not be executed until we call the subscribe function.   this.repo.getOwners('api/owner').subscribe(lambda)
+    * Handle errors on HTTP request
+        You can pipe the error response with pipe( catchError(handleErrors) ), the handleError function
+        must return an Observable of the same type as the response.
+        With tap() you can make something with the response. Syntax> pipe(tap(),catchError())
+
+    * Subscription on the HTTP Calls
+        wrapper functions need a subscription, and these function not be executed until we call the subscribe function.   this.repo.getOwners('api/owner').subscribe(lambda)    
 
 ## Angular Services
+https://angular.io/guide/providers
 Services are just classes, which provide us with some business logic relevant to our components. These services must be injected into a component using constructor injection.
 We should use services whenever we have code that we can reuse in other components, or extract part of the code from our components.
+Components shouldn't fetch or save data directly and they certainly shouldn't knowingly present fake data.
+We can delegate data access to a service or to share information among classes that don't know each other.
+Services mplements @Injectable() decorator. To deliver or create the service you need to register a provider
+metadata. When you provide at root level, angular created a single, shared instance.
+You can bind directly to a service in a template, for that, you must declare a public property.
+
 Create a new services -> ng g service shared/services/environment-url --skip-tests
 
 ## Angular Lazy Loading
@@ -69,13 +108,39 @@ Create a new services -> ng g service shared/services/environment-url --skip-tes
 
 ## Input and Output decorator
     In the situations where we want to send some content from a parent to a child component, we need to use the @Input decorator in a child component to provide a property binding between those components. Moreover, we can have some events in a child component that reflect its behavior back to a parent component. For that purpose, we are going to use @Output decorator with the EventEmitter.
+
+## Shared modules
+    When we want to register our reusable component it is a good practice to create a shared module and to register and export our components inside that module. Then, we can use those reusable components in any higher-level component we want by registering the shared module inside a module responsible for that higher-order component.
+## Directives (manipulate DOM)
+    Change the appearance or behavior of DOM elements and Angular components with attribute directives.
+
+## Form validation
+    Template-driven (via html)
+### Reactive form (validation in component): 
+* Add the ReactiveFormModule in the parent module and format the html:
+each input must have formControlName attribute inside every control. That attribute represents the control name which we are going to validate.
+* onInit instance a FormGroup object, pass a object with the names of the form fields as keys and instance FormatControl as values, syntax-> `FormatControl('',optional= array of validators)` and pass an array of Validators, handle errors (check if user place cursor in control (touched and if its valid)), handle creation and redirection
+
+
 ## Libraries
     Errors: HttpErrorResponse
     Redirection and navigation: Router
+    ReferenceDOM: ElementRef
+    ManipulateDOM: Renderer2
+    Check for changes: OnChanges interface and add ngOnChanges method lifecyle in class.
+    Reactive form validation module: ReactiveFormsModule 
 
 ## General
-    var? -> is a optional property
+    var? -> is a optional property. In template is a safe navigation operator and check if the 
+        property exists.
+    `${accNum}` text format
+    var$ -> $ symbol indicates var is an Observable
+    var! -> ! symbol indicates var is not null or undefined
 
+## Pipes
+    https://angular.io/guide/pipes
+
+    async keyword -> This identifies Angular's AsyncPipe and subscribes to an Observable automatically so you won't have to do so in the component class.
 
 Troubleshoot ngx boostrap
 Change oath in angular.json ( is wrong by default)
