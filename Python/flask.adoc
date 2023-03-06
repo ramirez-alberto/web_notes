@@ -96,7 +96,7 @@ __from https://github.com/jpadillaa/taller-api-flask/[Taller_api_flask]__
 
 == Flask Web App
 
-- Dependencies: marshmallow-sqlalchemy, flask, flask, flask-sqlalchemy, flask-restful
+- Dependencies: marshmallow-sqlalchemy, flask, flask, flask-sqlalchemy, flask-restful, flask-jwt-extended
 
 === Steps
 
@@ -111,3 +111,5 @@ the classes inherit from `SQLAlchemyAutoSchema` and has a nested class `Meta` wi
 `include_relationships = True`, `load_instance = True`; Optionally, to make a custom serializer, create a class that inherit from `fields.Field` and has a method `def _serialize(self, value, attr, obj, **kwargs)`
 . Create CRUD operations for the classes with `flask-restful`, define new classes for the views that inherits from `Resource` and
 create the methods for the CRUD operations. Use `instance_of_schema.dumps()` to return data for this methods as JSON. 
+. Test the app with POSTMAN.
+. Add security with `flask-jwt-extended`, to do this you must pass `app` to a `JWTManager` in the app factory and set the variable `JWT_SECRET_KEY` in the `app.config`; define a login and sign-in views. Decorate a protected method with `jwt_required()`
