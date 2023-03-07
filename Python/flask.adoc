@@ -117,3 +117,42 @@ create the methods for the CRUD operations. Use `instance_of_schema.dumps()` to 
 ==== FronEnd
 
 . Install Flask-cors, Angular CLI and for vscode Angular Essentials, Angular Files
+. Import CORS from flask-cors and pass the `app`
+. Create a service to get the api address in Angular
+
+==== Deploy
+
+- Dependencies: gunicorn
+
+For development set the environment variables FLASK_APP=app.py, FLASK_DEBUG=1, FLASK_ENV=development
+
+Configure a app server with Gunicorn WSGI, work as a interface between python apps and a web server.
+In a file wsgi.py add:
+
+.wsgi.py
+[source,python]
+----
+from app import app
+if __name__ == "__main__":
+    app.run()
+----
+
+__Note: In Linux, allow the port 5000 with `sufo ufw allow 5000`__
+
+Validate gunicorn executing `gunicorn --bind 0.0.0.0:5000 wsgi:app`
+
+Configure a reverse-proxy with Nginx, create a systemd file,this allow nginx to start automatically.
+On Linux create a file with extension service: `sudo nano /etc/systemd/system/app.service`
+
+[source]
+----
+[Unit]
+Description=Gunicorn instance to serve APP
+After=network.target
+
+[Service]
+User=your-localuser
+Group=your-localuser
+----
+
+Assign the group www-data, to allow nginx to communicate with the Gunicorn processes

@@ -12,6 +12,7 @@ npm uninstall -g @angular/cli
 npm cache clean --force
 
 Create a new project: ng new AccountOwnerClient --strict false
+Install bootsrap npm install --save bootstrap
 Third-Party Libraries as Part Of Angular Project Preparation:
     ng add ngx-bootstrap  -> [Angular bootstrap](https://valor-software.com/ngx-bootstrap/#/components/datepicker?tab=overview)
 Run our app and also open it in a browser automatically (-o flag): ng serve -o
