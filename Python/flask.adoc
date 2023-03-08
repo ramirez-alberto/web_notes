@@ -144,6 +144,13 @@ Validate gunicorn executing `gunicorn --bind 0.0.0.0:5000 wsgi:app`
 Configure a reverse-proxy with Nginx, create a systemd file,this allow nginx to start automatically.
 On Linux create a file with extension service: `sudo nano /etc/systemd/system/app.service`
 
+Assign the group www-data, to allow nginx to communicate with the Gunicorn processes
+
+Next, we need to configure the PATH variable so that the system knows where to 
+find the executables, Systemd needs the Gunicorn executable path, in the same line add a worker if needed, create the Unix socket file `app.sock` in the project directory and bind to it and configure mask permission 007 to give the owner access when the file is created, specify the WSGI entry point filename `wsgi:app`.
+
+Add the `[Install]` section , this will link the service to be loaded on the startup
+
 [source]
 ----
 [Unit]
@@ -153,6 +160,34 @@ After=network.target
 [Service]
 User=your-localuser
 Group=your-localuser
+WorkingDirectory=/home/user/folder
+Environment="PATH=/home/user/application-folder/bin/"
+ExecStart=/home/user/application-folder/bin/gunicorn --workers 1 --bind unix:app.sock -m 007 wsgi:app
+
+[Install]
+WantedBy=multi-user.target
 ----
 
-Assign the group www-data, to allow nginx to communicate with the Gunicorn processes
+Activate the service with `sudo systemctl start app` and `sudo systemctl enable app`
+Check the status with `sudo systemctl status app`
+
+Now, install Nginx `sudo apt install nginx` and enable the listen port `sudo ufw allow 'Nginx HTTP'`
+Create a config file `sudo nano /etc/nginx/sites-available/app`
+
+[source]
+----
+server {
+    listen 80;
+    server_name ip_servidor;
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/user/application-folder/app.sock;
+    }
+}
+----
+
+Enable the config file `sudo ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled` and
+check for syntax errors `sudo nginx -t`, if everything is ok, restart nginx `sudo systemctl restart nginx`
+
+Enable full access to Nginx `sudo ufw allow 'Nginx Full'`

@@ -1,0 +1,49 @@
+= Celery
+
+Es una libreria que gestiona colas de tareas distribuidas, entre sus ventajas estan:
+
+- Escalabilidad
+- Eficiencia
+- Tolerante a fallos
+- Orden de transacciones garantizados
+- Soportaa picos de mensajes
+
+Con Celery puedes dividir el backend de una aplicación en receptor de tareas y el procesador de tareas, administrando de forma uniforme las respuestas del backend.
+
+Requiere un message broker que envie y reciba mensajes. Estos brokers enrutan, agregan y permiten crear servicios de publicación/subscripción, comúnmente llamados servicios pubsub. Son necesarias en arquitecturas basadas en eventos y en arquitecturas para streaming.
+
+**Ejemplos**
+
+- RabbitMQ
+- Redis
+- Amazon SQS
+
+== Steps
+
+. Desarrollar una instancia de Celery (se le nombra aplicacion). Para esto se usa la sentencia
+`Celery('nombre_del_modulo_actual','url-broker-mensajes')` Con el primer parametro se pueden 
+generar automaticamente los nombres de las tareas cuando se definan en `\__main__`
+
+. Crear una tarea, se debe decorar con `@app.task` una funcion.
+
+. Asignar las tareas a nuestro message-broker se usa `celery -A archivo-con-app-celery worker -l info` donde la opción `worker` le indica a Celery que queremos crear un worker con las tareas del módulo y la opción `-l info` permite especificar el nivel de los mensajes de información que se presentan en pantalla.
+
+. Crear un archivo app.py para utilizar e invocar las tareas creadas y ejecutarlo.
+
+[source, python]
+----
+from aplicacion_celery import funciones_decoradas
+
+# Para ejecutar una función en forma de tarea lo tenemos que hacer de esta forma:
+funcion_decorada.delay('parametros')
+----
+
+=== Redis
+
+En linux se puede instalar Redis como message-broker con los sig. comandos:
+
+$` sudo apt-get install redis-server`
+
+`$ sudo systemctl enable redis-server.service`   <- Se mantiene Redis como servicio
+
+Se instala la libreria para python con `pip install redis`
