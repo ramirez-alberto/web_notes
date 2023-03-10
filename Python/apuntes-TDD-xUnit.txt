@@ -25,3 +25,16 @@ Mocking:
 == Python test tools
 
 pip install pytest coverage
+
+== Testing
+
+BDD-style tests
+
+# Given a patient record
+(Python code to create a record)
+# And some other thing
+(do the other thing)
+# When we normalize the data
+(call method to do stuff)
+# Then there’s a new record for the patient, with a score of 0.5
+self.assertEqual(record.score, 0.5)
