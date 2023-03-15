@@ -1,25 +1,35 @@
-https://code-maze.com/net-core-web-development-part7/
-https://code-maze.com/angular-series/
+= Angular
+Alberto R
+:source-highlighter: highlight.js
+:toc:
+:toc-placement!:
+
+toc::[]
 
 Angular is a framework for building SPA (Single Page Application) applications. 
 That is why we only have the index.html page inside the src folder. In the index.html file all content is going to be generated inside <app-root></app-root> selector, which comes from the app.component.ts file.
 
-## Install angular cli
-npm install -g @angular/cli
-ng version -> Check version
-## Uninstall
-npm uninstall -g @angular/cli
-npm cache clean --force
+== Install/Uninstall angular cli
+- npm install -g @angular/cli
+- ng version -> Check version
+- npm uninstall -g @angular/cli
+- npm cache clean --force
 
-Create a new project: ng new AccountOwnerClient --strict false
+== Angular commands
 
-Install bootsrap npm install --save bootstrap
-Third-Party Libraries as Part Of Angular Project Preparation:
-    ng add ngx-bootstrap  -> [Angular bootstrap](https://valor-software.com/ngx-bootstrap/#/components/datepicker?tab=overview)
-Run our app and also open it in a browser automatically (-o flag): ng serve -o
+- **Create a new project**: `ng new AccountOwnerClient --strict false`
 
-Creating Angular Components
-    ng g component home --skip-tests or ng g component dir/not-found --skip-tests
+https://code-maze.com/net-core-web-development-part7/
+https://code-maze.com/angular-series/
+
+- **Install bootsrap**: `npm install --save bootstrap`
+
+- **Third-Party Libraries**:
+    `ng add ngx-bootstrap`  -> https://valor-software.com/ngx-bootstrap/#/components/datepicker?tab=overview[Angular bootstrap]
+
+- **Run the app and open it in a browser automatically**: `ng serve -o`
+
+- **Creating Angular Components**: `ng g component home --skip-tests` or `ng g component dir/not-found --skip-tests`
 Creating Angular Modules with routes
     ng g module owner --routing=true --module app.module
     ng generate module app-routing --flat --module=app -> --flat puts the file 
@@ -151,6 +161,10 @@ Change oath in angular.json ( is wrong by default)
   "./node_modules/bootstrap/dist/css/bootstrap.min.css",
   "src/styles.css"
 ]
+
+## Deploying
+
+ng build
 
 Recipe: 
 Installation of the Angular CLI and Starting a New Project

@@ -1,0 +1,36 @@
+= Observability
+Alberto R
+:source-highlighter: highlight.js
+:toc:
+:toc-placement!:
+
+toc::[]
+
+== Stack
+
+Running on podman:
+
+- Prometheus
+- Grafana
+
+Gather metrics with blackbox-exporter
+
+podman run -d -p 9090:9090 -v prom-data:/etc/prometheus quay.io/prometheus/prometheus
+podman run -d --name=grafana -p 3000:3000 docker.io/grafana/grafana-enterprise
+
+== Configs
+
+- Blackbox
+
+.Default config, use ipv4 
+[source,yaml]
+----
+  http_2xx:
+    prober: http
+    http:
+      preferred_ip_protocol: "ip4"
+----
+
+- Prometheus
+
+Check guide for grafana-exporter
