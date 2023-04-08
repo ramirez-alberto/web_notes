@@ -3,6 +3,8 @@
 
 Terraform uses a plugin-based architecture to support infraestructure and service providers. Each provider is its own encapsulated binary distributed separately from Terraform itself. 
 
+A module is a reusable configuration file inside a folder
+
 == Install terraform in Debian
 
 Check the installation page from https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli[Terraform]
@@ -24,10 +26,6 @@ terraform -help command
 In a folder, create a file with extension tf, for example "provider.tf" and initialize dir with ´terraform init´
 
 === Base template
-
-=== Auto-Mode network with firewall and two VMs
-
-You can use a base template to create resources in terraform
 
 [source]
 ----
@@ -61,6 +59,7 @@ NOTE: The *google_compute_network* resource is a VPC network.
 
 Define a firewall rule to allow HTTP, SSH, RDP, ICMP traffic in mynetwork file, in this file create a dependence order rule with ´resource.self_link´
 
+.mynetwork.tf
 [source]
 ----
 resource "google_compute_firewall" "mynetwork-allow-http-ssh-rdp-icmp" {
@@ -73,7 +72,73 @@ allow {
 allow {
     protocol = "icmp"
 }
+source_ranges = ["0.0.0.0/0"]
 
 }
 ----
 
+==== Define a VM instance
+
+Create a folder, name it *instance* and add the files below. In one file, define a `input variable` "${var.instance_name}" as the name of this resource. This allow to control the name of the variable inside mynetworf.tf
+
+Now define the boot disk to use Debian 11 image and the network interface to use a ephemeral external IP address (add `access_config` section and leave it blank)
+
+NOTE: If you want an internal IP only, remove the `access_config` section
+
+.main.tf
+[source]
+----
+resource google_compute_instance "vm_instance" {
+name         = "${var.instance_name}"
+zone         = "${var.instance_zone}"
+machine_type = "${var.instance_type}"
+} 
+boot_disk {
+    initialize_params {
+        image = "debian-cloud/debian-11"
+        }
+}
+network_interface {
+    network = "${var.instance_network}"
+    access_config {
+        #Allocate a one-to-one NAT IP to the instance
+    }
+}
+----
+
+In another file, define the input variables, give a value to *instance_type* to make it optional.
+
+.variables.tf
+----
+variable "instance_name" {}
+variable "instance_zone" {}
+variable "instance_type" {
+    default = "e2-micro"
+    }
+variable "instance_network" {}
+----
+
+Add the VM instances to *mynetwork.tf*.
+
+[source]
+----
+module "mynet-us-vm" {
+    source = "./instance"
+    instance_name = "mynet-us-vm"
+    instance_zone = "us-central1-c"
+    instance_network = google_compute_network.mynetwork.self_link
+}
+
+module "mynet-eu-vm" {
+    source = "./instance"
+    instance_name = "mynet-eu-vm"
+    instance_zone = "europe-west1-d"
+    instance_network = google_compute_network.mynetwork.self_link
+}
+----
+
+==== Create the resources
+
+Reformat the config files to a canonical format and style with `terraform fmt`, to install the module initialize the folder and create a execution plan with `terraform plan`.
+
+To apply the changes use `terraform apply`
