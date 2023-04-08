@@ -1,0 +1,79 @@
+= Terraform
+:author: Alberto Ramirez
+
+Terraform uses a plugin-based architecture to support infraestructure and service providers. Each provider is its own encapsulated binary distributed separately from Terraform itself. 
+
+== Install terraform in Debian
+
+Check the installation page from https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli[Terraform]
+
+== Commands
+
+.Get help
+[source,bash]
+----
+#help
+terraform -help
+
+#Learn more about a command
+terraform -help command
+----
+
+== Create a provider and initialize
+
+In a folder, create a file with extension tf, for example "provider.tf" and initialize dir with ´terraform init´
+
+=== Base template
+
+=== Auto-Mode network with firewall and two VMs
+
+You can use a base template to create resources in terraform
+
+[source]
+----
+#Create a network 
+resource [RESOURCE_TYPE] "mynetwork" {
+    name = [RESOURCE_NAME]
+# RESOURCE properties go here
+}
+----
+
+=== Auto-Mode network with firewall and two VMs
+
+==== Network
+
+Using the template, create the network
+
+.mynetwork.tf
+[source]
+----
+#Create a network 
+resource "google_compute_network" "mynetwork" {
+    name = "mynetwork"
+# RESOURCE properties go here
+auto_create_subnetworks = "true" #automatically creates a subnetwork in each region
+}
+----
+
+NOTE: The *google_compute_network* resource is a VPC network.
+
+==== Configure the firewall rule
+
+Define a firewall rule to allow HTTP, SSH, RDP, ICMP traffic in mynetwork file, in this file create a dependence order rule with ´resource.self_link´
+
+[source]
+----
+resource "google_compute_firewall" "mynetwork-allow-http-ssh-rdp-icmp" {
+    name = "mynetwork-allow-http-ssh-rdp-icmp"
+network = google_compute_network.mynetwork.self_link #dependence rule, the network is created before the firewall rule
+allow {
+    protocol = "tcp"
+    ports    = ["22","80","3389"]
+      }
+allow {
+    protocol = "icmp"
+}
+
+}
+----
+
