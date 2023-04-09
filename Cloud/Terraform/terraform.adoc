@@ -25,6 +25,39 @@ terraform -help command
 
 In a folder, create a file with extension tf, for example "provider.tf" and initialize dir with ´terraform init´
 
+Terraform uses this directory to store required plugins, modules (pre-written configurations), and information about the real infrastructure it created.
+
+.Example of configuration
+[source]
+----
+terraform {
+  required_providers {
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "~> 3.0.1"
+    }
+  }
+}
+
+provider "docker" {}
+
+resource "docker_image" "nginx" {
+  name         = "nginx"
+  keep_locally = false
+}
+
+resource "docker_container" "nginx" {
+  image = docker_image.nginx.image_id
+  name  = "tutorial"
+
+  ports {
+    internal = 80
+    external = 8000
+  }
+}
+
+----
+
 === Base template
 
 [source]
