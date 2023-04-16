@@ -1,0 +1,36 @@
+= Ansible Basics
+:source-highlighter: highlight.js
+
+== Ansible core
+
+Includes CLI, Framework, Language, Functions
+
+=== Ansible playbook
+
+Its a YAML file which contains Plays, Modules and Plugins.
+
+.Plays
+Will tell which hosts it will execute on and control behavior such as privilege level. These are the building blocks of an Ansible playbook and can have multiple plays.
+[source,yaml]
+----
+---
+- name: install and start apache
+  hosts: web
+  become: yes
+----
+
+.Modules
+Components with a internal logic, represent a single step to be done. These are the tools.
+Modules are written in python, in the example below `template` is a module.
+[source,yaml]
+----
+---
+- name: latest index.html file
+  template: 
+    src: files/index.html
+    dest: /var/html/www
+----
+
+.Plugins
+Ansible uses a plugin architecture to enable a rich, flexible and expandable feature set.
+In a early example, `become` is a plugin for privilege scalation.
