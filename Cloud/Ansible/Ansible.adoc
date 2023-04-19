@@ -5,9 +5,17 @@
 
 Includes CLI, Framework, Language, Functions
 
+== Commands
+
+- Use a module: `ansible -m mymodule myhost`
+
 === Ansible playbook
 
-Its a YAML file which contains Plays, Modules and Plugins.
+Its a YAML file which contains Plays, Modules and Plugins. The results of a play in the console has three colors: 
+
+- Green: Executed but no changes was made.
+- Yellow: Executed and apply changes.
+- Red: Task failed to executed successfully.
 
 .Plays
 Will tell which hosts it will execute on and control behavior such as privilege level. These are the building blocks of an Ansible playbook and can have multiple plays.
@@ -33,4 +41,212 @@ Modules are written in python, in the example below `template` is a module.
 
 .Plugins
 Ansible uses a plugin architecture to enable a rich, flexible and expandable feature set.
-In a early example, `become` is a plugin for privilege scalation.
+In a early example, `become` is a plugin for privilege scalation. 
+
+==== Variables and Facts
+
+Variables hold values, in production are in a separate files.
+
+[source,yaml]
+----
+---
+- name: variable playbook test
+  hosts: localhost
+
+  vars: 
+    var_one: A value 
+    var_three: "{{ var_one }}"
+
+  tasks:
+  - name: print out var_three
+    debug:
+      msg: " {{ var_three }}"
+----
+
+Facts are like variables but coming from the host itself. You can check out with the setup module: 
+`ansible all -m setup`
+[source,yaml]
+----
+- name: Output some facts within a playbook
+  hosts: all
+
+  tasks:
+  - name: print facts
+    debug:
+      msg: "The host {{ ansible_fqdn }} has a ip: {{ ansible_default_ipv4.address }}"
+----
+
+==== Constructs
+
+Conditional, loops, handlers. Prefer handlers vs when keyword and lists vs loops
+
+[source,yaml]
+----
+- name: Output some facts within a playbook
+  hosts: all
+
+  tasks:
+  - name: print facts
+    debug:
+      msg: "The host {{ ansible_fqdn }} has a ip: {{ ansible_default_ipv4.address }}"
+      when: ansible_host == "Debian" #conditional
+      #loop
+    user: 
+      name: "{{item}}"
+      state: present
+    loop:
+      - dev user
+      - qa user
+      - prod user
+      #handler
+    yum:
+      name: httpd
+      state: latest
+    notify: restart-httpd
+
+    handlers:
+    - name: restart-httpd
+      service:
+        name: httpd
+        state: restarted
+----
+
+==== Templating
+
+Uses jinja templates in a j2 file.
+
+.playbook
+[source,yaml]
+----
+- name: Ensure apache is installed and started
+  hosts: web
+  become: yes
+vars:
+  httpd_port: 80
+  httpd_docroot: /var/www/mysite.com
+
+tasks:
+  - name: Verify correct config file is present
+    template:
+      src: templates/httpd.conf.j2
+      dest: /etc/httpd/conf/httpd.conf
+      #optional
+      owner: root
+      group: root
+      mode: 0644
+----
+
+.httpd.conf.j2
+[source,yaml]
+----
+Listen {{httpd_port}}
+DocumentRoot {{httpd_docroot}}
+----
+
+=== Ansible Inventory
+
+List of systems in your infraestructure that automation is executed against. This can have variable for each group or even host. 
+
+You can pin an address with *ansible_host=xx.xx.xx.xx*
+
+TIP: Put variables related to how to connect to a device in the inventory if the playbook is large. 
+
+Ansible has a basic configuration file: _ansible.cfg_, can be in multiple locations, with diferent precedence
+
+.basic INI inventory
+[source,yaml]
+----
+[web]
+webserver.example.com
+webserver2.example.com ansible_host=10.42.0.3
+
+[db]
+dbserver.example.com
+
+[switches]
+ruckus.internal.com
+
+[web:vars] #variables
+apache_listen_port=8080
+apache_root_path=/var/www/mywebdocs/
+
+[all:vars]
+ansible_user=ansible
+----
+
+.Groups and hierarchy
+[source,yaml]
+----
+# you can group hosts within hosts
+[atlanta]
+atlapp01
+atlapp02
+
+[nashville]
+nashapp01
+
+# when we run a playbook over south, it's going to use atlanta, nashville and finnally 
+# anotherapp01
+
+[south:children] 
+atlanta
+nashville
+anotherapp01
+
+----
+
+=== Ansible Roles
+
+We can group our tasks and variables in a reusable structure, so we can share them with others. When we have more than 3 or 4 task in a row that are being used the same way, it become a good candidate for a role.
+
+In a playbook, Ansible search the *roles* directory for roles.
+[source,yaml]
+----
+roles:
+  - apache_vhost
+----
+You can use `include_role:` keyword to reference a role:
+[source,yaml]
+----
+include_role:
+  name: myrole
+----
+
+==== Role Structure
+
+Roles has a defined structure
+
+- defaults: define vars (e.g. port) in a main.yml
+- handlers: main.yml
+- meta: role metadata including dependencies to other roles in a main.yml
+- tasks: it's common to include tasks in main.yml with "when"
+- templates: 
+- test: inventory, test.yml
+- vars: in a main.yml include variables (e.g. override port)
+
+=== Collections
+
+Contains automation content like `Modules`,`Playbooks`,`Roles`,`Plugins`,`Docs`,`Tests`
+
+.Structure
+[source]
+---
+nginx_core
+|_ MANIFEST.json
+|_ playbooks
+    |_ deploy-nginx.yml
+    |_ ...
+|_ plugins
+|_ README.md
+|_ roles
+    |_ nginx
+       |_ defaults
+       |_ files
+          |_ ...
+    |_ nginx_app_protect
+    |_ nginx_config
+---
+
+== Automation Execution Environments
+
+Include collections, libraries and ansible core in a universal base image.
