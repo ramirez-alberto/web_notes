@@ -1,0 +1,30 @@
+= KPIs and SLIs
+
+Understand which behaviours matter and how to measure and evaluate this behaviors.
+
+NOTE: This must be considered in the context of the contraints, usually time, funding and people
+
+Next, we need to define `what can be achieved`, this depend on the type of system to be evaluated. We must answer this question(s) with the data gathered from the services.
+
+Key performance indicators or `KPIs` are metrics that can be used to measure success. This can be used to support the most valuables projects and take decisions.
+
+KPIs indicate wheter we are on track to achieve the business goal. For each KPIs, define targets for what success looks like.
+
+KPIs must be SMART:
+* Specific
+* Measurable
+* Achivable
+* Relevant
+* Time-bound
+
+NOTE: KPIs need an accompanying goal to be effective, a goal is the outcome or result
+
+.Common KPIs by field
+[cols='1,1',options="header",width="80%"]
+|==============================================================
+|Business                                  |Technical(Software)
+|Return of investment (ROI)                |Page views
+|Earning before interest and taxes (EBIT)  |User registrations
+|Employee turnover                         |Clickthroughs
+|Customer churn                            |Checkouts
+|==============================================================
