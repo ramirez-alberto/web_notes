@@ -1,5 +1,6 @@
 = Ansible Basics
 :source-highlighter: highlight.js
+:toc: auto
 
 == Ansible core
 
@@ -42,6 +43,21 @@ Modules are written in python, in the example below `template` is a module.
 .Plugins
 Ansible uses a plugin architecture to enable a rich, flexible and expandable feature set.
 In a early example, `become` is a plugin for privilege scalation. 
+
+==== Folder Structure
+The common structure in a production or staging environment is:
+
+----
+FolderRoot
+  |_ ansible.cfg
+  |_ setup.yml <- use ansible-playbook setup.yml 
+  |_ hosts
+  |_RoleName
+    |_tasks
+      |_ main.yml
+      |_handlers
+        |_ main.yml
+---- 
 
 ==== Variables and Facts
 
