@@ -13,7 +13,8 @@ Docker:
     Push image to DockerHub: docker push username/image_name:tag
 
 Container's Filesystem:
-    Run a ubuntu image, write to data.txt inside container and watch a file preventing closing it: docker run -d ubuntu bash -c "shuf -i 1-10000 -n 1 -o /data.txt && tail -f /dev/null"
+    Run a ubuntu image, write to data.txt inside container and watch a file preventing closing it: 
+    docker run -d ubuntu bash -c "shuf -i 1-10000 -n 1 -o /data.txt && tail -f /dev/null"
     Cat the data txt file inside the container: docker exec <container-id> cat /data.txt
     Run a interactive bash shell when running a container: docker run -it ubuntu ls /
 

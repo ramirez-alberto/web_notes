@@ -1,0 +1,25 @@
+= Incident Management
+
+== Service Request Management
+
+Incident, problem, change management and service requests. Service requests are often recurring, so efficient IT teams follow a repeatable procedure to handle them. 
+
+Service requests and service desk are managed by the request fulfillment process.
+
+=== Request fulfillment
+
+Process of resolving a customer’s service request and refers to managing the entire lifecycle of all service requests
+
+customer exp
+recuerdo genera mente consumidor relacion con la marca
+se ejerce en todos los deptos de la empresa
+genera valor percibido
+
+fases - momentos + interacciones = percepcion
+
+Identificar canal de comunicacion no funciona o el proceso o el agente
+
+mejores al final del customer journey, si el plan a fallo el plan b no debe fallar
+Experiencia funcional + experiencia emocional
+
+Request fulfillment is about enabling employees by providing access to the IT services they need to be productive. It should help users see available services, understand how to request them, and set expectations for how long requests will take to be addressed

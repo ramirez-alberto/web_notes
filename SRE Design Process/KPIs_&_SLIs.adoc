@@ -1,0 +1,63 @@
+= KPIs and SLIs
+
+Understand which behaviours matter and how to measure and evaluate this behaviors.
+
+NOTE: This must be considered in the context of the contraints, usually time, funding and people
+
+Next, we need to define `what can be achieved`, this depend on the type of system to be evaluated. We must answer this question(s) with the data gathered from the services.
+
+Key performance indicators or `KPIs` are metrics that can be used to measure success. This can be used to support the most valuables projects and take decisions.
+
+KPIs indicate wheter we are on track to achieve the business goal. For each KPIs, define targets for what success looks like.
+
+KPIs must be SMART:
+- Specific
+- Measurable
+- Achivable
+- Relevant
+- Time-bound
+
+NOTE: KPIs need an accompanying goal to be effective, a goal is the outcome or result
+
+.Common KPIs by field
+[cols='1,1',options="header",width="80%"]
+|==============================================================
+|Business                                  |Technical(Software)
+|Return of investment (ROI)                |Page views
+|Earning before interest and taxes (EBIT)  |User registrations
+|Employee turnover                         |Clickthroughs
+|Customer churn                            |Checkouts
+|==============================================================
+
+== Service Levels
+
+When architect a solution, we want:
+
+* To maintain an SLO so that we provide us with spare capacity against the SLA.
+* Understand what users want from a service, will help us to select the indicators.
+* Define measurable indicators
+
+Use percentiles when needed: 99 percent shows worst case values while the 50 percentile will indicate a typical case
+
+
+=== Service Level Indicator (SLI)
+
+Quantitative measure of the level of service being provided. Like throughput, latency and error rate.
+
+=== Service Level Objective (SLO)
+
+It's a range of values or target for a service level that is measured by an SLI.
+Normally stated in the form: *SLI < TARGET* or *LOWER BOUND <= SLI*.
+An example are: _Average latency of HTTP requests for our service < 1
+00 milliseconds_
+
+Based your SLOs around what is easy to measure rather what is useful. Like 100% target availability sounds good but is not practical.
+
+The use case needs to be considered also.
+Its often OK specify multiple SLOs
+
+IMPORTANT: The aim is to keep users happy.
+
+=== Service Level Agreement (SLA)
+
+Define the responsabilities for delivering a service and consequences between a consumer and a service provider.

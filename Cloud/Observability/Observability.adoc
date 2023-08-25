@@ -8,19 +8,25 @@ toc::[]
 
 == Stack
 
-Running on podman:
+Running with podman on a pod:
 
 - Prometheus
 - Grafana
+- AlertManager
 
 Gather metrics with blackbox-exporter
 
 podman run -d -p 9090:9090 -v prom-data:/etc/prometheus quay.io/prometheus/prometheus
 podman run -d --name=grafana -p 3000:3000 docker.io/grafana/grafana-enterprise
+podman run -d --name=alertmanager -p 9093:9093 quay.io/prometheus/alertmanager
+
+== YAML
+
+https://github.com/ramirez-alberto/Prometheus-Grafana-Pod.git
 
 == Configs
 
-- Blackbox
+- *Blackbox*
 
 .Default config, use ipv4 
 [source,yaml]
@@ -33,4 +39,6 @@ podman run -d --name=grafana -p 3000:3000 docker.io/grafana/grafana-enterprise
 
 - Prometheus
 
-Check guide for grafana-exporter
+- *Grafana*: Check guide for grafana
+
+- *AlertManager*: 

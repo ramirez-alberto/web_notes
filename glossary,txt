@@ -56,3 +56,8 @@ In HTML, accessibility is important
  proof of concept (PoC) implementation
 
  Code-first: FIrst you create the data-access layer like model and next you program controllers and views
+
+== DNS
+
+If a client has no cached DNS records, it will take the .com of a domain name and query a root name server (Top-Level Domain or TLD), which will return a list of authority name servers. 
+Next, the client will query one of those servers and ask for the next part of the domain name, in response the DNS server will return another list, and finally the client will query those servers for the `A-record` corresponding to the domain name, this will respond with an ip address.

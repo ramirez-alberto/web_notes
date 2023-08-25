@@ -1,0 +1,19 @@
+= PowerApps
+
+== Concepts
+
+=== Types of apps
+
+* Model-driven apps: Needs a dataverse entity
+* Canvas apps: No-code solution
+
+=== Model-Driven Apps Steps
+
+. Create a Dataverse entity.
+. Configure Forms and Views for the entity.
+. Create an app and configure the site navigation, add subareas and areas.
+. Optionally, you can create a bussiness process flow to validate data, apply logic or ensure the input data is consistent.
+
+=== Bussiness process flow
+
+You can create only inside a Solution

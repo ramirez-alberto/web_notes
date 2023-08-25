@@ -1,8 +1,15 @@
 = Kubernetes Basics
 Alberto Ramirez ramirez.alberto@zoho.com
+:source-highlighter: highlight.js
+
+In Kubernetes all its resources are API objects, which allow CRUD operations.
+
+Posible operations are: _create, update, delete, list, get, exec, watch, edit_
 
 == KubeCTL:
 
+.Commands
+- `kubectl create namespace mynamespace`
 - `kubectl config get-clusters` Get cluster information
 - `kubectl config get-contexts` context is a group of access parameters, including a cluster, a user, and a namespace. View your current context
 - `kubectl get pods` List all the pods in your namespace or expand view: kubectl get pods -o wide
@@ -15,23 +22,29 @@ Alberto Ramirez ramirez.alberto@zoho.com
         and for testing purposes) curl -L localhost:8001/api/v1/namespaces/sn-labs-$USERNAME/services/hello-world/proxy
 - `kubectl delete deployment/hello-world service/hello-world` -Delete the deployment and services/app
 - `kubectl get events -w` Get events
+- `kubectl port-forward podname hostPort:podPort` -Expose a port to the host
 
-Imperatively create a pod:
-    Create a pod with imperative command
-        Export a namespace to be used in subsecuent commands: export MY_NAMESPACE=sn-labs-$USERNAME
-        Run the sample image in Kubernetes. Note: --overrides only apply in this test lab
-        kubectl run hello-world --image us.icr.io/$MY_NAMESPACE/hello-world:1 --overrides='{"spec":{"template":{"spec":{"imagePullSecrets":[{"name":"icr"}]}}}}'
+=== Imperatively create a pod
 
-    Create a pod with imperative object configuration
-        Imperative object configuration lets you create objects by specifying the action to take (e.g., create, update, delete) while using a configuration file.
-        Create a pod with configuration file: kubectl create -f hello-world-create.yaml
+.Create a pod with imperative command
+Export a namespace to be used in subsecuent commands: `export MY_NAMESPACE=sn-labs-$USERNAME`
+Run the sample image in Kubernetes. Note: --overrides only apply in this test lab
 
-Declarative pod creation (suited for production):
-    Create a pod with yaml file: kubectl apply -f hello-world-apply.yaml
-    Check the deployment: kubectl get deployments
-    Delete the deploymentn: kubectl delete -f deployment-configmap-env-var.yaml
+[source,bash]
+----
+kubectl run hello-world --image us.icr.io/$MY_NAMESPACE/hello-world:1 --overrides='{"spec":{"template":{"spec":{"imagePullSecrets":[{"name":"icr"}]}}}}'
+----
 
-Scaling and Updating Applications
+.Create a pod with imperative object configuration
+Imperative object configuration lets you create objects by specifying the action to take (e.g., create, update, delete) while using a configuration file.
+Create a pod with configuration file: `kubectl create -f hello-world-create.yaml`
+
+=== Declarative pod creation (suited for production)
+- Create a pod with yaml file: `kubectl apply -f hello-world-apply.yaml`
+- Check the deployment: `kubectl get deployments`
+- Delete the deploymentn: `kubectl delete -f deployment-configmap-env-var.yaml`
+
+=== Scaling and Updating Applications
     ReplicaSet:
         kubectl scale deployment hello-world --replicas=3 -Scale up or scale down (replicas=1 for example) your
                 deployment
@@ -45,3 +58,121 @@ Scaling and Updating Applications
         kubectl delete configmap app-config && kubectl create configmap app-config --from-literal=MESSAGE="This 
                 message is different, and you didn't have to rebuild the image!" -Delete and Create configMap
         kubectl rollout restart deployment hello-world -Restart deployment to see the changes on configMap
+
+=== Configure RBAC in k8
+
+By default RBAC (_Kubernetes Role-Based Access Control_) policies are enabled by default, they allow to specify wich types of actions are permitted depending on the user and their role.
+
+You can encounter this type of errors:
+[source]
+----
+the server does not allow access to the requested resource
+----
+
+Check if RBAC is enabled `kubectl api-versions | grep rbac`
+
+To manage RBAC, apart from resources and operations, we need:
+
+* *Rules*: A rule is a set of operations (verbs) that can be carried out on a group of resources which belong to different API Groups.
+* *Roles and ClusterRoles*: Both consist of rules. The difference between a Role and a ClusterRole is the scope: in a Role, the rules are applicable to a single namespace, whereas a ClusterRole is cluster-wide. ClusterRoles can define rules for cluster-scoped resources (such as nodes) as well. Both Roles and ClusterRoles are mapped as API Resources inside our cluster.
+* *Subjects*: These correspond to the entity that attempts an operation in the cluster. There are three types of subjects:
+** User Accounts: These are global, and meant for humans or processes living outside the cluster. There is no associated resource API Object in the Kubernetes cluster. 
+** Service Accounts: This kind of account is namespaced and meant for intra-cluster processes running inside pods, which want to authenticate against the API.    
+** Groups: This is used for referring to multiple accounts. There are some groups created by default such as cluster-admin (explained in later sections).
+* *RoleBindings and ClusterRoleBindings*: Just as the names imply, these bind subjects to roles (i.e. the operations a given user can perform). As for Roles and ClusterRoles, the difference lies in the scope: a RoleBinding will make the rules effective inside a namespace, whereas a ClusterRoleBinding will make the rules effective in all namespaces.
+
+==== User creation
+
+Kubernetes doesn't have API objects related to users, for this example we will use OpenSSL certificates for their simplicity. Check the https://kubernetes.io/docs/admin/authentication[Kubernetes documentation] for a complete list.
+
+* Create a private key: 
+[source, bash]
+----
+openssl genrsa -out employee.key 2048
+----
+
+* Create a certificate sign request with the previous key, specify the username in `CN` and the group in `O`: 
+[source, bash]
+----
+openssl req -new -key employee.key -out employee.csr -subj "/CN=employee/O=bitnami"
+----
+
+* Locate your cluster certificate authority `CA`
+
+* Generate the certificate by approving the csr made earlier and save it in a safe location
+[source, bash]
+----
+#this certificate will be valid for 500 days
+openssl x509 -req -in employee.csr -CA CA_LOCATION/ca.crt -CAkey CA_LOCATION/ca.key -CAcreateserial -out employee.crt -days 500
+----
+
+* Add a new context with the credentials in Kubernetes
+[source, bash]
+----
+kubectl config set-credentials employee --client-certificate=/home/employee/.certs/employee.crt  --client-key=/home/employee/.certs/employee.key
+kubectl config set-context employee-context --cluster=minikube --namespace=office --user=employee
+----
+
+* To test it you should receive a error message when running a command with this config file
+[source, bash]
+----
+kubectl --context=employee-context get pods
+----
+
+==== Create a Role
+
+As example this code will create a role to manage deployments:
+
+.role-deployment-manager.yaml
+[source,yaml]
+----
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  namespace: office
+  name: deployment-manager
+rules:
+- apiGroups: ["", "extensions", "apps"]
+  resources: ["deployments", "replicasets", "pods"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"] # You can also use ["*"]
+----
+
+NOTE: In the apiGroups list, the _core_ API Group is expressed by "".
+
+Next, you need to apply the role with `kubectl create -f role-deployment-manager.yaml`
+
+==== Bind the role to a user with a RoleBinding
+
+Here, we bind the User Account _employee_ with the Role _deployment-manager_ in the namespace _office_
+
+[source,yaml]
+----
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: deployment-manager-binding
+  namespace: office
+subjects:
+- kind: User
+  name: employee
+  apiGroup: ""
+roleRef:
+  kind: Role
+  name: deployment-manager
+  apiGroup: ""
+----
+
+and apply with `kubectl create -f rolebinding-deployment-manager.yaml`
+
+==== Test the role
+
+[source,bash]
+----
+kubectl --context=employee-context run --image bitnami/dokuwiki mydokuwiki
+kubectl --context=employee-context get pods
+----
+
+[source,bash]
+----
+kubectl --context=employee-context get pods --namespace=default
+----
