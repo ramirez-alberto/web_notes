@@ -1,0 +1,36 @@
+= Scrappers
+
+== Installation
+
+`pip install Scrapy`
+
+== Procedure
+
+https://docs.scrapy.org/en/latest/intro/tutorial.html
+
+.Create a project
+[source]
+----
+scrapy startproject tutorial
+----
+
+.Run a spider
+[source]
+----
+scrapy crawl quotes
+----
+
+.Extract data with Scrapy shell
+[source]
+----
+scrapy shell 'https://quotes.toscrape.com/page/1/'
+----
+
+.Store the scraped data
+[source]
+----
+scrapy crawl quotes -O quotes.json
+
+#Note -O overwrites data, use -o to append to file
+----
+
