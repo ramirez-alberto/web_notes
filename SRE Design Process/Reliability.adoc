@@ -58,15 +58,15 @@ It's important from the perspective of both external customers and internal user
 * Can they use the product when they expect to?
 
 ==== Latency*
- 
+
 Refers to the amount of delay between a request and a response.
- 
+
 ==== Throughput
- 
+
 Throughput is a measure of the rate at which something is processed, or the number of transactions that a website, application, or service successfully handles over a specified period of time. This is particularly **important when running pipelines or batch-processing systems**. If a pipeline or a batch-processing system isn't processing things fast enough, that's not meeting our expectations and it isn't considered reliable.
- 
+
 ==== Coverage
- 
+
 Refers to how much of the data that you expected to process was actually processed.
  
 ==== Correctness
