@@ -34,7 +34,7 @@ Collect information about the present configuration. Given a specific applicatio
 * what are its component parts?
 * What parts talk to other parts?
 * What are the obvious (and not-so-obvious) dependencies for this application?
- 
+
 === Collect information about normal and past performance
 Attempt to get a baseline around performance and "normal" behavior for the system.
 
@@ -68,108 +68,108 @@ Throughput is a measure of the rate at which something is processed, or the numb
 ==== Coverage
 
 Refers to how much of the data that you expected to process was actually processed.
- 
+
 ==== Correctness
- 
+
 This is an aspect of reliability that's often overlooked. Did the process that you ran on the data yield the correct or expected result?
- 
+
 ==== Fidelity
- 
+
 we'd be measuring how often the user of a service received a "degraded" experience versus the full experience (complete fidelity). This measurement is useful for any fault-tolerant service that has the ability to continue running in a degraded mode when something goes wrong.
- 
+
 ==== Freshness
- 
+
 Freshness refers to how up to date the information is in situations where timeliness matters to the customer (for example, services that provide election results). Those services are considered reliable if *the data they provide is kept current*.
- 
+
 ==== Durability
- 
+
 Durability is another slightly more niche aspect of reliability. If you're running a service that provides storage, you know just how important it is that data a customer writes to your service can be read later. This is a durability expectation.
- 
+
 === Define levels of reliability
- 
+
 *what's the appropriate level of reliability?*
- 
+
 Reliability has to be measured from the customer's perspective, not the component perspective.
- 
+
 * *Sustainably*: In this context, "sustainably" refers to the role of people in all of this. It's crucial we create a sustainable operations practice. Reliable systems, services, products are built by people. If we don't do things to make sure that our work is sustainable—if we wake our people up at 3:00 AM every night with a page, if we don't give them time with their family, if they don't have the opportunity to spend time taking care of themselves—then there's no way they're going to be able to build reliable systems. SRE thinks it's important that we implement an operations practice that is sustainable over time so that our people are able to bring their best to the job.
- 
+
 * *Appropriate*: 100% reliable isn't often possible. what's the appropriate level of reliability?
- 
+
 === SLI/SLO's
- 
+
 SLIs and SLOs are work-planning tools. They can help you make engineering decisions
- 
+
 ==== Service Level Indicators (SLI)
- 
+
 * *What's the indicator that our service is behaving reliably (doing what we expect)?*
 * *What can we measure to answer this?*
- 
+
 The right feedback loops improve reliability in your organization. Improving reliability in your organization is an iterative process.
- 
+
 For SLIs to be useful in concrete discussions using objective data, there's one other piece we need to specify beyond just what we're measuring. When creating an SLI, we need to note not only what we measured, but also where the measurement was taken.
- 
+
 For example, for the web server, we'd say _"the ratio of successful to total requests as measured at the load balancer"_ for availability. For the latency, we'd say something like _"the ratio of number of operations that completed in less than 10 milliseconds to total operations as measured at the client."_
- 
+
 ==== Service Level Objectives (SLO)
- 
+
 Measure the appopiate level of reliability. This objective will clearly state our goal for that service.
- 
+
 The basic recipe for creating an SLO consists of these ingredients:
- 
+
 * The “thing” you’re going to measure: Number of requests, storage checks, operations; what you're measuring.
- 
+
 * The desired proportion: For example, "successful 50% of the time," "can read 99.9% of the time," "return in 10ms 90% of the time."
- 
+
 * The time horizon What's the time period we're going to consider for the objective: the last 10 minutes, during the last quarter, over a rolling 30-day window? SLOs are more often than not specified using a rolling window versus a calendar unit like "a month" to allow us to compare data from different periods.
- 
+
 For example: _`90% of HTTP requests as reported by the load balancer succeeded in the last 30-day window.`_
- 
+
 === Actionable Alerts - Sustainability -
- 
+
 Alert fatigue
- 
+
 Think about the purpose of alerts and how they differ from other operational signals. Actionable alerts are not Logs, Notifications for non-critical occurrences, Heartbeats
- 
+
 Alerts are used for situations in which you need a human to investigate and intervene to remediate the problem. Alerts should be communications that something exceptional or unexpected has happened requiring someone’s attention.
- 
+
 If the event is something that the system can handle through automated processes, such as scaling resources within a preset limit, an alert isn't necessary. The system should just handle it and write a line to a log.
- 
+
 ==== Create actionable alerts
- 
-* *Simplicity:*  You cannot lose valuable time just trying to figure out what it means
+
+* *Simplicity:* You cannot lose valuable time just trying to figure out what it means
 * *Scope:* Is the issue with a single server? One service?
 * *Context:* What does the person who's going to receive that alert need to know to get started dealing with it?
 ** *Where's the alert coming from?*
 ** *What expectation was violated?*
-** *Why is this an issue (for the customer)?* :  gives us a way to determine importance and to appropriately gauge our reaction.
+** *Why is this an issue (for the customer)?* : gives us a way to determine importance and to appropriately gauge our reaction.
 ** *What are the next steps to take?* If possible
- 
+
 === Summary
- 
+
 * Gain operational awareness.
 * Rationalize an appropriate level of reliability for our systems, services, and products.
 * Construct a process for monitoring this reliability using SLIs and SLOs.
 * Have a concrete discussion about reliability using objective data.
 * Create actionable alerts that support a sustainable operations practice.
 * Together, these concepts and tools will help you to create and nurture feedback loops within your organization that can lead to improved reliability.
- 
- 
+
+
 === Tools
 
 We need a way to track how well (or not well) they're doing
- 
+
 == Incident response
- 
+
 Every production environment has an outage of some sort. When this happens The questions then become:
- 
+
 * What do you do when an incident occurs?
 * What happens when systems are down and customers are impacted?
 
 You need a standard process that is effective at triaging the problem, getting the right resources engaged, and then mitigating the issue. At the same time, you also want to make sure you're communicating with stakeholders about the problem.
- 
+
 == Post-incident review (learning from failure)
 This process allows us to level up our operations practices by collectively *investigating, reviewing, and discussing the experience of each significant incident*. Post-incident review allows us to learn from failure and is *crucial* to reliability work.
- 
+
 == Testing/release (deployment)
 Focus on our testing, release, and deployment processes. You can think of this level as _"how good are you at creating the systems and processes that can catch problems before they cause incidents?"_
 
