@@ -1,0 +1,60 @@
+= Powershell
+:source-highlighter: highlight.js
+//:highlightjs-languages: powershell
+:author: Alberto Ramirez
+:revdate: {localdate}
+:revnumber: 1.0.0
+:toc:
+
+== Rutas
+
+=== Powershell 5.1
+
+* Ruta de instalación: `$env:WINDIR\System32\WindowsPowerShell\v1.0`
+* Ubicacion de modulos: `%systemdir%\WindowsPowerShell\v1.0\Modules` y `%userprofiles%\Documents\WindowsPowerShell\Modules`
+* Ejecutable: `powershell.exe`
+* Perfiles: `$HOME\Documents\WindowsPowerShell`
+
+=== Powershell 7.0
+
+* Ruta de instalación: `$env:ProgramFiles\PowerShell\7`
+* Ejecutable: `pwsh.exe`
+* PS combina las rutas de los modulos en la variable de entorno `$Env:PSModulePath`
+* Perfiles: `$HOME\Documents\PowerShell` https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_profiles?view=powershell-7.3[Como crear perfiles]
+
+== Directivas de ejecucion
+
+* Identificar la directiva de ejecucion: `Get-ExecutionPolicy`
+** AllSigned
+** Default
+** RemoteSigned
+** Restricted
+** Unrestricted
+** Undefined
+* Cambiar la directiva de ejecucion: `Set-ExecutionPolicy -ExecutionPolicy <PolicyName>`
+
+== Cmdlet
+
+* Estructura: `Verb-Noun`
+
+== Modulos
+
+Se pueden descargar modulos de la galeria de Powershel con el modulo `PowerShellGet`
+
+== Notas
+
+Se puede usar la tabulacion con caracteres comodin como `*-services`
+
+== Glosario
+
+* comando: se refiere al cmdlet
+* conmutador: parametros de tipo booleano como `-Recurse`
+
+== Ayuda
+
+* `Get-Command` recupera información sobre un comando
+* `Get-Help` recupera contenido de ayuda sobre el comando
+* Ayuda sobre comandos: `Get-Help about*` o `Get-Command *event*`
+* Mostrar los miembros de un cmdlet: `Get-Member`
+* `Get-Alias -definition Remove-Item` muestra los alias del comando
+* Show-Command
