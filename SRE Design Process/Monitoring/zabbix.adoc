@@ -1,0 +1,99 @@
+= Zabbix
+:source-highlighter: highlight.js
+//:highlightjs-languages: powershell
+:author: Alberto Ramirez
+:revdate: {localdate}
+:revnumber: 1.0.0
+:toc:
+
+== Database Size
+
+.The table contains formulas that can be used to calculate the disk space required for Zabbix system:
+[col="1,1"]
+|===
+|Parameter 	|Formula for required disk space (in bytes)
+
+|Zabbix configuration 	
+|Fixed size. Normally 10MB or less.
+
+|History 	
+|days*(items/refresh rate)*24*3600*bytes
+
+* items : number of items
+* days : number of days to keep history
+* refresh rate : average refresh rate of items
+
+bytes : number of bytes required to keep single value, depends on database engine, normally ~90 bytes.
+
+|Trends 	
+|days*(items/3600)*24*3600*bytes
+items : number of items
+days : number of days to keep history
+bytes : number of bytes required to keep single trend, depends on the database engine, normally ~90 bytes.
+
+|Events 	
+|days*events*24*3600*bytes
+events : number of event per second. One (1) event per second in worst-case scenario.
+days : number of days to keep history
+bytes : number of bytes required to keep single trend, depends on the database engine, normally 
+~330 + average number of tags per event * 100 bytes.
+|===
+
+So, the total required disk space can be calculated as:
+Configuration + History + Trends + Events
+The disk space will NOT be used immediately after Zabbix installation. Database size will grow then it will stop growing at some point, which depends on housekeeper settings.
+
+https://www.zabbix.com/documentation/current/en/manual/installation/requirements#database-size
+
+== Restricting agent checks
+
+When restricting agent checks is recommended to allow specific checks and deny others:
+
+.Whitelist specific checks with AllowKey parameters, deny others with DenyKey=*
+----
+# Allow reading logs: 
+AllowKey=vfs.file.*[/var/log/*] 
+
+# Allow localtime checks 
+AllowKey=system.localtime[*] 
+
+# Deny all other keys 
+DenyKey=*
+---- 
+
+.Patterns
+* AllowKey=<pattern> - which checks are allowed; <pattern> is specified using a wildcard (*) expression
+* DenyKey=<pattern> - which checks are denied; <pattern> is specified using a wildcard (*) expression
+
+NOTE: All system.run[*] items (remote commands, scripts) are disabled by default
+
+
+https://www.zabbix.com/documentation/current/en/manual/config/items/restrict_checks[Zabbix Docs]
+
+
+1-
+Requirement: I was trying to fetch data for "CPU system time" and "Available memory" in one query.
+Behavior : Data was returned either for CPU or Memory but not for both in one query.
+Fact : Data type for CPU and Memory are different and "history" parameter in "history.get" method doesn't support multiple values.
+resolution : supplied data type of metric (variable replacement) in query using "value_type" for metric in question.
+history => value_type
+
+This resolve the issue of getting data for some metrics only.
+
+2-
+Requirement : Trying to fetch performance data for all hosts.
+Behavior : Data was returned for some hosts only.
+Fact : Some metrics data was collected every minute and some metrics data was collected for every five minutes.
+Resolution : Check the polling interval for all metrics in question.
+
+== Using templates
+
+=== Naming templates
+
+Name the templates in a significant way, think of linking a template as assigning roles or applications to your hosts. Bad examples are:
+
+* Template for checking web connectivity
+* SAN
+* Ping webserver
+
+
