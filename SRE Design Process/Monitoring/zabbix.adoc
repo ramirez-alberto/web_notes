@@ -97,3 +97,6 @@ Name the templates in a significant way, think of linking a template as assignin
 * Ping webserver
 
 
+== Reducing pulling and server overhead when collect metrics
+
+https://zabbix.tips/reduce-polling-with-dependent-items-and-jsonpath/[Reducing pulling and server overhead when collect metrics]
