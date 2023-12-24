@@ -67,11 +67,44 @@ DenyKey=*
 
 NOTE: All system.run[*] items (remote commands, scripts) are disabled by default
 
-
 https://www.zabbix.com/documentation/current/en/manual/config/items/restrict_checks[Zabbix Docs]
 
 
-1-
+== Using templates
+
+=== Best practices
+
+https://www.zabbix.com/documentation/guidelines/en/thosts/best_practices
+
+=== Naming templates
+
+Name the templates in a significant way, think of linking a template as assigning roles or applications to your hosts. Bad examples are:
+
+* Template for checking web connectivity
+* SAN
+* Ping webserver
+
+=== Community Templates 
+
+https://www.zabbix.com/integrations[Official Integrations Page]
+
+
+== Reducing pulling and server overhead when collect metrics
+
+https://zabbix.tips/reduce-polling-with-dependent-items-and-jsonpath/[Reducing pulling and server overhead when collect metrics]
+
+== Network Discovery
+
+You can discover devices on your network and add them to zabbix for monitoring. Go to *Data Collection* -> *Discovery* and add or modify the rule accordingly.
+By default the rule check for zabbix agents in the network and is disabled.
+
+Now, go to *Monitoring* -> *Discovery* and view the list of discovered devices in your network. It is not populated, try restarting the server.
+
+== 
+
+
+
+//// 1-
 Requirement: I was trying to fetch data for "CPU system time" and "Available memory" in one query.
 Behavior : Data was returned either for CPU or Memory but not for both in one query.
 Fact : Data type for CPU and Memory are different and "history" parameter in "history.get" method doesn't support multiple values.
@@ -86,17 +119,6 @@ Behavior : Data was returned for some hosts only.
 Fact : Some metrics data was collected every minute and some metrics data was collected for every five minutes.
 Resolution : Check the polling interval for all metrics in question.
 
-== Using templates
+https://www.zabbix.com/forum/zabbix-cookbook/17295-best-practices-of-monitoring-in-medium-large-enviroments/page2 
 
-=== Naming templates
-
-Name the templates in a significant way, think of linking a template as assigning roles or applications to your hosts. Bad examples are:
-
-* Template for checking web connectivity
-* SAN
-* Ping webserver
-
-
-== Reducing pulling and server overhead when collect metrics
-
-https://zabbix.tips/reduce-polling-with-dependent-items-and-jsonpath/[Reducing pulling and server overhead when collect metrics]
+ ////
