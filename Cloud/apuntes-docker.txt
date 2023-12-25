@@ -60,3 +60,19 @@ words, an executable that should run in your container.
 
 Links:
 https://labs.play-with-docker.com/
+
+
+== Docker Desktop 
+
+=== Troubleshooting
+
+*error invoking remote method 'docker-start-container' ports are not available*
+
+Windows reserve ports , use `netsh int ipv4 show dynamicport tcp` in order to view the range of ports dynamically reserved.
+Then use `netsh int ipv4 show excludedportrange protocol=tcp` to show the excluded ports range.
+
+Change the range with:
+----
+netsh int ipv4 set dynamic tcp start=10100 num=16384
+netsh int ipv6 set dynamic tcp start=10100 num=16384
+----
