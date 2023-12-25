@@ -63,7 +63,7 @@ AllowKey=system.localtime[*]
 
 # Deny all other keys 
 DenyKey=*
----- 
+----
 
 .Patterns
 * AllowKey=<pattern> - which checks are allowed; <pattern> is specified using a wildcard (*) expression
@@ -79,6 +79,7 @@ https://www.zabbix.com/documentation/current/en/manual/config/items/restrict_che
 === Best practices
 
 https://www.zabbix.com/documentation/guidelines/en/thosts/best_practices
+Use user macros
 
 === Naming templates
 
@@ -104,7 +105,23 @@ By default the rule check for zabbix agents in the network and is disabled.
 
 Now, go to *Monitoring* -> *Discovery* and view the list of discovered devices in your network. It is not populated, try restarting the server.
 
-== 
+== Best practices
+
+=== Items
+
+* Use templates.
+* Use preprocessing If you only need a numeric value from a string.
+* Store trends for long lived data.
+* Use a descriptive name and describe your items as needed.
+* Define a update interval that make sense.
+
+=== Triggers
+
+* Use a descriptive name and describe your items as needed.
+* Use aggregate functions to define a trigger, like max,avg,etc.
+* For simple triggers use PROBLEM event generation to SINGLE.
+* Use recovery expressions.
+* Allow manual close on the trigger.
 
 
 
