@@ -9,7 +9,7 @@
 == Database Size
 
 .The table contains formulas that can be used to calculate the disk space required for Zabbix system:
-[col="1,1"]
+[%autowidth]
 |===
 |Parameter 	|Formula for required disk space (in bytes)
 
@@ -27,15 +27,19 @@ bytes : number of bytes required to keep single value, depends on database engin
 
 |Trends 	
 |days*(items/3600)*24*3600*bytes
-items : number of items
-days : number of days to keep history
+
+* items : number of items
+* days : number of days to keep history
+
 bytes : number of bytes required to keep single trend, depends on the database engine, normally ~90 bytes.
 
 |Events 	
 |days*events*24*3600*bytes
-events : number of event per second. One (1) event per second in worst-case scenario.
-days : number of days to keep history
-bytes : number of bytes required to keep single trend, depends on the database engine, normally 
+
+* events : number of event per second. One (1) event per second in worst-case scenario.
+* days : number of days to keep history
+
+ bytes : number of bytes required to keep single trend, depends on the database engine, normally 
 ~330 + average number of tags per event * 100 bytes.
 |===
 
@@ -112,7 +116,7 @@ AllowKey=system.localtime[*]
 
 # Deny all other keys 
 DenyKey=*
----- 
+----
 
 .Patterns
 * AllowKey=<pattern> - which checks are allowed; <pattern> is specified using a wildcard (*) expression
@@ -128,6 +132,8 @@ https://www.zabbix.com/documentation/current/en/manual/config/items/restrict_che
 https://www.zabbix.com/documentation/current/en/manual/installation/requirements/best_practices[Best practices for secure Zabbix setup]
 
 https://www.zabbix.com/security_advisories#modal[Zabbix Security Advisories and CVE database]
+https://www.zabbix.com/documentation/guidelines/en/thosts/best_practices
+Use user macros
 
 https://www.zabbix.com/forum/zabbix-cookbook/17295-best-practices-of-monitoring-in-medium-large-enviroments/page2[2010 Azabbix blog]
 

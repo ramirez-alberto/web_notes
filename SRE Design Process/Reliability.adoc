@@ -53,6 +53,7 @@ the idea of measuring how well we're meeting expectations as part of determining
 ==== Availability
 
 It's important from the perspective of both external customers and internal users who depend on your service.
+
 * Is the system "up" or is it "down?"
 * Can others reach your website or your service?
 * Can they use the product when they expect to?

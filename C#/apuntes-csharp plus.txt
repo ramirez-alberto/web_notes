@@ -64,7 +64,8 @@ Classes
     You can have the same class in multiple files. The partial keyword and the same name must be in both classes
         Syntax: public partial class Name
     Local Function C#7
-        A local function is declared inside of a method an can only be accesesed inside of this method (Encapsulation).
+        A local function is declared inside of a method an can only be accesesed inside of this method 
+        (Encapsulation).
             Syntax: public string Name(){ string LocalFunction(){}}  //No visibility modifier
         You can declare the local function after declare the local variables of the method if you want to use them
             Static Local Function C#8
