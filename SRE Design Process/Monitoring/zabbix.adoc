@@ -45,7 +45,60 @@ The disk space will NOT be used immediately after Zabbix installation. Database 
 
 https://www.zabbix.com/documentation/current/en/manual/installation/requirements#database-size
 
-== Restricting agent checks
+== Using templates
+
+=== Best practices
+
+https://www.zabbix.com/documentation/guidelines/en/thosts/best_practices
+
+=== Naming templates
+
+Name the templates in a significant way, think of linking a template as assigning roles or applications to your hosts. Bad examples are:
+
+* Template for checking web connectivity
+* SAN
+* Ping webserver
+
+=== Community Templates 
+
+https://www.zabbix.com/integrations[Official Integrations Page]
+
+
+== Reducing pulling and server overhead when collect metrics
+
+https://zabbix.tips/reduce-polling-with-dependent-items-and-jsonpath/[Reducing pulling and server overhead when collect metrics]
+
+
+== Network Discovery
+
+You can discover devices on your network and add them to zabbix for monitoring. Go to *Data Collection* -> *Discovery* and add or modify the rule accordingly.
+By default the rule check for zabbix agents in the network and is disabled.
+
+Now, go to *Monitoring* -> *Discovery* and view the list of discovered devices in your network. If it isn't populated, try restarting the server.
+
+== Zabbix agent
+
+Check linux version host RPM based: cat /etc/*rel* or hostnamectl
+
+https://www.zabbix.com/documentation/current/en/manual/appendix/config/zabbix_agent2[Zabbix agent 2 (UNIX)]
+
+https://www.zabbix.com/documentation/current/en/manual/appendix/config/zabbix_agent2_win[Zabbix agent 2 (Windows)]
+
+https://www.zabbix.com/documentation/current/en/manual/appendix/protocols/zabbix_agent2[Zabbix agent 2 protocol]
+
+https://www.zabbix.com/documentation/current/en/manual/guides/monitor_windowsMonitor[Windows with Zabbix agent Quickstart]
+
+https://www.zabbix.com/documentation/current/en/manual/appendix/items/win_permissions[Minimum permission level for Windows agent items]
+
+https://www.zabbix.com/documentation/current/en/manual/guides/monitor_linux[Monitor Linux with Zabbix agent]
+
+https://www.zabbix.com/documentation/current/en/manual/appendix/install/windows_agent[Zabbix agent on Microsoft Windows]
+
+https://www.zabbix.com/download?zabbix=6.4&os_distribution=red_hat_enterprise_linux&os_version=9&components=agent_2&db=&ws=[Download and install Zabbix Agent2 RHEL9]
+
+https://poweradm.com/install-zabbix-agent/[Zabbix: Agent Installation on Linux (Personal Blog)]
+
+=== Restricting agent checks
 
 When restricting agent checks is recommended to allow specific checks and deny others:
 
@@ -70,41 +123,35 @@ NOTE: All system.run[*] items (remote commands, scripts) are disabled by default
 https://www.zabbix.com/documentation/current/en/manual/config/items/restrict_checks[Zabbix Docs]
 
 
-== Using templates
+=== Best practices 
 
-=== Best practices
+https://www.zabbix.com/documentation/current/en/manual/installation/requirements/best_practices[Best practices for secure Zabbix setup]
 
-https://www.zabbix.com/documentation/guidelines/en/thosts/best_practices
+https://www.zabbix.com/security_advisories#modal[Zabbix Security Advisories and CVE database]
 
-=== Naming templates
+https://www.zabbix.com/forum/zabbix-cookbook/17295-best-practices-of-monitoring-in-medium-large-enviroments/page2[2010 Azabbix blog]
 
-Name the templates in a significant way, think of linking a template as assigning roles or applications to your hosts. Bad examples are:
+=== Access control
+*Principle of least privilege*
 
-* Template for checking web connectivity
-* SAN
-* Ping webserver
+The principle of least privilege should be used at all times for Zabbix. This principle means that user accounts at all times should run with as few privileges as possible.
 
-=== Community Templates 
+Giving extra permissions to 'zabbix' user will allow it to access configuration files and execute operations that can compromise the overall security of the infrastructure.
 
-https://www.zabbix.com/integrations[Official Integrations Page]
+In the default configuration, Zabbix server and Zabbix agent processes share one 'zabbix' user. If you wish to make sure that the agent cannot access sensitive details in server configuration (e.g. database login information), the agent should be run as a different user:
 
+. Create a secure user
+. Specify this user in the agent configuration file ('User' parameter)
+. Restart the agent with administrator privileges. Privileges will be dropped to the specified user.
 
-== Reducing pulling and server overhead when collect metrics
+*Revoke write access to SSL configuration file in Windows*
 
-https://zabbix.tips/reduce-polling-with-dependent-items-and-jsonpath/[Reducing pulling and server overhead when collect metrics]
+Zabbix Windows agent compiled with OpenSSL will try to reach the SSL configuration file in c:\openssl-64bit. The "openssl-64bit" directory on disk C: can be created by non-privileged users.
 
-== Network Discovery
-
-You can discover devices on your network and add them to zabbix for monitoring. Go to *Data Collection* -> *Discovery* and add or modify the rule accordingly.
-By default the rule check for zabbix agents in the network and is disabled.
-
-Now, go to *Monitoring* -> *Discovery* and view the list of discovered devices in your network. It is not populated, try restarting the server.
-
-== 
+So for security hardening, it is required to create this directory manually and revoke write access from non-admin users.
 
 
-
-//// 1-
+////
 Requirement: I was trying to fetch data for "CPU system time" and "Available memory" in one query.
 Behavior : Data was returned either for CPU or Memory but not for both in one query.
 Fact : Data type for CPU and Memory are different and "history" parameter in "history.get" method doesn't support multiple values.
@@ -118,7 +165,6 @@ Requirement : Trying to fetch performance data for all hosts.
 Behavior : Data was returned for some hosts only.
 Fact : Some metrics data was collected every minute and some metrics data was collected for every five minutes.
 Resolution : Check the polling interval for all metrics in question.
+////
 
-https://www.zabbix.com/forum/zabbix-cookbook/17295-best-practices-of-monitoring-in-medium-large-enviroments/page2 
 
- ////
