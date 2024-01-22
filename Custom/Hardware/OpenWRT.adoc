@@ -1,0 +1,27 @@
+= OpenWrt
+
+== Compile images without some packages
+
+Click the triangle next to "Customize installed packages and/or first boot script" and then click the request build option. This will give you a firmware image that does not include LuCI. (you can even pre-install other packages that you might want)
+
+https://firmware-selector.openwrt.org/?version=22.03.5&target=ramips%2Fmt76x8&id=tplink_archer-c20-v5[Firmware Selector]
+
+== Revert to stock firmware
+
+I'm pretty sure you need to strip U-Boot from the factory image and then run sysupgrade. Basically, you need to reverse the installation instructions mentioned in the Wiki (https://openwrt.org/toh/tp-link/archer_c20_v5#create_factory_image 33).
+
+The worst that can happen is that you end up with a soft-brick and that you will need to attach serial console to revive your device.
+
+EDIT: Looks like for TFTP recovery, you just need to strip the first 512 bytes from the vendor image (compare https://openwrt.org/toh/tp-link/archer_c20_v5#installing_via_tftp 29)
+
+EDIT 2: Or you just use Google to discover the following instructions: https://www2.rigacci.org/wiki/doku.php/doc/appunti/hardware/tl-ac750_archer_c20v5 26
+
+https://forum.openwrt.org/t/tp-link-archer-c20-v5-openwrt-to-stock-firmware/154286/2
+
+== Archer C20
+
+* Versión del Firmware: 0.9.1 4.16 v0001.0 Build 190103 Rel.45825n(4553)
+
+* Versión del Hardware: Archer C20 v5 00000005
+
+https://forum.openwrt.org/t/porting-firmware-to-tp-link-archer-c20-v5/35512/232
