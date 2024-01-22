@@ -116,6 +116,13 @@ Pattern Matching (https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/fu
 
 StreamReader and StreamWriter
 
+== Comments
+
+Use /// three slashes to generate comments. See https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/documentation-comments[Documentation comments]
+
+== editorconfig
+You can use a .editorconfig file to ensure consistent formatting. See https://learn.microsoft.com/es-es/dotnet/fundamentals/code-analysis/code-style-rule-options[Code-style rule options]
+
 == Unit test 
 https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test:
 [source,bash]
