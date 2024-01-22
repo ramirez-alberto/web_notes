@@ -12,10 +12,8 @@ search library > lucenenet
 
 google dork > https://www.exploit-db.com/google-hacking-database
 
-<<<<<<< HEAD
 free fronts
 https://www.fontsquirrel.com
-=======
 flake8 python lynter
 https://www.atlassian.com/team-playbook
 
@@ -35,4 +33,3 @@ wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-CD02
 
  flask-talisman for http headers
  ClosedXML nuget 
->>>>>>> 1259992b11f01f7fd62191ce064b13a1abc3ef04

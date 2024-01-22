@@ -1,6 +1,10 @@
-https://code-maze.com/getting-started-with-efcore/
+= C# Concepts
+:toc: auto
+
+== Tutorial EFCore
+https://code-maze.com/getting-started-with-efcore/[Getting started efcore]
 https://github.com/CodeMazeBlog/.NET-Core-Series/tree/master/Part%204
 
-DTO
+== DTO
 https://www.telerik.com/blogs/dotnet-basics-dto-data-transfer-object
 https://docs.microsoft.com/en-us/aspnet/web-api/overview/data/using-web-api-with-entity-framework/part-5

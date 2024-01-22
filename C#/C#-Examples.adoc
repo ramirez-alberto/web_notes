@@ -1,3 +1,7 @@
+= C# Examples
+
+.recursive_traverse_directory_tree
+----
 #recursive_traverse_directory_tree
 public class RecursiveFileSearch
 {
@@ -81,8 +85,10 @@ public class RecursiveFileSearch
         }
     }
 }
+----
 
-
+.no_recursion_traverse_dirtree
+----
 #no_recursion_traverse_dirtree
 
 public class StackBasedIteration
@@ -183,14 +189,23 @@ public class StackBasedIteration
     }
 }
 
-#ExpandoObject
-+use a ExpandoObject
+----
+
+.Use an ExpandoObject
+[source,csharp]
+----
+
+// ExpandoObject
+
 dynamic user = new System.Dynamic.ExpandoObject();
 user.Name = "John Doe";
 user.Age = 42;
 user.HomeTown = "New York";
 Console.WriteLine(user.Name + " is " + user.Age + " years old and lives in " + user.HomeTown);
-+assign a property
+
+
+// Assign a property
+
 dynamic user = new System.Dynamic.ExpandoObject();
 user.Name = "John Doe";
 user.Age = 42;
@@ -199,13 +214,18 @@ user.HomeTown = new System.Dynamic.ExpandoObject();
 user.HomeTown.Name = "New York";
 user.HomeTown.ZipCode = 10001;
 
-+assign a object
+
+// Assign an object
+
 user.DescribeUser = (Func<String>)(() => {
     return user.Name + " is " + user.Age + " years old and lives in " + user.HomeTown.Name + " [" + user.HomeTown.ZipCode + "]";
 });
 
 Console.WriteLine(user.DescribeUser());
-+iterate 
+
+
+//iterate 
+
 dynamic user = new System.Dynamic.ExpandoObject();  
 user.Name = "John Doe";  
 user.Age = 42;  
@@ -215,7 +235,14 @@ foreach (KeyValuePair<string, object> kvp in user)
     Console.WriteLine(kvp.Key + ": " + kvp.Value);
 }
 
-#Anonymous types
+----
+
+
+.Anonymous types
+[source,csharp]
+----
+// Anonymous types
+
 using System;
 using System.IO;
 
@@ -236,15 +263,22 @@ namespace AnonymousTypes
     }
     }
 }
+----
 
 
-#LINQExamples
+.LINQ Examples
+[source,csharp]
+----
+// LINQ Examples
 
-Query Syntax
+
+// Query Syntax
+
 // Get the names which are 8 characters or less, using LINQ  
 var shortNames = from name in names where name.Length <= 8 orderby name.Length select name;
 
-\\Method Syntax
+
+// Method Syntax
 
 var names = new List<string>()
 {
@@ -254,15 +288,25 @@ var names = new List<string>()
     "Joe Doe"
 };
 
+
 // Get the names which are 8 characters or less, using LINQ
+
 var shortNames = names.Where(name => name.Length <= 8);
+
+
 // Order it by length
+
 shortNames = shortNames.OrderBy(name => name.Length);
+
+
 // Add a name to the original list
+
 names.Add("Zoe Doe");
+
 
 // Iterate over it - the query has not actually been executed yet!
 // It will be as soon as we hit the foreach loop though!
+
 foreach (var name in shortNames)
     Console.WriteLine(name);
 
@@ -305,3 +349,4 @@ namespace LinqTakeSkip1
     }
     }
 }
+----
