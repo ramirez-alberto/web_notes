@@ -1,0 +1,57 @@
+= Linux Commands
+:source-highlighter: highlight.js
+
+== Shell
+
+.Check if a dir don't exists
+[source,shell]
+----
+[ ! -d 'CC201' ] && command
+----
+
+== Saving Commands
+
+You have many options for saving commands so you can remember them when you need them. Some options are:
+
+* A Makefile per repo.
+* An Ansible playbook. 
+* `history | grep mycommand ` or ctrl+R 
+* Set aliases for shorter commands or full scripts
+* WebApps like https://cht.sh/[cht.sh] or https://tldr.sh/[tldr.sh] and https://github.com/dbrgn/tealdeer[tealdeer]
+
+As a bonus, here's an ansible to log everyone's commands to syslog
+[source,shell]
+----
+
+#Adapted from: https://administratosphere.wordpress.com/2011/05/20/logging-every-shell-command/
+
+# The other part of it was using filebeat to upload syslog to Elasticsearch so we could see WTH 
+# everyone was doing poking around in prod as part of the overall security dashboard
+
+- name: Deploy bash logger functions in proflie
+  copy:
+    dest: /etc/profile.d/log2syslog.sh
+    content: |
+      function log2syslog
+        {
+          local -t command
+          command=$(fc -ln -0)
+          [[ -z "$command" ]] || logger -p local1.notice -t "$USER[$$]" -- $0: $command
+        }
+      trap log2syslog DEBUG
+
+      export HISTCONTROL=
+      export HISTFILE=$HOME/.bash_history
+      export HISTFILESIZE=2000
+      export HISTIGNORE=
+      export HISTSIZE=1000
+      export HISTTIMEFORMAT="%Y-%m-%d_%T%z "
+
+      shopt -s cmdhist
+      shopt -s histappend
+
+    owner: root
+    group: root
+    mode: 0644
+
+----

@@ -102,6 +102,8 @@ https://www.zabbix.com/download?zabbix=6.4&os_distribution=red_hat_enterprise_li
 
 https://poweradm.com/install-zabbix-agent/[Zabbix: Agent Installation on Linux (Personal Blog)]
 
+http://phucnw.blogspot.com/2014/03/installing-and-setting-zabbix-agent.html
+
 === Restricting agent checks
 
 When restricting agent checks is recommended to allow specific checks and deny others:

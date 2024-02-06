@@ -1,0 +1,15 @@
+= Monitoring
+
+== Tools
+
+=== Solution
+
+* Netdata
+* Zabbix
+* Prometheus + Grafana + Loki
+* ELK stack
+* CheckMk
+
+=== ChechMK
+
+https://checkmk.com/blog/how-to-monitor-web-server
