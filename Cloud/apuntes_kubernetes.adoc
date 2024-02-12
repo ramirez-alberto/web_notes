@@ -61,7 +61,7 @@ Create a pod with configuration file: `kubectl create -f hello-world-create.yaml
 
 === Configure RBAC in k8
 
-By default RBAC (_Kubernetes Role-Based Access Control_) policies are enabled by default, they allow to specify wich types of actions are permitted depending on the user and their role.
+By default RBAC (_Kubernetes Role-Based Access Control_) policies are enabled by default, they allow to specify which types of actions are permitted depending on the user and their role.
 
 You can encounter this type of errors:
 [source]
@@ -181,3 +181,9 @@ kubectl --context=employee-context get pods --namespace=default
 === Certificates
 
 cert-manager
+
+== Networking
+
+By default the service type is ClusterIP
+
+https://kubernetes.io/es/docs/concepts/services-networking/service/#publishing-services-service-types[Service Types]
