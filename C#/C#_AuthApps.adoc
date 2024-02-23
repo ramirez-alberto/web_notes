@@ -1,13 +1,31 @@
 = Authentication 
+:source-highlighter: highlight.js
 :toc: auto
+
+:ms-identity-url: https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-6.0&tabs=netcore-cli
+:tutorial: https://code-maze.com/identity-asp-net-core-project/
 
 == Using Identity in ASP NET CORE : 
 
-ASP.NET Core Identity is the membership system for web applications that includes membership, login and user data. ASP.NET Core Identity is a user store
+ASP.NET Core Identity is the membership system for web applications that includes membership, 
+login and user data. ASP.NET Core Identity is a user store
 
-https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-6.0&tabs=netcore-cli
+{ms-identity-url}[MSDocs for Identity]
 
-https://code-maze.com/identity-asp-net-core-project/
+{tutorial}[CodeMaze tutorial]
+
+To create a new app using Identity Core use: `dotnet new webapp --auth Individual -o WebApp1`
+
+The preceding command creates a Razor web app using SQLite. To create the web app with LocalDB,
+run the following command: `dotnet new webapp --auth Individual -uld -o WebApp1`
+
+To scaffold auth pages: `Install-Package Microsoft.VisualStudio.Web.CodeGeneration.Design`
+
+The typical pattern is to call methods in the following order:
+
+    Add{Service}
+    builder.Services.Configure{Service}
+
 
 == Implementation: 
 
@@ -16,65 +34,72 @@ https://code-maze.com/identity-asp-net-core-project/
 * Microsoft.AspNetCore.Identity.EntityFrameworkCore
 * AutoMapper.Extensions.Microsoft.DependencyInjection
 
-1. Configure User Model
+// -
 
-    ***Think about extending Identity schema***: 
-    Extend the User model from `IdentityUser` if we want add additional data or use Claims ( populate the `Claim` object by providing the type and the value properties of the string type (`new Claim(string type, string value)`)
-
-    If its complex use custom properties otherwise use Claims
-
-2. Inherit from `IdentityDbContext<User>` in the class Context.
-3. Register Identity 
-    Use `AddIdentityCore<TUser>` or `AddIdentity<TUser, TRole>`:
-
-        AddIdentityCore method adds the services that are necessary for user-management actions, such as creating users, hashing passwords, password validation, etc. If your project doesn’t require any additional features, then you should use this method for the implementation.
-        If your project requires those features and any additional ones like supporting Roles not only Users, supporting external authentication, and SingInManager, as our application does, you have to use the AddIdentity method.
-    Add `AddEntityFrameworkStores<Context>` to register the required EF Core implementation of Identity stores
-
-    ```csharp
-        builder.Services.AddIdentity<User, IdentityRole>()
-        .AddEntityFrameworkStores<ApplicationContext>();
-    ```
-
-4. Add Roles ( Custom Implementation ) to the Db, apply the roles configuration in the `OnModelCreating` method
-    Create a public class inherit from `IEntityTypeConfiguration<IdentityRole>` and add the method `Configure`    
-    ```csharp
-        public class RoleConfiguration : IEntityTypeConfiguration<IdentityRole>
-        {
-            public void Configure(EntityTypeBuilder<IdentityRole> builder)
-            {
-                builder.HasData(
-                new IdentityRole
-                {
-                    Name = "Visitor",
-                    NormalizedName = "VISITOR"
-                },);
-            }
-        }
-    ```
-
-    Apply this configuration in the context class
-    ```csharp
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-        modelBuilder.ApplyConfiguration(new RoleConfiguration());
-    }
-    ```
-
-5. Add Migrations and Update the databasea
-
-dotnet new webapp --auth Individual -o WebApp1
-
-The preceding command creates a Razor web app using SQLite. To create the web app with LocalDB, run the following command: dotnet new webapp --auth Individual -uld -o WebApp1
-
-The typical pattern is to call methods in the following order:
-
-    Add{Service}
-    builder.Services.Configure{Service}
-
-Scaffold auth pages
-Install-Package Microsoft.VisualStudio.Web.CodeGeneration.Design
-
+. Configure User Model
++
+***Think about extending Identity schema***: 
+Extend the User model from `IdentityUser` if we want add additional data or use Claims ( populate the `Claim` object by providing the type and the value properties of the string type (`new Claim(string type, string value)`)
++
 A claim is a name value pair that represents what the subject is, not what the subject can do. 
 An identity can contain multiple claims with multiple values and can contain multiple claims of the same type.
++
+NOTE: If its complex use custom properties otherwise use Claims
+
+
+. Inherit from `IdentityDbContext<User>` in the class Context.
+
+
+. Register Identity 
++
+.Use `AddIdentityCore<TUser>` or `AddIdentity<TUser, TRole>`:
+----
+AddIdentityCore method adds the services that are necessary for user-management actions, such as creating users, hashing passwords, password validation, etc. If your project doesn’t require any additional features, then you should use this method for the implementation.
+If your project requires those features and any additional ones like supporting Roles not only Users, supporting external authentication, and SingInManager, as our application does, you have to use the AddIdentity method.
+----
++
+.Add `AddEntityFrameworkStores<Context>` to register the required EF Core implementation of Identity stores
+[source,csharp]
+----
+builder.Services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationContext>();
+----
+
+
+. Add Roles ( Custom Implementation ) to the Db, apply the roles configuration in the `OnModelCreating` method
++
+Create a public class inherit from `IEntityTypeConfiguration<IdentityRole>` and add the method `Configure`:
++
+[source,csharp]
+----
+
+public class RoleConfiguration : IEntityTypeConfiguration<IdentityRole>
+{
+    public void Configure(EntityTypeBuilder<IdentityRole> builder)
+    {
+        builder.HasData(
+        new IdentityRole
+        {
+            Name = "Visitor",
+            NormalizedName = "VISITOR"
+        },);
+    }
+}
+
+----
++
+Apply this configuration in the context class
++
+[source,csharp]
+----
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    base.OnModelCreating(modelBuilder);
+    modelBuilder.ApplyConfiguration(new RoleConfiguration());
+}
+
+----
+
+
+. Add Migrations and Update the database

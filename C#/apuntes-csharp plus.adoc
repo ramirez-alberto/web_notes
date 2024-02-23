@@ -1,0 +1,157 @@
+= C# Ecosystem
+:source-highlighter: highlight.js
+:toc: auto
+
+== Type of Variables
+For converting types use Convert class
+
+=== Booleans
+
+=== Integers 
+
+Common integer types:
+* bytes ( 0 - 255 )
+* short ( +-32768 or Int16)
+* long (Int64)
+* uint unsigned
+
+.Syntax
+[source,csharp]
+----
+int keyword == Int32 class
+----
+
+=== Float 
+Use double or float for performance, use decimal for precision.
+
+.Types of floats
+* double 16precision (System.Double)
++
+[source,csharp]
+----
+double var = 32.0 
+// or 
+double var = 32.0d
+----
+
+* float 7precision (System.Single)
+[source,csharp]
+----
+float var = 32.0f
+----
+* decimal 29precision (System.Decimal) 
+[source,csharp]
+----
+decimal var = 32.0m
+----
+
+=== Char (Char class)
+Char is a numerical value, where each character has a specified number in Unicode
+
+char var = 'H' //note the single quotes
+
+=== Strings
+Is a reference type, an is immutable.
+
+It's generally recommended to use a `StringBuilder` if you know that you will 
+be building a string over several operations: `StringBuilder numbers = new StringBuilder();`
+
+You can use a verbatim operator @ for escaping characters
+
+=== Date & time
+DateTime is a struct, and always be use as a container for datetime data.
+            DateTime dt = new DateTime(); and DateTime dt = DateTime.Now;
+
+=== Null (System.Nullable)
+Helper method GetValueOrDefault()
+Always check for null references before trying to use the value, 
+
+=== Implicit variables C#3
+
+Var keyword, only in method not in class level.
+C# check the value type in compile time
+a must in  anonymous types
+
+=== Dynamic types C#4
+
+We can hold a object where we get to define the properties, without 
+having to define the class first.
+
+Its a static type, the compiler dont check the members
+
+We cant dynamically assign properties after the object has been initialized
+This will give you some of the advantages of the dynamically/weakly 
+typed languages, while maintaining the advantages of a strongly typed 
+language in all other cases.
+
+Examples of when it makes good sense to use the dynamic keyword are for 
+COM interop and when interacting with data formats like JSON and XML.
+
+=== ExpandoObject (System.Dynamic)
+Example: #ExpandoObject
+https://csharp.net-tutorials.com/data-types/the-expandoobject/
+
+=== Anonymous Types
+Example: #Anonymous types
+
+Can only holds properties, cant have fields or methods
+
+Properties are readonly , you cant add new properties
+usage scenario is when you have a complex object (from a defined class) 
+and you need to simplify it, e.g. because you have to keep the object as 
+small as possible to send it to a browser or perhaps because the full 
+object has sensitive information that you don't want to expose to the 
+consumer. Anonymous types are great for this, as illustrated in this next example:
+https://csharp.net-tutorials.com/data-types/anonymous-types/
+
+== Classes
+=== Namespaces
+using Namespace = Alias; make an alias for the namespace.
+
+=== Constants 
+Defined either inside the scope of a method or on the class level. 
+
+const keyword evaluate in compile time, you cannot assign the result of method call.
+Syntax\Example: public const int name = value;  
+
+readonly keyword same as const less restrictive, can assign in the constructor.
+
+=== Partial Classes
+You can have the same class in multiple files. The partial keyword and the same name must be in both classes
+
+Syntax: public partial class Name
+
+=== Local Function C#7
+A local function is declared inside of a method an can only be accessed inside of this method 
+(Encapsulation).
+Syntax: public string Name(){ string LocalFunction(){}}  //No visibility modifier
+You can declare the local function after declare the local variables of the method 
+if you want to use them.
+
+==== Static Local Function C#8
+So if you want to make sure that your local function can't reference or change variables from the method, just declare it as static
+Syntax: public string Name(){ static string LocalFunction(){}}  //No visibility modifier    
+
+== Collections:
+Arrays implement IList and is part of Array class(Use lists instead)
+.Syntax
+[source,csharp]
+----
+
+string[] myarray; 
+//or instantiate array for use
+string[] myarray = new string[size_of_array]; 
+//or 
+int[] numbers = new int[5] { 4, 3, 8, 0, 5 }; 
+// shorter version 
+int[] numbers = { 4, 3, 8, 0, 5 };
+
+----
+Lists implement the IList interfaces (List<T> is type-safe)
+
+== LINQ Language Integrated-Query
+Comes with to syntax flavors Query and Method Syntax.
+LINQ query is executed when we use the data. Example in a foreach loop
+
+== Lambda Expressions 
+name => name.Length <= 8

@@ -30,6 +30,9 @@ Ctrl-Shift-[ for folding
 *Errors*
 F8	Navigate Errors
 
+*Remove brackets*
+Ctrl-Alt-backspace
+
 *Snippets*
 *
 
