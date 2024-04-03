@@ -1,4 +1,5 @@
 = C# Examples
+:toc: auto
 
 .recursive_traverse_directory_tree
 ----

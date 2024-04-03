@@ -76,7 +76,7 @@ Inheritance (https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/tutoria
 
         public MyConstructor(type_var name_var) : base(name_var) 
 
-Polymorfism
+Polymorphism
     In the base class declare a virtual function
         scope virtual void MyFunction(){}
     Define the new implementation in the derived class (overriding the base class implementation)

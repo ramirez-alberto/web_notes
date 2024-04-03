@@ -77,7 +77,7 @@ a must in  anonymous types
 We can hold a object where we get to define the properties, without 
 having to define the class first.
 
-Its a static type, the compiler dont check the members
+Its a static type, the compiler don't check the members
 
 We cant dynamically assign properties after the object has been initialized
 This will give you some of the advantages of the dynamically/weakly 
