@@ -8,17 +8,16 @@ For converting types use Convert class
 === Booleans
 
 === Integers 
-
 Common integer types:
 * bytes ( 0 - 255 )
-* short ( +-32768 or Int16)
+* short ( ± 32768 or Int16 )
 * long (Int64)
 * uint unsigned
 
 .Syntax
 [source,csharp]
 ----
-int keyword == Int32 class
+int keyword == Int32 class;
 ----
 
 === Float 
@@ -29,20 +28,20 @@ Use double or float for performance, use decimal for precision.
 +
 [source,csharp]
 ----
-double var = 32.0 
+double var = 32.0 ;
 // or 
-double var = 32.0d
+double var = 32.0d;
 ----
 
 * float 7precision (System.Single)
 [source,csharp]
 ----
-float var = 32.0f
+float var = 32.0f;
 ----
 * decimal 29precision (System.Decimal) 
 [source,csharp]
 ----
-decimal var = 32.0m
+decimal var = 32.0m;
 ----
 
 === Char (Char class)
@@ -149,9 +148,43 @@ int[] numbers = { 4, 3, 8, 0, 5 };
 ----
 Lists implement the IList interfaces (List<T> is type-safe)
 
+* array.Add()
+* array.Insert(index, value)
+* array.AddRange() and InsertRange() add another collection
+* Remove:
+** Remove(), RemoveAt() and RemoveAll().
+
 == LINQ Language Integrated-Query
 Comes with to syntax flavors Query and Method Syntax.
 LINQ query is executed when we use the data. Example in a foreach loop
 
 == Lambda Expressions 
 name => name.Length <= 8
+
+== Numeric
+double.Parse Parse a string to double
+
+== LINQ 
+    https://dev.to/juancarlosfl/equivalencia-de-filter-map-y-reduce-en-c-38ga
+    js map equivalence = Select()  transform and shape data from your data source into new variants
+    js filter eq = Where() can contain a lamba Expression, you can call any methods 
+         as long as the final result is a boolean value.
+    js reduce eq = Aggregate()
+
+    Sorting Data: OrderBy and ThenBy
+    Take() get you X number of items from the data source
+    Skip() allow you to ignore the first X items
+
+== Return types
+    return default; returns null or zeros
+
+== Exception
+    throw new exceptionType("text");
+
+== Method keywords
+    This function only call in derived classes, can be override and return type 
+            may be null
+    protected virtual type? MyFunction(varType varName)
+    {
+        return default;  return null
+    }

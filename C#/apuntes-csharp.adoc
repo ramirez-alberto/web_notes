@@ -8,7 +8,6 @@ Fields denote storage locations, properties has accessors (get set)
 https://docs.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/program-building-blocks#members
 
 == Guidelines 
-
 https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/
 
 == Accessibility 
@@ -34,6 +33,7 @@ https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/
 * Delegates (https://docs.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/features#delegates-and-lambda-expressions)
 https://code-maze.com/csharp-delegates/: 
 * syntax delegate double Function(double x);
+* nameof() generate the name of its operand.
 
 C# has the two built-in delegates: Func<T> and Action<T>
 ----
@@ -44,7 +44,7 @@ C# has the two built-in delegates: Func<T> and Action<T>
         Action<Type1, Type2...> DelegateName = new Action<Type1, Type2...>(MethodName);
         Action < Type1, Type2...> DelegateName = MethodName;
 ----
-== Variables
+== Define an access level to variables
 * static keyword are class variables or non-instance variable
 * readonly keyword like instance variables but cannot be modified, the value 
 is assign in the constructor
@@ -63,14 +63,24 @@ https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/program-structure/
 ** System.IO.DriveInfo, 
 ** System.IO.Directory
 ** System.IO.File   
-** Example : System.IO.DriveInfo di = new System.IO.DriveInfo(@"C:\");
+
++
+.Example
+[source,csharp]
+----
+System.IO.DriveInfo di = new System.IO.DriveInfo(@"C:\");
+----
+* Methods
+** System.Environment.GetLogicalDrives
 
 https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/file-system/how-to-get-information-about-files-folders-and-drives
 
-   GetFiles , GetDirectories
-        if any one of the subdirectories under the specified root causes a 
-            DirectoryNotFoundException or UnauthorizedAccessException, the whole 
-            method fails and returns no directories. 
+** GetFiles
+** GetDirectories
++
+NOTE: If any one of the subdirectories under the specified root causes a *DirectoryNotFoundException* or *UnauthorizedAccessException*, the whole method fails and returns no directories. 
+
+=== Notes    
 
     Traverse directory tree manually    
         pre-order traversal : files first
@@ -99,7 +109,7 @@ https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/file-system/how
             The file name is longer than the system-defined maximum length.
             The file name contains a colon (:).
 
-Pattern Matching (https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/functional/pattern-matching)
+== Pattern Matching (https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/functional/pattern-matching)
     Declarative pattern if(maybe is int number)
                             Console.WriteLine($"Maybe is int equal to {number}");
     switch expression
@@ -144,4 +154,33 @@ Name the test: public class ReferenceClass_thingToBeTested
 
 Use ARRANGE,ACTION,ASSERT
 
+== Health Checks
 
+In the Net Core ecosystem, background services are called Hosted services because 
+a single host can run multiple of these services. This services implement the 
+`IHostedService` interface.
+We can leverage the `BackgroundService` abstract class for this purpose.
+
+implement IHealthCheck 
+Patterns: Really depends on how you monitor your app, examples are touching a file 
+    or configuring an endpoint in the app. 
+
+== Running scripts with C#
+
+Use the class `Process` in the System.Diagnostics namespace.
+
+.Example
+[source,csharp]
+----
+    var scriptArguments = "-ExecutionPolicy Bypass -File \""+pathToScript+"\"";
+    var processStartInfo = new ProcessStartInfo("powershell.exe",scriptArguments);
+    processStartInfo.RedirectStandardOutput = true;
+    processStartInfo.RedirectStandardError = true;
+
+    using var process = new Process();
+    process.StartInfo = processStartInfo;
+    process.Start();
+    string output = process.StandardOutput.ReadToEnd();
+    string error = process.StandardError.ReadToEnd();
+    Console.WriteLine(output);
+----
