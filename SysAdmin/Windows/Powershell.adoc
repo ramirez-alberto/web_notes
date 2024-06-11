@@ -1,6 +1,6 @@
 = Powershell
 :source-highlighter: highlight.js
-//:highlightjs-languages: powershell
+:highlightjs-languages: powershell
 :author: Alberto Ramirez
 :revdate: {localdate}
 :revnumber: 1.0.0
@@ -36,6 +36,18 @@
 == Cmdlet
 
 * Estructura: `Verb-Noun`
+
+== Historial
+
+* Para guardar el historial de comandos en otra ubicacion: 
+[source,powershell]
+----
+# Ubicacion alterna
+Set-PSReadlineOption -HistorySavePath 'C:\Users\Hali\Desktop\History1.txt'
+
+# Default
+Set-PSReadlineOption -HistorySavePath 'C:\Users\nombre_usuario\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt'
+----
 
 == Modulos
 

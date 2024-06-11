@@ -25,7 +25,7 @@ It's the source of information that allows you to have concrete conversations ab
 
 When you make changes, this practice is how you know the effect.
 
-We need to have a reasonable level of `operational awereness`. This means we first have to have a decent understanding of those systems and how they're functioning in production.
+We need to have a reasonable level of `operational awareness`. This means we first have to have a decent understanding of those systems and how they're functioning in production.
 
 === Operational Awereness
 *What exactly is running in production?*
