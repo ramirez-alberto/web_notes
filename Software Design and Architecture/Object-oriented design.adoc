@@ -1,0 +1,170 @@
+// ACM/IEEE Software Engineering Curriculum Guidelines
+
+== Software Requirements
+
+. Starting point
++
+* Understand what the client wants, this is known as `eliciting requirements`.
+* Eliciting requirements not only involves listening to the client, we also need to ask questions to clarify what the client has not told us.
+
+You don't dive right into solving it in code. There's a design step in between that iteratively deals with both the problem space and the solution space.
+
+=== Outcomes
+
+The design activity (conceptual and technical design) involves using these requirements to outline a solution. 
+
+When we refine components enough, they turn into a collection of functions, classes or other components. 
+These represent a much simpler problem that the developers can individually implement.
+
+==== Conceptual design
+
+*Conceptual mockups:*
+
+Provide the initial thoughts on how the requirements will be satisfied.
+
+==== Technical design
+
+*Technical diagrams:*
+
+With technical design, we add details on how the components, connections and responsibilities in a conceptual mockup can be implemented.
+We refine each component until it is specific enough to be designed in detail.
+
+
+=== Satisfying requirements 
+Some software design decisions will involve tradeoffs in different quality attributes such as performance, convenience and security.
+
+== Object-oriented design
+
+The goal is to create abstract data types easier, structure a system around this abstract data types (classes) and introduce the ability for an abstract data type to extend another (inheritance).
+
+=== Design Principles
+
+==== Abstraction
+
+Abstraction allows us to handle complexity by breaking down concepts into simplified descriptions, ignoring non-essential details within a specific context.
+
+Good abstraction removes unnecessary details. Also an abstraction for a concept should make sense for the concept's purpose. Check `Rule of Least Astonishment`.
+
+Define the essential characteristics for some concept in a class named after the concept. A class is like a template for instances of a concept.
+
+The abstractions are relative to some context, and multiple abstractions can exist for a single concept.
+
+In addition to attributes, an abstraction should describe a concept's fundamental behaviors and responsibilities. Anything beyond essential attributes 
+and behaviors is irrelevant within the abstraction's context.
+
+Abstractions are not fixed; they evolve based on the problem they address, so if the purpose of your system or the problem changes, feel free to update your abstractions accordingly..
+
+==== Encapsulation
+
+* We can restrict and control access to attributes and methods. 
+* Changing the software is easier because related data and code is located in the same place.
+
+==== Decomposition
+
+Using decomposition we can break into its different parts a unit so that we can keep their different 
+responsibilities separate. 
+
+* Look at the different responsibilities of some whole thing.
+* Evaluate how you can separate them into different parts, each with its own specific responsibility.
+
+One issue in decomposition involves the lifetimes of the whole object, and the part objects, and how they could
+relate. Lifetimes might be closely related or can exist independently.
+
+Important issues to understand are how the parts relate to the whole, such as fixed or dynamic number, their
+lifetimes, and whether there is sharing.
+
+==== Generalization
+
+Reduce the amount of redundancy when solving problems.
+
+Using methods are a way to applying the same behavior to a different set of data.
+
+A parent class is known as a superclass and a child class is called the subclass.
+
+==== Inheritance
+
+Used to describe relationship between classes
+
+Subclasses that inherit from the same superclass include attributes and behaviors from the superclass,
+that's an easy way to share attributes and behavior among related classes.
+
+Changes can be made easily and quickly to a large group of subclasses by making changes to the superclass 
+they inherit from, unless the subclasses overrides the superclass.
+
+We don't need to re-implement behaviors that already exist (Don't Repeat Yourself).
+
+
+=== UML Diagrams
+
+==== UML Class Diagram
+
+* Closer to the implementation and can easily be converted to classes in code.
+
+* Representation
++
+** Class/Object: Each class is represented by a box. Divided in three sections: Class Name, Property, Operations (Methods)
+** Relationships
+*** Association: Loose relationship between two objects that exists independently. To represent this interaction use a 
+*straight line* and, in each end of the line, the cardinality like 0..* (Zero or more objects).
+*** Aggregation: Is a _has-a_ relationship where a object has parts that belong to it. It's called _weak relationship_ 
+because they can also exist independently. Use a line with an empty diamond, the empty diamond denotes which is 
+considered the whole and not the part.
+*** Composition: it's a strong _has a_ relationship. This means that the objects cannot exists without each other. 
+Represented by a straight line with a filled in diamond towards the whole in the relationship and the part has the cardinality 
+above the line like 1..*.
++
+The part does not need to be instantiated anywhere else, nor does it need to be passed into the whole object on creation. The part is
+automatically created with the whole.
+** Generalization and Inheritance: 
+*** Connect two classes with a solid lined arrow. 
+*** The superclass is at the head of the arrow, and the subclass is at the tail. 
+*** The standard way is to have the arrow pointing upward.
+*** Interfaces are denoted using guillemets «interface» or French quotes. The interaction is indicated using a dotted arrow.
+The head of the arrow is at the interface. The standard way is to have the arrow pointing upward.
+
+==== About interfaces
+Since they are only contracts and do not enforce a specific way to complete these contracts, overlapping method
+signatures are not a problem. A single implementation for multiple interfaces with overlapping contracts is
+acceptable.
+
+=== Measure design complexity
+
+==== Coupling and cohesion
+
+When evaluating the coupling of a module, you need to consider degree, ease, and flexibility.
+
+* Degree is the number of connections between the module and others. With coupling, you want to keep the degree
+small. 
+
+* Ease is how obvious are the connections between the module and others. With coupling, you want the
+connections to be easy to make without needing to understand the implementations of the other modules.
+
+* Flexibility is how interchangeable the other modules are for this module.
+
+
+Example of low ease is the usage of globals, you never know what other modules use or modify them.
+
+Cohesion represents the clarity of the responsibilities of a module. If your module performs one task and
+nothing else or has a clear purpose, your module has high cohesion.
+If you find your module having more than one responsibility, it is probably time to split your module.
+
+== Tools Recap
+
+* CRC Cards: Good for prototyping and simulating high level designs.
+* UML Class Diagram: Guide implementation.
+
+
+== Glossary
+
+Cardinality is a mathematical term. It translates into the number of elements in a set. 
+In databases, cardinality refers to the relationships between the data in two database tables. 
+Cardinality defines how many instances of one entity are related to instances of another entity.
+Represented by a Entity-Relationship (ER) diagrams.
+
+Module is any sort of program unit like classes and methods.
+
+
+Implementation inheritance.
+
+
+Explicit and Implicit constructors.
