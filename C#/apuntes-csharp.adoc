@@ -46,8 +46,7 @@ C# has the two built-in delegates: Func<T> and Action<T>
 ----
 == Define an access level to variables
 * static keyword are class variables or non-instance variable
-* readonly keyword like instance variables but cannot be modified, the value 
-is assign in the constructor
+* readonly keyword like instance variables but cannot be modified, the value is assign in the constructor
 * protected functions can be called only in derived classes
 
 == Program structure
@@ -164,6 +163,10 @@ We can leverage the `BackgroundService` abstract class for this purpose.
 implement IHealthCheck 
 Patterns: Really depends on how you monitor your app, examples are touching a file 
     or configuring an endpoint in the app. 
+
+    https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-8.0
+    https://dev.to/isaacojeda/implementacion-de-health-checks-en-aspnet-core-3a01
+    https://dzone.com/articles/monitoring-health-of-aspnet-core-background-servic
 
 == Running scripts with C#
 

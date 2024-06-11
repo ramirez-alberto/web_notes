@@ -1,0 +1,18 @@
+== Project Notes
+:source-highlighter: highlight.js
+:toc: auto
+
+= Multiple Request to monitor webpages
+
+HttpClient is intended to be instantiated once and reused throughout the life of an application.
+
+== Manage HTTPClient lifetimes
+
+The above still begs the question how you are going to manage HttpClient lifetimes:
+
+* Singleton (app-scoped) HttpClients do not pick up DNS updates. 
+    Your app will be ignorant of DNS updates unless you kill and restart it.
+
+* A frequently-create-and-dispose pattern, using (HttpClient client = ) { }, can cause socket exhaustion.
+
+https://learn.microsoft.com/es-es/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests[Use IHttpClientFactory to implement resilient HTTP requests]

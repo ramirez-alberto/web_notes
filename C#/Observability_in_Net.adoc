@@ -1,0 +1,104 @@
+= Observability in .Net
+:source-highlighter: highlight.js
+:toc: auto
+
+There are a few different ways to achieve observability in .NET applications:
+
+* Explicitly in code, by referencing and using a library such as OpenTelemetry. If you have access to the source code and can rebuild the app, then this is the most powerful and * configurable mechanism.
+* Out-of-process using EventPipe. Tools such as dotnet-monitor can listen to logs and metrics and then process them without affecting any code.
+* Using a startup hook, assemblies can be injected into the process that can then collect instrumentation. An example of this approach is OpenTelemetry .NET Automatic Instrumentation.
+
+== Using OpenTelemetry libraries
+
+.Table with OTEL packages
+[%autowidth]
+|====
+|Package Name 	                                |Description
+
+|OpenTelemetry 	                                |Main library that provides the core OTEL functionality
+
+|OpenTelemetry.Instrumentation.AspNetCore 	    |Instrumentation for ASP.NET Core and Kestrel
+
+|OpenTelemetry.Instrumentation.GrpcNetClient    |Instrumentation for gRPC Client for tracking outbound gRPC calls
+
+|OpenTelemetry.Instrumentation.Http 	        |Instrumentation for HttpClient and HttpWebRequest to track outbound HTTP calls
+
+|OpenTelemetry.Instrumentation.SqlClient 	    |Instrumentation for SqlClient used to trace database operations
+
+|OpenTelemetry.Exporter.Console 	            |Exporter for the console, commonly used to diagnose what telemetry is being exported
+
+|OpenTelemetry.Exporter.OpenTelemetryProtocol 	|Exporter using the OTLP protocol
+
+|OpenTelemetry.Exporter.Prometheus.AspNetCore 	|Exporter for Prometheus implemented using an ASP.NET Core endpoint
+
+|OpenTelemetry.Exporter.Zipkin 	                |Exporter for Zipkin tracing
+
+|====
+
+
+. Add the NuGet packages to the project:
++
+[source,bash]
+----
+dotnet add package OpenTelemetry.Extensions.Hosting
+dotnet add package OpenTelemetry.Instrumentation.AspNetCore
+dotnet add package OpenTelemetry.Exporter.Console
+#For Jaeger
+dotnet add package  OpenTelemetry.Exporter.OpenTelemetryProtocol
+----
+
+. Add the OTEL services to the pipeline:
++
+.Program.cs
+[source,csharp]
+----
+using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
+
+
+var builder = WebApplication.CreateBuilder(args);
+
+const string serviceName = "roll-dice";
+var tracingOtlpEndpoint = builder.Configuration["OTLP_ENDPOINT_URL"];
+
+builder.Logging.AddOpenTelemetry(options =>
+{
+    options
+        .SetResourceBuilder(
+            ResourceBuilder.CreateDefault()
+                .AddService(serviceName))
+        .AddConsoleExporter();
+});
+builder.Services.AddOpenTelemetry()
+      .ConfigureResource(resource => resource.AddService(serviceName))
+      .WithTracing(tracing => tracing
+          .AddAspNetCoreInstrumentation()
+          .AddConsoleExporter())
+      .WithMetrics(metrics => metrics
+          .AddAspNetCoreInstrumentation()
+          .AddConsoleExporter());
+
+/* If we want to use Jaeger:
+    if (tracingOtlpEndpoint != null)
+    {
+        tracing.AddOtlpExporter(otlpOptions =>
+         {
+             otlpOptions.Endpoint = new Uri(tracingOtlpEndpoint);
+         });
+    }
+    else
+    {
+        tracing.AddConsoleExporter();
+    }
+*/
+var app = builder.Build();
+
+----
+
+== References
+https://learn.microsoft.com/en-us/dotnet/core/diagnostics/observability-with-otel[Observability with OTEL]
+https://opentelemetry.io/docs/languages/net/getting-started/[Getting Started OTEL]
+https://medium.com/@ebubekirdinc/distributed-tracing-with-jaeger-and-opentelemetry-in-a-microservices-architecture-62d69f51d84e[EFCore Instrumentation]
+https://medium.com/opentelemetry/securing-your-opentelemetry-collector-1a4f9fa5bd6f
